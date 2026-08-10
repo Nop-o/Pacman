@@ -8,10 +8,12 @@ class Entity:
         HUNTING = 0
         RUNNING = 1
 
-    def __init__(self, line: int, column: int, maze: Maze) -> None:
+    def __init__(self, line: int, column: int, maze: Maze,
+                 super_pacgum_cooldown: int) -> None:
         self.line = line
         self.column = column
         self.maze = maze
+        self.super_pacgum_cooldown = super_pacgum_cooldown
         self.state = self.State.RUNNING
 
     def go_left(self) -> None:

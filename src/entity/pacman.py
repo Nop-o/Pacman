@@ -4,8 +4,9 @@ from ..maze import Maze
 
 class Pacman(Entity):
 
-    def __init__(self, line: int, column: int, lives: int, maze: Maze) -> None:
-        super().__init__(line, column)
+    def __init__(self, line: int, column: int, lives: int, maze: Maze,
+                 super_pacgum_cooldown: int) -> None:
+        super().__init__(line, column, maze, super_pacgum_cooldown)
         self.lives = lives
 
     def set_starting_position(self, maze: Maze) -> None:
