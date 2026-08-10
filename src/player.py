@@ -1,5 +1,6 @@
 from .maze import Maze
 
+
 class Player():
     def __init__(self, maze: Maze, lives: int = 3) -> None:
         self.lives: int = lives
@@ -23,10 +24,10 @@ class Player():
                     return
                 j += 1
             i += 1
-            
+
     def verif_position(self, maze: Maze, line: int, column: int)\
-        -> bool:
-        if maze.cases[line][column].is_enclosed == False:
+            -> bool:
+        if maze.cases[line][column].is_enclosed is False:
             self.line = line
             self.column = column
             return True

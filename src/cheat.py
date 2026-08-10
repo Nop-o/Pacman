@@ -3,18 +3,18 @@ class Cheat():
         self.invicibility = False
         self.ghost_freeze = False
 
-    #TODO
-    def skip_level(self):
+    # TODO
+    def skip_level(self) -> None:
         pass
 
-    #TODO
-    def give_extra_lives(self):
+    # TODO
+    def give_extra_lives(self) -> None:
         pass
 
-    #TODO
-    def increase_speed(self):
+    # TODO
+    def increase_speed(self) -> None:
         pass
 
-    #TODO
-    def slow_speed(self):
+    # TODO
+    def slow_speed(self) -> None:
         pass
