@@ -6,7 +6,7 @@ class Case():
         self.wall_west: bool = False
         self.create_walls(case)
         self.is_enclosed: bool = True
-        if any([self.wall_west, self.wall_south,
+        if not any([self.wall_west, self.wall_south,
                 self.wall_east, self.wall_north]):
             self.is_enclosed = False
 
