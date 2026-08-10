@@ -1,6 +1,6 @@
 import sys
 from pydantic import ValidationError
-from json_parsing import JsonParsing
+from parsing.json_parsing import JsonParsing
 import json
 
 
