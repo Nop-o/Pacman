@@ -38,8 +38,12 @@ class Entity:
         else:
             self.state = self.State.HUNTING
 
+    def reset_super_pacgum_cooldown(self) -> None:
+        """Reset the timer of the super pacgum effect"""
+        self.super_pacgum_cooldown = self.super_pacgum_cooldown
+
 
 if __name__ == "__main__":
     maze = Maze([[1, 2, 3], [1, 2, 3], [1, 2, 3]])
-    entity = Entity(10, 10, maze)
+    entity = Entity(10, 10, maze, 10)
     print(entity.state)
