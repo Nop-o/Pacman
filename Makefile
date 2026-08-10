@@ -19,6 +19,7 @@ help:
 
 install:
 	uv sync
+	uv pip install mazegenerator-00001/mazegenerator-2.1.0-py3-none-any.whl
 
 run: install
 	uv run $(PYTHON) -m $(SRC_DIR)
