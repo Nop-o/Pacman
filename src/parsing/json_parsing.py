@@ -70,14 +70,13 @@ class JsonParsing:
 
 
 class JsonData(BaseModel):
-    highscore_filename: str = Field(min_length=1, max_length=100)
-    level: list
     width: int = Field(ge=0, le=200)
     height: int = Field(ge=0, le=200)
     lives: int = Field(ge=0, le=200)
     pacgum: int = Field(ge=0)
     points_per_pacgum: int = Field(ge=-100000, le=100000)
     points_per_super_pacgum: int = Field(ge=-100000, le=100000)
+    super_pacgum_time: int = Field(ge=1, le=1000)
     points_per_ghost: int = Field(ge=-100000, le=100000)
     seed: int = Field(ge=-1000000000, le=1000000000)
     level_max_time: int = Field(ge=20, le=1000000000)
