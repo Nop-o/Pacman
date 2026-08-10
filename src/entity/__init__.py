@@ -1,5 +1,5 @@
-from entity.entity import Entity
-from entity.ghost import Ghost
-from entity.pacman import Pacman
+from .entity import Entity
+from .ghost import Ghost
+from .pacman import Pacman
 
 __all__ = ["Entity", "Ghost", "Pacman"]
