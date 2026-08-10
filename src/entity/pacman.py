@@ -1,9 +1,12 @@
-from .maze import Maze
+from entity import Entity
+from ..maze import Maze
 
 
-class Player():
-    def __init__(self, maze: Maze, lives: int = 3) -> None:
-        self.lives: int = lives
+class Pacman(Entity):
+
+    def __init__(self, line: int, column: int, lives: int, maze: Maze) -> None:
+        super().__init__(line, column)
+        self.lives = lives
 
     def set_starting_position(self, maze: Maze) -> None:
         line = (len(maze.cases) - 1) // 2
