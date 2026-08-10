@@ -1,19 +1,21 @@
 import sys
 from pydantic import ValidationError
-from src.parsing.json_parsing import JsonParsing
+from json_parsing import JsonParsing
+import json
 
 
 class Main:
-    def main() -> None:
-        if len(sys.args) < 2:
+    def main(self) -> None:
+        if len(sys.argv) < 2:
             print("Argument error: missing json file")
             return
-        if len(sys.args) > 2:
+        if len(sys.argv) > 2:
             print("Argument error: too many arguments entered")
             return
 
         try:
-            json_parsing = JsonParsing(sys.args[1])
+            json_parsing = JsonParsing(sys.argv[1])
+            print(json_parsing.file_content)
 
         except ValidationError as e:
             print(e.errors()[0]["msg"].replace("Value error, ", ""))

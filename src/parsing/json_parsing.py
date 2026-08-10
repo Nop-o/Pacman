@@ -8,10 +8,10 @@ class JsonParsing:
 
     def __init__(self, file_path: str,
                  temp_file_path: str = "temp_file.json") -> None:
-        self.file_content: str = self._load_json_file(
+        self.file_content: Any = self._load_json_file(
             file_path, temp_file_path)
 
-    def _load_json_file(self, file_path: str, temp_file_path: str) -> dict:
+    def _load_json_file(self, file_path: str, temp_file_path: str) -> Any:
         """Load json content"""
         if not file_path.endswith(".json"):
             raise ValueError("Argument error: file is not a json file")
@@ -25,7 +25,7 @@ class JsonParsing:
         with open(temp_file_path, "r", encoding="utf-8") as f:
             file_content = json.load(
                 f, object_pairs_hook=JsonParsing._verify_duplicate_keys)
-        
+
         os.remove(temp_file_path)
 
         return file_content
@@ -45,7 +45,7 @@ class JsonParsing:
     def _create_temp_file(self, to_copy_file_path: str,
                           new_file_path: str) -> None:
         """Create a temp file without the comments"""
-        comments: tuple[str] = ("//", "#")
+        comments: tuple[str, str] = ("//", "#")
         file_content_without_comments: str = ""
 
         with open(to_copy_file_path, "r") as f:
@@ -62,11 +62,11 @@ class JsonParsing:
                     break
 
             if line:
-                file_content_without_comments = file_content_without_comments + line
+                file_content_without_comments = (
+                    file_content_without_comments + line)
 
         with open(new_file_path, "w", encoding="utf-8") as file:
             file.write(file_content_without_comments)
-
 
 
 class JsonData(BaseModel):
@@ -82,6 +82,7 @@ class JsonData(BaseModel):
     seed: int = Field(ge=-1000000000, le=1000000000)
     level_max_time: int = Field(ge=20, le=1000000000)
 
-if  __name__ == "__main__":
+
+if __name__ == "__main__":
     parser = JsonParsing("settings.json", "setting.json")
     print(parser.file_content)
