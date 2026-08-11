@@ -1,5 +1,5 @@
 from .entity import Entity
-from ..maze.maze import Maze
+from ..maze import Maze
 
 
 class Pacman(Entity):
@@ -46,6 +46,6 @@ class Pacman(Entity):
 
 
 if __name__ == "__main__":
-    maze = Maze([[1, 2, 3], [1, 2, 3], [1, 2, 3]])
+    maze = Maze()
     pacman = Pacman(1, 1, 3, maze, (2, 2), 10)
     print(pacman.starting_position)
