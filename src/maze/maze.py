@@ -32,3 +32,6 @@ class Maze():
             raise ValueError("Error in is_tavelable: "
                              "The direction is invalide")
         return False
+
+    def is_accessible(self, line: int, column: int) -> bool:
+        return not self.cases[line][column].is_enclosed
