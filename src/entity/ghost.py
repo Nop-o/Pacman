@@ -1,5 +1,5 @@
 from .entity import Entity
-from ..maze.maze import Maze
+from ..maze import Maze
 
 
 class Ghost(Entity):
@@ -17,6 +17,6 @@ class Ghost(Entity):
 
 
 if __name__ == "__main__":
-    maze = Maze([[1, 2, 3], [1, 2, 3], [1, 2, 3]])
+    maze = Maze()
     ghost = Ghost(1, 1, maze, (1, 1), 10)
     print(ghost.starting_position)

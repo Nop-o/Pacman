@@ -1,5 +1,13 @@
 from .case import Case
+from enum import Enum
 from mazegenerator import MazeGenerator
+
+
+class Direction(Enum):
+    N = (-1, 0)
+    E = (0, 1)
+    S = (1, 0)
+    W = (0, -1)
 
 
 class Maze():
@@ -13,22 +21,38 @@ class Maze():
         for i, line in enumerate(cases):
             self.cases.append([])
             for n, column in enumerate(line):
-                self.cases[i].append(Case(column))
+                self.cases[i].append(Case(column, i, n))
 
-    def is_travelable(self, case: Case, direction: str) -> bool:
-        if direction == "N":
+    def is_travelable(self, case: Case, direction: Direction) -> bool:
+        if direction == Direction.N:
             if case.wall_north is True:
-                return True
-        elif direction == "E":
+                return False
+        elif direction == Direction.E:
             if case.wall_east is True:
-                return True
-        elif direction == "S":
+                return False
+        elif direction == Direction.S:
             if case.wall_south is True:
-                return True
-        elif direction == "W":
+                return False
+        elif direction == Direction.W:
             if case.wall_west is True:
-                return True
-        else:
-            raise ValueError("Error in is_tavelable: "
-                             "The direction is invalide")
-        return False
+                return False
+        return True
+
+    def get_adjacent_case(self, case: Case, direction: Direction)\
+            -> Case | None:
+        if self.is_travelable(case, direction):
+            new_line = case.line + direction.value[0]
+            new_column = case.column + direction.value[1]
+            return self.cases[new_line][new_column]
+        return None
+
+    def get_neighbors(self, case: Case) -> list[Case]:
+        neighbors: list[Case] = []
+        for direction in Direction:
+            adjacent_case = self.get_adjacent_case(case, direction)
+            if adjacent_case is not None:
+                neighbors.append(adjacent_case)
+        return neighbors
+
+    def get_case(self, line: int, column: int) -> Case:
+        return self.cases[line][column]
