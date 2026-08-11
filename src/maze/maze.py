@@ -1,10 +1,13 @@
 from .case import Case
+from mazegenerator import MazeGenerator
 
 
 class Maze():
-    def __init__(self, cases: list[list[int]]) -> None:
+    def __init__(self, seed: int = 0) -> None:
         self.cases: list[list[Case]] = []
-        self.create_cases(cases)
+        generator = MazeGenerator()
+        generator.generate(seed)
+        self.create_cases(generator.maze)
 
     def create_cases(self, cases: list[list[int]]) -> None:
         for i, line in enumerate(cases):
