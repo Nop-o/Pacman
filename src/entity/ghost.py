@@ -54,8 +54,8 @@ class Shadow(Ghost):  #red chase
                  super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(
-            line_pos, column_pos, maze, super_pacgum_cooldown, starting_position,
-            pacman, algorithm)
+            line_pos, column_pos, maze, super_pacgum_cooldown,
+            starting_position, pacman, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
         new_line = -1
@@ -73,8 +73,8 @@ class Speedy(Ghost):  #pink flank
                  super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(
-            line_pos, column_pos, maze, super_pacgum_cooldown, starting_position,
-            pacman, algorithm)
+            line_pos, column_pos, maze, super_pacgum_cooldown,
+            starting_position, pacman, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
         pass
@@ -87,8 +87,8 @@ class Bashful(Ghost):  #cyan random
                  super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(
-            line_pos, column_pos, maze, super_pacgum_cooldown, starting_position,
-            pacman, algorithm)
+            line_pos, column_pos, maze, super_pacgum_cooldown,
+            starting_position, pacman, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
         new_line = -1

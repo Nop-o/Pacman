@@ -19,25 +19,25 @@ class Entity:
     def go_left(self) -> None:
         """Go one case left in the maze"""
         if self.maze.is_travelable(
-            maze.cases[self.line_pos][self.column_pos], Direction.W):
+           maze.cases[self.line_pos][self.column_pos], Direction.W):
             self.line_pos = self.line_pos - 1
 
     def go_right(self) -> None:
         """Go one case right in the maze"""
         if self.maze.is_travelable(
-            maze.cases[self.line_pos][self.column_pos], Direction.E):
+           maze.cases[self.line_pos][self.column_pos], Direction.E):
             self.line_pos = self.line_pos + 1
 
     def go_up(self) -> None:
         """Go one case up in the maze"""
         if self.maze.is_travelable(
-            maze.cases[self.line_pos][self.column_pos], Direction.N):
+           maze.cases[self.line_pos][self.column_pos], Direction.N):
             self.column_pos = self.column_pos - 1
 
     def go_down(self) -> None:
         """Go one case down in the maze"""
         if self.maze.is_travelable(
-            maze.cases[self.line_pos][self.column_pos], Direction.S):
+           maze.cases[self.line_pos][self.column_pos], Direction.S):
             self.column_pos = self.column_pos + 1
 
     def change_state(self) -> None:
