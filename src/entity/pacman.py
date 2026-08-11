@@ -11,6 +11,7 @@ class Pacman(Entity):
             line, column, maze, super_pacgum_cooldown)
         self.starting_position: tuple[int, int] = self._set_starting_position()
         self.lives: int = lives
+        self._last_move_direction: str = self.reset_last_move_direction()
 
     def _set_starting_position(self) -> tuple[int, int]:
         """Find the starting position of pacman, at the middle if possible"""
@@ -43,6 +44,13 @@ class Pacman(Entity):
     def reset_starting_position(self) -> None:
         """Reset the position of an entity to his starting position"""
         self.line, self.column = self.starting_position
+
+    @property
+    def last_move_direction(self) -> str:
+        return self._last_move_direction
+
+    def reset_last_move_direction(self) -> None:
+        self._last_move_direction = 'N'
 
 
 if __name__ == "__main__":
