@@ -11,6 +11,7 @@ class Case():
             self.is_enclosed = False
 
     def create_walls(self, case: int) -> None:
+        """Create the walls of one case based on it's binary value"""
         binary = bin(case)[2:]
         while len(binary) < 4:
             binary = "0" + binary

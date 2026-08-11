@@ -10,6 +10,7 @@ class Pacman(Entity):
         self.lives = lives
 
     def set_starting_position(self, maze: Maze) -> None:
+        """Find the starting position of pacman, at the middle if possible"""
         line = (len(maze.cases) - 1) // 2
         column = (len(maze.cases[0]) - 1) // 2
         if self.verif_position(maze, line, column):
