@@ -7,11 +7,11 @@ from ..maze import Maze
 
 class Ghost(Entity):
 
-    def __init__(self, line: int, column: int, maze: Maze,
+    def __init__(self, line_pos: int, column_pos: int, maze: Maze,
                  starting_position: tuple[int, int], pacman: Pacman,
                  super_pacgum_cooldown: int, algorithm: DepthFirstSearch
                  ) -> None:
-        super().__init__(line, column, maze, super_pacgum_cooldown)
+        super().__init__(line_pos, column_pos, maze, super_pacgum_cooldown)
 
         self.starting_position: tuple[int, int] = starting_position
         self.pacman: Pacman = pacman
@@ -21,13 +21,13 @@ class Ghost(Entity):
 
     def reset_starting_position(self) -> None:
         """Reset the position of an entity to his starting position"""
-        self.line, self.column = self.starting_position
+        self.line_pos, self.column_pos = self.starting_position
 
     def change_goal(self, new_goal: tuple[int, int]) -> None:
         self.algorithm.exit = new_goal
 
     def change_entry_position(self, new_start: tuple[int, int]) -> None:
-        self.algorithm.entry = (self.line, self.column)
+        self.algorithm.entry = (self.line_pos, self.column_pos)
 
     def find_shortest_path_to_exit(self) -> None:
         self._shortest_path_to_goal = self.algorithm.solver()
@@ -49,12 +49,12 @@ class Ghost(Entity):
 
 class Shadow(Ghost):  #red chase
 
-    def __init__(self, line: int, column: int, maze: Maze,
+    def __init__(self, line_pos: int, column_pos: int, maze: Maze,
                  starting_position: tuple[int, int], pacman: Pacman,
                  super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(
-            line, column, maze, super_pacgum_cooldown, starting_position,
+            line_pos, column_pos, maze, super_pacgum_cooldown, starting_position,
             pacman, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
@@ -68,12 +68,12 @@ class Shadow(Ghost):  #red chase
 
 class Speedy(Ghost):  #pink flank
 
-    def __init__(self, line: int, column: int, maze: Maze,
+    def __init__(self, line_pos: int, column_pos: int, maze: Maze,
                  starting_position: tuple[int, int], pacman: Pacman,
                  super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(
-            line, column, maze, super_pacgum_cooldown, starting_position,
+            line_pos, column_pos, maze, super_pacgum_cooldown, starting_position,
             pacman, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
@@ -82,12 +82,12 @@ class Speedy(Ghost):  #pink flank
 
 class Bashful(Ghost):  #cyan random
 
-    def __init__(self, line: int, column: int, maze: Maze,
+    def __init__(self, line_pos: int, column_pos: int, maze: Maze,
                  starting_position: tuple[int, int], pacman: Pacman,
                  super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(
-            line, column, maze, super_pacgum_cooldown, starting_position,
+            line_pos, column_pos, maze, super_pacgum_cooldown, starting_position,
             pacman, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
@@ -102,19 +102,19 @@ class Bashful(Ghost):  #cyan random
 
 class Pokey(Ghost):  #orange chase + run away
 
-    def __init__(self, line: int, column: int, maze: Maze,
+    def __init__(self, line_pos: int, column_pos: int, maze: Maze,
                  starting_position: tuple[int, int], pacman: Pacman,
                  super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(
-            line, column, maze, super_pacgum_cooldown, starting_position,
-            pacman, algorithm)
+            line_pos, column_pos, maze, super_pacgum_cooldown,
+            starting_position, pacman, algorithm)
 
     def is_pacman_too_close(self) -> bool:
-        if (self.line - self.pacman.line < 3 and
-           self.line - self.pacman.line > -3):
-            if (self.column - self.pacman.column < 3 and
-               self.column - self.pacman.column > -3):
+        if (self.line_pos - self.pacman.line_pos < 3 and
+           self.line_pos - self.pacman.line_pos > -3):
+            if (self.column_pos - self.pacman.column_pos < 3 and
+               self.column_pos - self.pacman.column_pos > -3):
                 return True
         return False
 

@@ -41,5 +41,5 @@ class Maze():
                              "The direction is invalide")
         return False
 
-    def is_accessible(self, line: int, column: int) -> bool:
-        return not self.cases[line][column].is_enclosed
+    def is_accessible(self, line_pos: int, column_pos: int) -> bool:
+        return not self.cases[line_pos][column_pos].is_enclosed

@@ -1,12 +1,12 @@
 class Case():
-    def __init__(self, case: int, line: int, column: int) -> None:
+    def __init__(self, case: int, line_pos: int, column_pos: int) -> None:
         self.wall_north: bool = False
         self.wall_east: bool = False
         self.wall_south: bool = False
         self.wall_west: bool = False
         self.create_walls(case)
-        self.line: int = line
-        self.column: int = column
+        self.line_pos: int = line_pos
+        self.column_pos: int = column_pos
         self.is_enclosed: bool = all([self.wall_west, self.wall_south,
                                       self.wall_east, self.wall_north])
 
@@ -25,4 +25,4 @@ class Case():
             self.wall_north = True
 
     def get_coordinate(self) -> tuple[int, int]:
-        return (self.line, self.column)
+        return (self.line_pos, self.column_pos)

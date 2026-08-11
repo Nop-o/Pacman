@@ -8,37 +8,37 @@ class Entity:
         HUNTING = 0
         RUNNING = 1
 
-    def __init__(self, line: int, column: int, maze: Maze,
+    def __init__(self, line_pos: int, column_pos: int, maze: Maze,
                  super_pacgum_cooldown: int) -> None:
-        self.line: int = line
-        self.column: int = column
+        self.line_pos: int = line_pos
+        self.column_pos: int = column_pos
         self.maze: Maze = maze
         self.super_pacgum_cooldown: int = super_pacgum_cooldown
         self.state: Entity.State = self.State.RUNNING
 
     def go_left(self) -> None:
         """Go one case left in the maze"""
-        if self.maze.is_travelable(maze.cases[self.line][self.column],
-                                   Direction.W):
-            self.line = self.line - 1
+        if self.maze.is_travelable(
+            maze.cases[self.line_pos][self.column_pos], Direction.W):
+            self.line_pos = self.line_pos - 1
 
     def go_right(self) -> None:
         """Go one case right in the maze"""
-        if self.maze.is_travelable(maze.cases[self.line][self.column],
-                                   Direction.E):
-            self.line = self.line + 1
+        if self.maze.is_travelable(
+            maze.cases[self.line_pos][self.column_pos], Direction.E):
+            self.line_pos = self.line_pos + 1
 
     def go_up(self) -> None:
         """Go one case up in the maze"""
-        if self.maze.is_travelable(maze.cases[self.line][self.column],
-                                   Direction.N):
-            self.column = self.column - 1
+        if self.maze.is_travelable(
+            maze.cases[self.line_pos][self.column_pos], Direction.N):
+            self.column_pos = self.column_pos - 1
 
     def go_down(self) -> None:
         """Go one case down in the maze"""
-        if self.maze.is_travelable(maze.cases[self.line][self.column],
-                                   Direction.S):
-            self.column = self.column + 1
+        if self.maze.is_travelable(
+            maze.cases[self.line_pos][self.column_pos], Direction.S):
+            self.column_pos = self.column_pos + 1
 
     def change_state(self) -> None:
         """Alternate the state between hunting and running for entities"""
