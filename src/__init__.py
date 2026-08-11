@@ -1,5 +1,5 @@
-from src.case import Case
+from src.maze.case import Case
 from src.cheat import Cheat
-from src.maze import Maze
+from src.maze.maze import Maze
 
 __all__ = ["Case", "Cheat", "Maze"]

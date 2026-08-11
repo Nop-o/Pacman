@@ -1,4 +1,4 @@
-from ..maze import Maze
+from ..maze.maze import Maze
 from enum import Enum
 
 
@@ -49,6 +49,6 @@ class Entity:
 
 
 if __name__ == "__main__":
-    maze = Maze([[1, 2, 3], [1, 2, 3], [1, 2, 3]])
+    maze = Maze()
     entity = Entity(10, 10, maze, 10)
     print(entity.state)

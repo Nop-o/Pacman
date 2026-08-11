@@ -1,5 +1,5 @@
 from .entity import Entity
-from ..maze import Maze
+from ..maze.maze import Maze
 
 
 class Ghost(Entity):
