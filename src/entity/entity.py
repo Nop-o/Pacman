@@ -1,4 +1,4 @@
-from ..maze import Maze
+from ..maze.maze import Maze
 from enum import Enum
 
 
