@@ -1,5 +1,13 @@
 from .case import Case
+from enum import Enum
 from mazegenerator import MazeGenerator
+
+
+class Direction(Enum):
+    N = (-1, 0)
+    E = (0, 1)
+    S = (1, 0)
+    W = (0, -1)
 
 
 class Maze():
@@ -13,19 +21,19 @@ class Maze():
         for i, line in enumerate(cases):
             self.cases.append([])
             for n, column in enumerate(line):
-                self.cases[i].append(Case(column))
+                self.cases[i].append(Case(column, i, n))
 
-    def is_travelable(self, case: Case, direction: str) -> bool:
-        if direction == "N":
+    def is_travelable(self, case: Case, direction: Direction) -> bool:
+        if direction == Direction.N:
             if case.wall_north is True:
-                return True
-        elif direction == "E":
+                return False
+        elif direction == Direction.E:
             if case.wall_east is True:
-                return True
-        elif direction == "S":
+                return False
+        elif direction == Direction.S:
             if case.wall_south is True:
-                return True
-        elif direction == "W":
+                return False
+        elif direction == Direction.W:
             if case.wall_west is True:
                 return True
         else:

@@ -1,8 +1,8 @@
 from .entity import Entity
-from ..maze.maze import Maze
 from ..algorithm.dfs import DepthFirstSearch
 from .pacman import Pacman
 import random
+from ..maze import Maze
 
 
 class Ghost(Entity):

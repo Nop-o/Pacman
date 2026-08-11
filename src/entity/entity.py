@@ -1,4 +1,4 @@
-from ..maze.maze import Maze
+from ..maze import Maze, Direction
 from enum import Enum
 
 
@@ -18,22 +18,26 @@ class Entity:
 
     def go_left(self) -> None:
         """Go one case left in the maze"""
-        if self.maze.is_travelable(maze.cases[self.line][self.column], 'W'):
+        if self.maze.is_travelable(maze.cases[self.line][self.column],
+                                   Direction.W):
             self.line = self.line - 1
 
     def go_right(self) -> None:
         """Go one case right in the maze"""
-        if self.maze.is_travelable(maze.cases[self.line][self.column], 'E'):
+        if self.maze.is_travelable(maze.cases[self.line][self.column],
+                                   Direction.E):
             self.line = self.line + 1
 
     def go_up(self) -> None:
         """Go one case up in the maze"""
-        if self.maze.is_travelable(maze.cases[self.line][self.column], 'N'):
+        if self.maze.is_travelable(maze.cases[self.line][self.column],
+                                   Direction.N):
             self.column = self.column - 1
 
     def go_down(self) -> None:
         """Go one case down in the maze"""
-        if self.maze.is_travelable(maze.cases[self.line][self.column], 'S'):
+        if self.maze.is_travelable(maze.cases[self.line][self.column],
+                                   Direction.S):
             self.column = self.column + 1
 
     def change_state(self) -> None:
