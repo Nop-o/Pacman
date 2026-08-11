@@ -10,11 +10,11 @@ class Entity:
 
     def __init__(self, line: int, column: int, maze: Maze,
                  super_pacgum_cooldown: int) -> None:
-        self.line = line
-        self.column = column
-        self.maze = maze
-        self.super_pacgum_cooldown = super_pacgum_cooldown
-        self.state = self.State.RUNNING
+        self.line: int = line
+        self.column: int = column
+        self.maze: Maze = maze
+        self.super_pacgum_cooldown: int = super_pacgum_cooldown
+        self.state: Entity.State = self.State.RUNNING
 
     def go_left(self) -> None:
         """Go one case left in the maze"""
