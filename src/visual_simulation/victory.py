@@ -1,2 +1,0 @@
-class Victory:
-    pass
