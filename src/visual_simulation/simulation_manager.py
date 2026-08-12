@@ -13,6 +13,10 @@ class SimulationManager():
         self.test = Test(self)
         self.state_to_call: Callable = self.test.test1
         self.active = True
+        self.left_pressed = False
+        self.right_pressed = False
+        self.up_pressed = False
+        self.down_pressed = False
 
     def launch(self) -> None:
         while self.active:
@@ -34,6 +38,23 @@ class SimulationManager():
                 if event.key == pygame.K_ESCAPE:
                     # TODO call menu
                     pass
+                if event.key == pygame.K_LEFT:
+                    self.left_pressed = True
+                if event.key == pygame.K_RIGHT:
+                    self.right_pressed = True
+                if event.key == pygame.K_DOWN:
+                    self.down_pressed = True
+                if event.key == pygame.K_UP:
+                    self.up_pressed = True
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    self.left_pressed = False
+                if event.key == pygame.K_RIGHT:
+                    self.right_pressed = False
+                if event.key == pygame.K_DOWN:
+                    self.down_pressed = False
+                if event.key == pygame.K_UP:
+                    self.up_pressed = False
 
 
 if __name__ == "__main__":
@@ -41,14 +62,20 @@ if __name__ == "__main__":
         def __init__(self, simulation_manager: SimulationManager) -> None:
             self.simulation_manager = simulation_manager
             self.color: tuple = (0, 0, 0)
+            self.horizontal = 0
         def test1(self):
             screen = self.simulation_manager.screen
             screen.fill("black")
+            if self.simulation_manager.left_pressed:
+                self.horizontal -= 1
+            if self.simulation_manager.right_pressed:
+                self.horizontal += 1
             
             size = 50
             for dx in range(size):
                 for dy in range(size):
-                    screen.set_at((500 + dx, 500 + dy), self.color)
+                    screen.set_at((500 + dx + self.horizontal, 500 +
+                                   dy + self.horizontal), self.color)
             
             self.color = (self.color[0] + 1,
                         self.color[1] + 1,
@@ -58,11 +85,17 @@ if __name__ == "__main__":
         def test2(self):
             screen = self.simulation_manager.screen
             screen.fill("white")
+
+            if self.simulation_manager.left_pressed:
+                self.horizontal -= 1
+            if self.simulation_manager.right_pressed:
+                self.horizontal += 1
             
             size = 50
             for dx in range(size):
                 for dy in range(size):
-                    screen.set_at((500 + dx, 500 + dy), self.color)
+                    screen.set_at((500 + dx + self.horizontal, 500 +
+                                   dy + self.horizontal), self.color)
             
             self.color = (self.color[0] - 1,
                         self.color[1] - 1,
