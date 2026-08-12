@@ -2,6 +2,7 @@ from time import time, sleep
 import pygame
 from collections.abc import Callable
 
+
 class SimulationManager():
     def __init__(self) -> None:
         pygame.init()
@@ -56,6 +57,14 @@ class SimulationManager():
                 if event.key == pygame.K_UP:
                     self.up_pressed = False
 
+    def draw_rectangle(self, coord: tuple[int, int],
+                       width: int, height: int, color: tuple[int, int, int]):
+        for actual_width in range(width):
+            for actual_height in range(height):
+                self.screen.set_at(
+                    ((actual_width + coord[0]),
+                     (actual_height + coord[1])), color)
+
 
 if __name__ == "__main__":
     class Test():
@@ -63,6 +72,7 @@ if __name__ == "__main__":
             self.simulation_manager = simulation_manager
             self.color: tuple = (0, 0, 0)
             self.horizontal = 0
+
         def test1(self):
             screen = self.simulation_manager.screen
             screen.fill("black")
@@ -70,18 +80,16 @@ if __name__ == "__main__":
                 self.horizontal -= 1
             if self.simulation_manager.right_pressed:
                 self.horizontal += 1
-            
-            size = 50
-            for dx in range(size):
-                for dy in range(size):
-                    screen.set_at((500 + dx + self.horizontal, 500 +
-                                   dy + self.horizontal), self.color)
-            
+
+            self.simulation_manager.draw_rectangle((500, 500), 333, 666,
+                                                   self.color)
+
             self.color = (self.color[0] + 1,
-                        self.color[1] + 1,
-                        self.color[2] + 1)
+                          self.color[1] + 1,
+                          self.color[2] + 1)
             if self.color[0] == 255:
                 self.simulation_manager.state_to_call = self.test2
+
         def test2(self):
             screen = self.simulation_manager.screen
             screen.fill("white")
@@ -90,16 +98,13 @@ if __name__ == "__main__":
                 self.horizontal -= 1
             if self.simulation_manager.right_pressed:
                 self.horizontal += 1
-            
-            size = 50
-            for dx in range(size):
-                for dy in range(size):
-                    screen.set_at((500 + dx + self.horizontal, 500 +
-                                   dy + self.horizontal), self.color)
-            
+
+            self.simulation_manager.draw_rectangle((500, 500), 333, 666,
+                                                   self.color)
+
             self.color = (self.color[0] - 1,
-                        self.color[1] - 1,
-                        self.color[2] - 1)
+                          self.color[1] - 1,
+                          self.color[2] - 1)
             if self.color[0] == 0:
                 self.simulation_manager.state_to_call = self.test1
     simulation = SimulationManager()
