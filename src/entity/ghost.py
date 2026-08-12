@@ -2,7 +2,7 @@ from .entity import Entity
 from ..algorithm.dfs import DepthFirstSearch
 from .pacman import Pacman
 import random
-from ..maze import Maze
+from ..maze import Maze, Direction
 
 
 class Ghost(Entity):
@@ -40,11 +40,11 @@ class Ghost(Entity):
 
         return self._shortest_path_to_goal
 
-    def run_away(self) -> None:  # TODO
+    def run_away(self) -> tuple[int, int]:  # TODO
         pass
 
-    def chase_pacman(self) -> None:  # TODO
-        pass
+    def chase_pacman(self) -> tuple[int, int]:
+        return (self.pacman.line_pos, self.pacman.column_pos)
 
 
 class Shadow(Ghost):  #red chase
@@ -58,12 +58,10 @@ class Shadow(Ghost):  #red chase
             starting_position, pacman, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
-        new_line = -1
-        new_column = -1
-        while not self.maze.is_accessible(new_line, new_column):
-            new_line = random.randint(0, self.maze.width)
-            new_column = random.randint(0, self.maze.height)
-        return (new_line, new_column)
+        if self.state == Entity.State.RUNNING:
+            return self.run_away()
+
+        return self.chase_pacman()
 
 
 class Speedy(Ghost):  #pink flank
@@ -77,7 +75,20 @@ class Speedy(Ghost):  #pink flank
             starting_position, pacman, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
-        pass
+        if self.state == Entity.State.RUNNING:
+            return self.run_away()
+
+        for cardinal_point in Direction:
+            if self.pacman.last_move_direction == cardinal_point:
+                for i in range(3, 0, -1):
+                    new_line_pos = cardinal_point.value[0] * i
+                    new_column_pos = cardinal_point.value[1] * i
+
+                    if self.maze.is_accessible(new_line_pos, new_column_pos):
+                        return (new_line_pos, new_column_pos)
+
+        return self.chase_pacman()
+
 
 
 class Bashful(Ghost):  #cyan random
@@ -91,6 +102,9 @@ class Bashful(Ghost):  #cyan random
             starting_position, pacman, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
+        if self.state == Entity.State.RUNNING:
+            return self.run_away()
+
         new_line = -1
         new_column = -1
 
@@ -119,10 +133,10 @@ class Pokey(Ghost):  #orange chase + run away
         return False
 
     def get_goal(self) -> tuple[int, int]:
-        if self.is_pacman_too_close():
-            self.run_away()
+        if self.state == Entity.State.RUNNING or self.is_pacman_too_close():
+            return self.run_away()
         else:
-            self.chase_pacman()
+            return self.chase_pacman()
 
 
 if __name__ == "__main__":
