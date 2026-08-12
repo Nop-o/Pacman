@@ -59,3 +59,6 @@ class Maze():
 
     def is_accessible(self, line_pos: int, column_pos: int) -> bool:
         return not self.cases[line_pos][column_pos].is_enclosed
+
+    def get_case(self, line: int, column: int) -> Case:
+        return self.cases[line][column]
