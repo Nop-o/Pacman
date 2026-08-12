@@ -1,0 +1,2 @@
+class PauseMenu:
+    pass
