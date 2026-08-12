@@ -41,5 +41,24 @@ class Maze():
                              "The direction is invalide")
         return False
 
+    def get_adjacent_case(self, case: Case, direction: Direction)\
+            -> Case | None:
+        if self.is_travelable(case, direction):
+            new_line = case.line_pos + direction.value[0]
+            new_column = case.column_pos + direction.value[1]
+            return self.cases[new_line][new_column]
+        return None
+
+    def get_neighbors(self, case: Case) -> list[Case]:
+        neighbors: list[Case] = []
+        for direction in Direction:
+            adjacent_case = self.get_adjacent_case(case, direction)
+            if adjacent_case is not None:
+                neighbors.append(adjacent_case)
+        return neighbors
+
     def is_accessible(self, line_pos: int, column_pos: int) -> bool:
         return not self.cases[line_pos][column_pos].is_enclosed
+
+    def get_case(self, line: int, column: int) -> Case:
+        return self.cases[line][column]
