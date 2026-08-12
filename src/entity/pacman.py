@@ -1,39 +1,59 @@
 from .entity import Entity
-from ..maze.maze import Maze
+from ..maze import Maze, Direction
 
 
 class Pacman(Entity):
 
-    def __init__(self, line: int, column: int, lives: int, maze: Maze,
+    def __init__(self, line_pos: int, column_pos: int, lives: int, maze: Maze,
+                 starting_position: tuple[int, int],
                  super_pacgum_cooldown: int) -> None:
-        super().__init__(line, column, maze, super_pacgum_cooldown)
-        self.lives = lives
+        super().__init__(
+            line_pos, column_pos, maze, super_pacgum_cooldown)
+        self.starting_position: tuple[int, int] = self._set_starting_position()
+        self.lives: int = lives
+        self._last_move_direction: Direction = self.reset_last_move_direction()
 
-    def set_starting_position(self, maze: Maze) -> None:
+    def _set_starting_position(self) -> tuple[int, int]:
         """Find the starting position of pacman, at the middle if possible"""
-        line = (len(maze.cases) - 1) // 2
-        column = (len(maze.cases[0]) - 1) // 2
-        if self.verif_position(maze, line, column):
-            return
+        line_pos = (len(self.maze.cases) - 1) // 2
+        column_pos = (len(self.maze.cases[0]) - 1) // 2
+        if self.verif_position(line_pos, column_pos):
+            return (line_pos, column_pos)
         i = 1
         while True:
             j = 0
             while j < i:
-                if self.verif_position(maze, line-i + j, column-i):
-                    return
-                if self.verif_position(maze, line-i, column-i + j):
-                    return
-                if self.verif_position(maze, line+i + j, column-i):
-                    return
-                if self.verif_position(maze, line+i, column-i + j):
-                    return
+                if self.verif_position(line_pos-i + j, column_pos-i):
+                    return (line_pos-i + j, column_pos-i)
+                if self.verif_position(line_pos-i, column_pos-i + j):
+                    return (line_pos-i, column_pos-i + j)
+                if self.verif_position(line_pos+i + j, column_pos-i):
+                    return (line_pos+i + j, column_pos-i)
+                if self.verif_position(line_pos+i, column_pos-i + j):
+                    return (line_pos+i, column_pos-i + j)
                 j += 1
             i += 1
 
-    def verif_position(self, maze: Maze, line: int, column: int)\
-            -> bool:
-        if maze.cases[line][column].is_enclosed is False:
-            self.line = line
-            self.column = column
+    def verif_position(self, line_pos: int, column_pos: int) -> bool:
+        if self.maze.cases[line_pos][column_pos].is_enclosed is False:
+            self.line_pos = line_pos
+            self.column_pos = column_pos
             return True
         return False
+
+    def reset_starting_position(self) -> None:
+        """Reset the position of an entity to his starting position"""
+        self.line_pos, self.column_pos = self.starting_position
+
+    @property
+    def last_move_direction(self) -> str:
+        return self._last_move_direction
+
+    def reset_last_move_direction(self) -> None:
+        self._last_move_direction = Direction.N
+
+
+if __name__ == "__main__":
+    maze = Maze()
+    pacman = Pacman(1, 1, 3, maze, (2, 2), 10)
+    print(pacman.starting_position)
