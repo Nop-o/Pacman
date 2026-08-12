@@ -41,7 +41,16 @@ class Ghost(Entity):
         return self._shortest_path_to_goal
 
     def run_away(self) -> tuple[int, int]:  # TODO
-        pass
+        if self.pacman.line_pos <= len(maze.cases) // 2:
+            if self.pacman.column_pos <= len(maze.cases[0]) // 2:
+                return (0, 0)
+            else:
+                return (0, maze.nb_columm - 1)
+        else:
+            if self.pacman.column_pos <= len(maze.cases[0]) // 2:
+                return (maze.nb_line - 1, 0)
+            else:
+                return (maze.nb_line - 1, maze.nb_columm - 1)
 
     def chase_pacman(self) -> tuple[int, int]:
         return (self.pacman.line_pos, self.pacman.column_pos)
@@ -141,6 +150,6 @@ class Pokey(Ghost):  #orange chase + run away
 
 if __name__ == "__main__":
     algo = DepthFirstSearch(3, 3, 0, 0)
-    maze = Maze([[1, 2, 3], [1, 2, 3], [1, 2, 3]])
+    maze = Maze()
     ghost = Ghost(1, 1, maze, (1, 1), 10)
     print(ghost.starting_position)
