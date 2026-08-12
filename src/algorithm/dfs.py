@@ -50,6 +50,6 @@ class DepthFirstSearch:
 
 if __name__ == "__main__":
     maze = Maze(5)
-    dfs = DepthFirstSearch((1, 1), (12, 12), maze)
+    dfs = DepthFirstSearch((1, 1), (1, 2), maze)
     result = dfs.solver()
     print(result)

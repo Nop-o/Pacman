@@ -16,6 +16,8 @@ class Maze():
         generator = MazeGenerator()
         generator.generate(seed)
         self.create_cases(generator.maze)
+        self.nb_line = len(self.cases)
+        self.nb_columm = len(self.cases[0])
 
     def create_cases(self, cases: list[list[int]]) -> None:
         for i, line in enumerate(cases):
@@ -35,11 +37,11 @@ class Maze():
                 return False
         elif direction == Direction.W:
             if case.wall_west is True:
-                return True
+                return False
         else:
             raise ValueError("Error in is_tavelable: "
                              "The direction is invalide")
-        return False
+        return True
 
     def get_adjacent_case(self, case: Case, direction: Direction)\
             -> Case | None:
