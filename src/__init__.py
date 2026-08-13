@@ -1,5 +1,5 @@
-from src.maze.case import Case
-from src.cheat import Cheat
-from src.maze.maze import Maze
+from .cheat import Cheat
+from .game_state import GameState
 
-__all__ = ["Case", "Cheat", "Maze"]
+
+__all__ = ["Cheat", "GameState"]
