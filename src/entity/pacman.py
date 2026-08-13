@@ -5,7 +5,6 @@ from ..maze import Maze, Direction
 class Pacman(Entity):
 
     def __init__(self, line_pos: int, column_pos: int, lives: int, maze: Maze,
-                 starting_position: tuple[int, int],
                  super_pacgum_cooldown: int) -> None:
         super().__init__(
             line_pos, column_pos, maze, super_pacgum_cooldown)
