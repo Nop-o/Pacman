@@ -53,3 +53,6 @@ class Level(Screen):
 
     def display_screen(self):
         pass
+
+    def event_manager(self) -> None:  # TODO
+        pass

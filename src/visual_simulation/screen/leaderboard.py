@@ -52,6 +52,9 @@ class LeaderBoard(Screen):
     def display_screen(self) -> None:  # TODO
         pass
 
+    def event_manager(self) -> None:  # TODO
+        pass
+
 
 if __name__ == "__main__":
     leaderboard = LeaderBoard()
