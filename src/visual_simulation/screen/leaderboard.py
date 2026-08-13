@@ -1,4 +1,7 @@
-class LeaderBoard:
+from .screen import Screen
+
+
+class LeaderBoard(Screen):
     def __init__(self) -> None:
         self.scores: dict[int, int] = {}
         self.names: dict[int, str] = {}
@@ -45,6 +48,9 @@ class LeaderBoard:
             if score > self.scores[i]:
                 return i
         return -1
+
+    def display_screen(self) -> None:  # TODO
+        pass
 
 
 if __name__ == "__main__":
