@@ -49,7 +49,7 @@ class SimulationManager():
                 self.active = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.screen_manager.pause_menu.display_screen()
+                    self.active = self.screen_manager.pause_menu.display_screen()
 
                 if event.key == pygame.K_LEFT:
                     self.left_pressed = True
