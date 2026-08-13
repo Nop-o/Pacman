@@ -99,7 +99,6 @@ class Speedy(Ghost):  #pink flank
         return self.chase_pacman()
 
 
-
 class Bashful(Ghost):  #cyan random
 
     def __init__(self, line_pos: int, column_pos: int, maze: Maze,
