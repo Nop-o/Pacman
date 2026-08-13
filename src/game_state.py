@@ -1,4 +1,4 @@
-from src.entity import Pacman, Ghost, Entity
+from src.entity import Pacman, Ghost, Character
 
 
 class GameState:
@@ -30,7 +30,7 @@ class GameState:
         self.super_pacgum = self.super_pacgum - 1
         self.score = self.score + self.points_per_super_pacgum
 
-        if self.pacman.state == Entity.State.RUNNING:
+        if self.pacman.state == Character.State.RUNNING:
             self.pacman.change_state()
             for ghost in self.ghosts:
                 ghost.change_state()

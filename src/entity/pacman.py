@@ -1,8 +1,8 @@
-from .entity import Entity
+from .character import Character
 from ..maze import Maze, Direction
 
 
-class Pacman(Entity):
+class Pacman(Character):
 
     def __init__(self, lives: int, maze: Maze,
                  super_pacgum_cooldown: int) -> None:
