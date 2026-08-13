@@ -1,11 +1,11 @@
-from .. import SimulationManager
+from ... import GameState 
 from ...entity import Ghost, Pacman
 from . import Screen
 
 
 class Level(Screen):
-    def __init__(self, simulation_manager: SimulationManager) -> None:
-        self.simulation_manager: SimulationManager = simulation_manager
+    def __init__(self, game_state: GameState) -> None: #On ne peut pas appeler simulation_manager -> ca fait des circular import, go importer game_state ?
+        self.game_state: GameState = game_state
         # need fill ghosts and pacman
         self.ghosts: list[Ghost] = []
         self.pacman: Pacman
