@@ -8,10 +8,10 @@ class Entity:
         HUNTING = 0
         RUNNING = 1
 
-    def __init__(self, line_pos: int, column_pos: int, maze: Maze,
-                 super_pacgum_cooldown: int) -> None:
-        self.line_pos: int = line_pos
-        self.column_pos: int = column_pos
+    def __init__(self, maze: Maze, super_pacgum_cooldown: int) -> None:
+        self.starting_position: tuple[int, int] = self._set_starting_position()
+        self.line_pos: int = self.starting_position[0]
+        self.column_pos: int = self.starting_position[1]
         self.maze: Maze = maze
         self.super_pacgum_cooldown: int = super_pacgum_cooldown
         self.state: Entity.State = self.State.RUNNING
@@ -20,25 +20,25 @@ class Entity:
         """Go one case left in the maze"""
         if self.maze.is_travelable(
            maze.cases[self.line_pos][self.column_pos], Direction.W):
-            self.line_pos = self.line_pos - 1
+            self.column_pos -= 1
 
     def go_right(self) -> None:
         """Go one case right in the maze"""
         if self.maze.is_travelable(
            maze.cases[self.line_pos][self.column_pos], Direction.E):
-            self.line_pos = self.line_pos + 1
+            self.column_pos += 1
 
     def go_up(self) -> None:
         """Go one case up in the maze"""
         if self.maze.is_travelable(
            maze.cases[self.line_pos][self.column_pos], Direction.N):
-            self.column_pos = self.column_pos - 1
+            self.line_pos -= 1
 
     def go_down(self) -> None:
         """Go one case down in the maze"""
         if self.maze.is_travelable(
            maze.cases[self.line_pos][self.column_pos], Direction.S):
-            self.column_pos = self.column_pos + 1
+            self.line_pos += 1
 
     def change_state(self) -> None:
         """Alternate the state between hunting and running for entities"""
@@ -50,6 +50,9 @@ class Entity:
     def reset_super_pacgum_cooldown(self) -> None:
         """Reset the timer of the super pacgum effect"""
         self.super_pacgum_cooldown = self.super_pacgum_cooldown
+
+    def _set_starting_position(self) -> tuple[int, int]:
+        ...
 
 
 if __name__ == "__main__":
