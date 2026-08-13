@@ -8,14 +8,36 @@ class PauseMenu(Screen):
         self.main_menu = main_menu
         self.game_play = game_play
 
-    def resume_game(self) -> None:  #  TODO
+    def display_screen(self) -> bool:  # TODO
         pass
 
-    def return_to_main_menu() -> None:  # TODO
-        pass
+    def event_manager(self) -> bool:
+        actions: list[callable] = [
+            self.resume_game,
+            self.go_to_main_menu,
+            self.exit_game,
+        ]
+        position: int = 0
 
-    def display_screen(self) -> None:  # TODO
-        pass
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return False
 
-    def event_manager(self) -> None:  # TODO
-        pass
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    if position < 2:
+                        position = position + 1
+                    else:
+                        position = 0
+
+                if event.key == pygame.K_UP:
+                    if position > 0:
+                        position = position - 1
+                    else:
+                        position = 2
+
+                if event.key == pygame.K_RETURN:
+                    return actions[position]()
+
+        return False

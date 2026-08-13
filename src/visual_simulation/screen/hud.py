@@ -1,8 +1,7 @@
 from ...game_state import GameState
-from .screen import Screen
 
 
-class HUD(Screen):
+class HUD():
     def __init__(self, game_state: GameState) -> None:
         self.game_state = game_state
 
@@ -19,7 +18,4 @@ class HUD(Screen):
         pass
 
     def display_screen(self) -> None:  # TODO
-        pass
-
-    def event_manager(self) -> None:  # TODO
         pass
