@@ -5,6 +5,7 @@ from .leaderboard import LeaderBoard
 from .main_menu import MainMenu
 from .pause_menu import PauseMenu
 from .victory import Victory
+from .screen import Screen
 
 __all__ = ["GameOver", "GamePlay", "HUD", "LeaderBoard", "MainMenu",
-           "PauseMenu", "Victory"]
+           "PauseMenu", "Victory", "Screen"]
