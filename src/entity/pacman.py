@@ -4,13 +4,12 @@ from ..maze import Maze, Direction
 
 class Pacman(Entity):
 
-    def __init__(self, line_pos: int, column_pos: int, lives: int, maze: Maze,
+    def __init__(self, lives: int, maze: Maze,
                  super_pacgum_cooldown: int) -> None:
-        super().__init__(
-            line_pos, column_pos, maze, super_pacgum_cooldown)
+        super().__init__(maze, super_pacgum_cooldown)
         self.starting_position: tuple[int, int] = self._set_starting_position()
         self.lives: int = lives
-        self._last_move_direction: Direction = self.reset_last_move_direction()
+        self.reset_last_move_direction()
 
     def _set_starting_position(self) -> tuple[int, int]:
         """Find the starting position of pacman, at the middle if possible"""
@@ -45,7 +44,7 @@ class Pacman(Entity):
         self.line_pos, self.column_pos = self.starting_position
 
     @property
-    def last_move_direction(self) -> str:
+    def last_move_direction(self) -> Direction:
         return self._last_move_direction
 
     def reset_last_move_direction(self) -> None:

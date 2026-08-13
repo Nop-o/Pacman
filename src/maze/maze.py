@@ -17,7 +17,7 @@ class Maze():
         generator.generate(seed)
         self.create_cases(generator.maze)
         self.nb_line = len(self.cases)
-        self.nb_columm = len(self.cases[0])
+        self.nb_column = len(self.cases[0])
 
     def create_cases(self, cases: list[list[int]]) -> None:
         for i, line in enumerate(cases):
