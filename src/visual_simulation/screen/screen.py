@@ -5,3 +5,6 @@ class Screen(ABC):
 
     @abstractmethod
     def display_screen(self) -> None: ...
+
+    @abstractmethod
+    def event_manager(self) -> None: ...
