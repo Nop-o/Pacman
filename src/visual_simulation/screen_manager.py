@@ -1,10 +1,10 @@
-from .game_over import GameOver
-from .game_play import GamePlay
-from .hud import HUD
-from .leaderboard import LeaderBoard
-from .main_menu import MainMenu
-from .pause_menu import PauseMenu
-from .victory import Victory
+from .screen.game_over import GameOver
+from .screen.game_play import GamePlay
+from .screen.hud import HUD
+from .screen.leaderboard import LeaderBoard
+from .screen.main_menu import MainMenu
+from .screen.pause_menu import PauseMenu
+from .screen.victory import Victory
 
 
 class ScreenManager:
