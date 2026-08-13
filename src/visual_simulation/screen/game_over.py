@@ -7,7 +7,7 @@ class GameOver(Screen):
     def __init__(self, leaderboard: LeaderBoard) -> None:
         self.leaderboard: LeaderBoard = LeaderBoard
 
-    def display_screen(self) -> None:  # TODO
+    def display_screen(self) -> bool:  # TODO
         pass
 
     def event_manager(self) -> bool:
@@ -21,3 +21,8 @@ class GameOver(Screen):
                     return self.show_leaderboard()
 
         return False
+
+
+if __name__ == "__main__":
+    leaderboard = LeaderBoard()
+    game_over = GameOver(leaderboard)

@@ -49,7 +49,7 @@ class LeaderBoard(Screen):
                 return i
         return -1
 
-    def display_screen(self) -> None:  # TODO
+    def display_screen(self) -> bool:  # TODO
         pass
 
     def event_manager(self) -> bool:  # TODO

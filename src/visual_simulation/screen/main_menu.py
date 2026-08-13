@@ -13,7 +13,7 @@ class MainMenu(Screen):
     def show_instructions(self) -> None:  # TODO
         pass
 
-    def display_screen(self) -> None:  # TODO
+    def display_screen(self) -> bool:  # TODO
         pass
 
     def event_manager(self) -> bool:

@@ -10,7 +10,7 @@ class PauseMenu(Screen):
         self.main_menu = main_menu
         self.game_play = game_play
 
-    def display_screen(self) -> None:  # TODO
+    def display_screen(self) -> bool:  # TODO
         pass
 
     def event_manager(self) -> bool:

@@ -8,7 +8,7 @@ class GamePlay(Screen):
         self.level: Level = level
         self.hud: HUD = hud
 
-    def display_screen(self) -> None:
+    def display_screen(self) -> bool:
         self.level.display_screen()
         self.hud.display_screen()
 
