@@ -10,8 +10,7 @@ class SimulationManager():
         pygame.display.set_caption("Pac-Man")
         self.fps: int = 60
         self.frame_duration: float = 1.0 / self.fps
-        self.screen: pygame.Surface = pygame.display.set_mode(
-            (1500, 1000), pygame.RESIZABLE)
+        self.screen: pygame.Surface = pygame.display.set_mode((1500, 1000))
         # TODO set basic function to main menu
         self.test = Test(self)
         self.state_to_call: Callable = self.test.test1
@@ -50,8 +49,8 @@ class SimulationManager():
                 self.active = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.screen_manager.pause_menu
-                    pass
+                    self.screen_manager.pause_menu.display_screen()
+
                 if event.key == pygame.K_LEFT:
                     self.left_pressed = True
                 if event.key == pygame.K_RIGHT:
