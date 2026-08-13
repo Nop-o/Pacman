@@ -53,5 +53,3 @@ class Pacman(Character):
 
 if __name__ == "__main__":
     maze = Maze()
-    pacman = Pacman(1, 1, 3, maze, (2, 2), 10)
-    print(pacman.starting_position)

@@ -4,10 +4,10 @@ from ..screen_manager import ScreenManager
 
 class Screen(ABC):
     def __init__(self, screen_manager: ScreenManager) -> None:
-        self.screen_manager: screen_manager = screen_manager
+        self.screen_manager: ScreenManager = screen_manager
 
     @abstractmethod
-    def display_screen(self) -> bool: ...
+    def display_screen(self) -> None: ...
 
     @abstractmethod
     def event_manager(self) -> bool: ...

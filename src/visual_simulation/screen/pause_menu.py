@@ -1,6 +1,8 @@
 from .main_menu import MainMenu
 from .game_play import GamePlay
 from .screen import Screen
+import pygame
+from typing import Callable
 
 
 class PauseMenu(Screen):
@@ -8,11 +10,11 @@ class PauseMenu(Screen):
         self.main_menu = main_menu
         self.game_play = game_play
 
-    def display_screen(self) -> bool:  # TODO
+    def display_screen(self) -> None:  # TODO
         pass
 
     def event_manager(self) -> bool:
-        actions: list[callable] = [
+        actions: list[Callable] = [
             self.resume_game,
             self.go_to_main_menu,
             self.exit_game,

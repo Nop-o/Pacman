@@ -1,21 +1,23 @@
 from .game_play import GamePlay
 from .leaderboard import LeaderBoard
 from .screen import Screen
+import pygame
+from typing import Callable
 
 
 class MainMenu(Screen):
     def __init__(self, game_play: GamePlay, leaderboard: LeaderBoard) -> None:
-        self.game_play: GamePlay = GamePlay
-        self.leaderboard: leaderboard = LeaderBoard
+        self.game_play: GamePlay = game_play
+        self.leaderboard: LeaderBoard = leaderboard
 
     def show_instructions(self) -> None:  # TODO
         pass
 
-    def display_screen(self) -> bool:  # TODO
+    def display_screen(self) -> None:  # TODO
         pass
 
     def event_manager(self) -> bool:
-        actions: list[callable] = [
+        actions: list[Callable] = [
             self.resume_game,
             self.show_leaderboard,
             self.show_instructions,

@@ -42,14 +42,15 @@ class SimulationManager():
         """Display everything that you prepared to the screen"""
         pygame.display.flip()
 
-    def event_manager(self):
+    def event_manager(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 self.active = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.active = self.screen_manager.pause_menu.display_screen()
+                    self.active = (
+                        self.screen_manager.pause_menu.display_screen())
 
                 if event.key == pygame.K_LEFT:
                     self.left_pressed = True
@@ -71,7 +72,8 @@ class SimulationManager():
                     self.up_pressed = False
 
     def draw_rectangle(self, coord: tuple[int, int],
-                       width: int, height: int, color: tuple[int, int, int]):
+                       width: int, height: int,
+                       color: tuple[int, int, int]) -> None:
         for actual_width in range(width):
             for actual_height in range(height):
                 self.screen.set_at(
@@ -86,7 +88,7 @@ if __name__ == "__main__":
             self.color: tuple = (0, 0, 0)
             self.horizontal = 0
 
-        def test1(self):
+        def test1(self) -> None:
             screen = self.simulation_manager.screen
             screen.fill("black")
             if self.simulation_manager.left_pressed:
@@ -103,7 +105,7 @@ if __name__ == "__main__":
             if self.color[0] == 255:
                 self.simulation_manager.state_to_call = self.test2
 
-        def test2(self):
+        def test2(self) -> None:
             screen = self.simulation_manager.screen
             screen.fill("white")
 

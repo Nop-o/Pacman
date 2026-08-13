@@ -76,10 +76,10 @@ class Shadow(Ghost):  # red chase
 class Speedy(Ghost):  # pink flank
 
     def __init__(self, maze: Maze, starting_position: tuple[int, int],
-                pacman: Pacman, super_pacgum_cooldown: int,
-                algorithm: DepthFirstSearch) -> None:
+                 pacman: Pacman, super_pacgum_cooldown: int,
+                 algorithm: DepthFirstSearch) -> None:
         super().__init__(maze, starting_position, pacman,
-                        super_pacgum_cooldown, algorithm)
+                         super_pacgum_cooldown, algorithm)
 
     def get_goal(self) -> tuple[int, int]:
         if self.state == Character.State.RUNNING:
@@ -151,7 +151,7 @@ class Pokey(Ghost):  # orange chase + run away
 
 
 if __name__ == "__main__":
-    algo = DepthFirstSearch(3, 3, 0, 0)
     maze = Maze()
-    ghost = Ghost(1, 1, maze, (1, 1), 10)
-    print(ghost.starting_position)
+    algo = DepthFirstSearch((3, 3), (0, 0), maze)
+    pacman = Pacman(3, maze, 10)
+    ghost = Ghost(maze, (1, 1), pacman, 10, algo)

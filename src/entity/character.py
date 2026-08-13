@@ -61,5 +61,5 @@ class Character(Entity, ABC):
 
 if __name__ == "__main__":
     maze = Maze()
-    entity = Entity(10, 10, maze, 10)
-    print(entity.state)
+    entity = Entity()
+    chara = Character(maze, 10)

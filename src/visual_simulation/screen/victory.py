@@ -1,5 +1,6 @@
 from .leaderboard import LeaderBoard
 from .screen import Screen
+import pygame
 
 
 class Victory(Screen):
@@ -9,7 +10,7 @@ class Victory(Screen):
     def display_screen(self) -> None:  # TODO
         pass
 
-    def event_manager(self) -> None:
+    def event_manager(self) -> bool:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
