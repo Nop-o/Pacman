@@ -1,4 +1,4 @@
-from ...game_state import GameState
+from ... import GameState
 
 
 class HUD():

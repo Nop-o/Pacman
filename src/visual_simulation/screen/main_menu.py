@@ -1,6 +1,4 @@
-from .game_play import GamePlay
-from .leaderboard import LeaderBoard
-from .screen import Screen
+from . import GamePlay, LeaderBoard, Screen
 import pygame
 from typing import Callable
 

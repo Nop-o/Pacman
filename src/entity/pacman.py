@@ -1,4 +1,4 @@
-from .character import Character
+from . import Character
 from ..maze import Maze, Direction
 
 

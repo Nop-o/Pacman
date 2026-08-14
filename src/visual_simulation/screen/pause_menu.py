@@ -1,6 +1,4 @@
-from .main_menu import MainMenu
-from .game_play import GamePlay
-from .screen import Screen
+from . import MainMenu, GamePlay, Screen
 import pygame
 from typing import Callable
 

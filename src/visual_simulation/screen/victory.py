@@ -1,5 +1,4 @@
-from .leaderboard import LeaderBoard
-from .screen import Screen
+from . import LeaderBoard, Screen
 import pygame
 
 

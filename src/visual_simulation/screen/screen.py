@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ..screen_manager import ScreenManager
+from .. import ScreenManager
 
 
 class Screen(ABC):

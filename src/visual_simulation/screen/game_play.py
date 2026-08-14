@@ -1,6 +1,4 @@
-from .screen import Screen
-from .level import Level
-from .hud import HUD
+from . import Screen, Level, HUD
 
 
 class GamePlay(Screen):

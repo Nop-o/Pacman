@@ -1,4 +1,4 @@
-from src.entity import Pacman, Ghost, Character
+from .entity import Pacman, Ghost, Character
 
 
 class GameState:

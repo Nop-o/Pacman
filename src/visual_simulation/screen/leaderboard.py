@@ -1,4 +1,4 @@
-from .screen import Screen
+from . import Screen
 
 
 class LeaderBoard(Screen):
