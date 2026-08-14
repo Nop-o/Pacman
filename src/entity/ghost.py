@@ -1,6 +1,6 @@
-from .character import Character
+from .pacman import Pacman
+from . import Character
 from ..algorithm.dfs import DepthFirstSearch
-from . import Pacman
 import random
 from ..maze import Maze, Direction
 
