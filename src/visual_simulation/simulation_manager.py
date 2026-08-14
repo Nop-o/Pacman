@@ -14,11 +14,11 @@ class SimulationManager():
         # TODO set basic function to main menu
         self.test = Test(self)
         self.state_to_call: Callable = self.test.test1
-        self.active = True
-        self.left_pressed = False
-        self.right_pressed = False
-        self.up_pressed = False
-        self.down_pressed = False
+        self.active: bool = True
+        self.left_pressed: bool = False
+        self.right_pressed: bool = False
+        self.up_pressed: bool = False
+        self.down_pressed: bool = False
 
         self.screen_manager = screen_manager
 

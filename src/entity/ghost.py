@@ -12,7 +12,7 @@ class Ghost(Character):
                  algorithm: DepthFirstSearch
                  ) -> None:
         super().__init__(maze, super_pacgum_cooldown)
-        self.starting_position = starting_position
+        self.starting_position: tuple[int, int] = starting_position
         self.pacman: Pacman = pacman
 
         self.algorithm: DepthFirstSearch = algorithm

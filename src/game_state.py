@@ -6,17 +6,17 @@ class GameState:
                  points_per_super_pacgum: int, super_pacgum_time: int,
                  points_per_ghost: int, seed: int, level_max_time: int,
                  pacman: Pacman, ghosts: list[Ghost]) -> None:
-        self.pacgum = pacgum
-        self.super_pacgum = 4
-        self.points_per_pacgum = points_per_pacgum
-        self.points_per_super_pacgum = points_per_super_pacgum
-        self.super_pacgum_time = super_pacgum_time
-        self.points_per_ghost = points_per_ghost
-        self.seed = seed
-        self.level_max_time = level_max_time
-        self.pacman = pacman
-        self.ghosts = ghosts
-        self.score = 0
+        self.pacgum: int = pacgum
+        self.super_pacgum: int = 4
+        self.points_per_pacgum: int = points_per_pacgum
+        self.points_per_super_pacgum: int = points_per_super_pacgum
+        self.super_pacgum_time: int = super_pacgum_time
+        self.points_per_ghost: int = points_per_ghost
+        self.seed: int = seed
+        self.level_max_time: int = level_max_time
+        self.pacman: Pacman = pacman
+        self.ghosts: list[Ghost] = ghosts
+        self.score: int = 0
 
     def pacman_eat_pacgum(self) -> None:
         """Update pacgum count and score after pacman eats a pacgum"""

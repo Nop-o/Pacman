@@ -13,11 +13,11 @@ class Direction(Enum):
 class Maze():
     def __init__(self, seed: int = 0) -> None:
         self.cases: list[list[Case]] = []
-        generator = MazeGenerator()
+        generator: MazeGenerator = MazeGenerator()
         generator.generate(seed)
         self.create_cases(generator.maze)
-        self.nb_line = len(self.cases)
-        self.nb_column = len(self.cases[0])
+        self.nb_line: int = len(self.cases)
+        self.nb_column: int = len(self.cases[0])
 
     def create_cases(self, cases: list[list[int]]) -> None:
         for i, line in enumerate(cases):
