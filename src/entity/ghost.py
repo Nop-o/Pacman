@@ -3,9 +3,10 @@ from . import Character
 from ..algorithm.dfs import DepthFirstSearch
 import random
 from ..maze import Maze, Direction
+from abc import ABC
 
 
-class Ghost(Character):
+class Ghost(Character, ABC):
 
     def __init__(self, maze: Maze, starting_position: tuple[int, int],
                  pacman: Pacman, super_pacgum_cooldown: int,
