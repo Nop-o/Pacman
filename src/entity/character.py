@@ -12,10 +12,10 @@ class Character(Entity, ABC):
 
     def __init__(self, maze: Maze, super_pacgum_cooldown: int) -> None:
         super().__init__()
-        self.starting_position: tuple[int, int] = self._set_starting_position()
-        self.line_pos = self.starting_position[0]
-        self.column_pos = self.starting_position[1]
         self.maze: Maze = maze
+        self.starting_position: tuple[int, int] = self._set_starting_position()
+        self.line_pos: int = self.starting_position[0]
+        self.column_pos: int = self.starting_position[1]
         self.super_pacgum_cooldown: int = super_pacgum_cooldown
         self.state: Character.State = self.State.RUNNING
 
