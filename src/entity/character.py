@@ -55,8 +55,7 @@ class Character(Entity, ABC):
         self.super_pacgum_cooldown = self.super_pacgum_cooldown
 
     @abstractmethod
-    def _set_starting_position(self) -> tuple[int, int]:
-        ...
+    def _set_starting_position(self) -> tuple[int, int]: ...
 
 
 if __name__ == "__main__":
