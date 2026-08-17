@@ -56,9 +56,3 @@ class Character(Entity, ABC):
 
     @abstractmethod
     def _set_starting_position(self) -> tuple[int, int]: ...
-
-
-if __name__ == "__main__":
-    maze = Maze()
-    entity = Entity()
-    chara = Character(maze, 10)

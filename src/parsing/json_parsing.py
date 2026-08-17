@@ -80,8 +80,3 @@ class JsonData(BaseModel):
     points_per_ghost: int = Field(ge=-100000, le=100000)
     seed: int = Field(ge=-1000000000, le=1000000000)
     level_max_time: int = Field(ge=20, le=1000000000)
-
-
-if __name__ == "__main__":
-    parser = JsonParsing("settings.json", "setting.json")
-    print(parser.file_content)

@@ -49,7 +49,3 @@ class Pacman(Character):
 
     def reset_last_move_direction(self) -> None:
         self._last_move_direction = Direction.N
-
-
-if __name__ == "__main__":
-    maze = Maze()

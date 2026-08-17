@@ -142,13 +142,3 @@ class Pokey(Ghost):  # orange chase + run away
 
     def _set_starting_position(self) -> tuple[int, int]:
         return (maze.nb_line, maze.nb_column)
-
-
-if __name__ == "__main__":
-    maze = Maze()
-    algo = DepthFirstSearch((3, 3), (0, 0), maze)
-    pacman = Pacman(3, maze, 10)
-    ghost1 = Pokey(maze, pacman, 10, algo)
-    ghost2 = Shadow(maze, pacman, 10, algo)
-    ghost3 = Speedy(maze, pacman, 10, algo)
-    ghost4 = Bashful(maze, pacman, 10, algo)

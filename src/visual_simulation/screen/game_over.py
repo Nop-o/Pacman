@@ -20,8 +20,3 @@ class GameOver(Screen):
                     return self.show_leaderboard()
 
         return False
-
-
-if __name__ == "__main__":
-    leaderboard = LeaderBoard()
-    game_over = GameOver(leaderboard)
