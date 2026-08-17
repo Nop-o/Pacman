@@ -1,16 +1,34 @@
-from ... import GameState
-from ...entity import Ghost, Pacman
+from ..simulation_manager import SimulationManager
+from ...entity import Ghost, Pacman, Pokey, Shadow, Speedy, Bashful
+from ...maze import Maze
 from . import Screen
 
 
 class Level(Screen):
-    # On ne peut pas appeler simulation_manager -> ca fait des circular import,
-    # go importer game_state ?
-    def __init__(self, game_state: GameState) -> None:
-        self.game_state: GameState = game_state
+    def __init__(self, simulation_manager: SimulationManager,
+                 seed: int = 0) -> None:
+
         # need fill ghosts and pacman
-        self.ghosts: list[Ghost] = []
-        self.pacman: Pacman
+        self.maze = Maze(seed=seed)
+        self.simulation_manager: SimulationManager = SimulationManager
+        self.ghosts: list[Ghost] = [
+            Pokey(
+                self.maze, self.simulation_manager.game_state.pacman,
+                self.simulation_manager.game_state.super_pacgum_cooldown,
+                self.simulation_manager.game_state.algorithm),
+            Bashful(
+                self.maze, self.simulation_manager.game_state.pacman,
+                self.simulation_manager.game_state.super_pacgum_cooldown,
+                self.simulation_manager.game_state.algorithm),
+            Speedy(
+                self.maze, self.simulation_manager.game_state.pacman,
+                self.simulation_manager.game_state.super_pacgum_cooldown,
+                self.simulation_manager.game_state.algorithm),
+            Shadow(
+                self.maze, self.simulation_manager.game_state.pacman,
+                self.simulation_manager.game_state.super_pacgum_cooldown,
+                self.simulation_manager.game_state.algorithm),
+        ]
         # need pacgum, either in list with coord form or object
 
     # TODO Do the turn by calling in order move_pacman, move_ghost, load_maze,
