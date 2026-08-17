@@ -1,22 +1,12 @@
 from . import LeaderBoard, Screen
+from .. import SimulationManager
 import pygame
 
 
 class Victory(Screen):
-    def __init__(self, score: int, leaderboard: LeaderBoard) -> None:
+    def __init__(self, score: int, simulation: SimulationManager) -> None:
         self.score: int = score
+        self.simulation_manager
 
-    def display_screen(self) -> bool:  # TODO
+    def display_screen(self) -> None:  # TODO
         pass
-
-    def event_manager(self) -> bool:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                return False
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    return self.show_leaderboard()
-
-        return False
