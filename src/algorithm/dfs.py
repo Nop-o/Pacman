@@ -3,10 +3,9 @@ from ..maze import Maze
 
 
 class DepthFirstSearch:
-    def __init__(self, entry: tuple[int, int],
-                 exit: tuple[int, int], maze: Maze):
-        self.entry: tuple[int, int] = entry
-        self.exit: tuple[int, int] = exit
+    def __init__(self, maze: Maze):
+        self._entry: tuple[int, int] | None = None
+        self._exit: tuple[int, int] | None = None
         self.maze: Maze = maze
 
     def solver(self) -> list[tuple[int, int]] | None:
@@ -47,9 +46,33 @@ class DepthFirstSearch:
         path.reverse()
         return path
 
+    @property
+    def exit(self) -> tuple[int, int] | None:
+        if self._exit is None:
+            raise ValueError(
+                f"{type(self).__name__} hasn't initialized self._exit")
+
+        return self._exit
+
+    @property
+    def entry(self) -> tuple[int, int] | None:
+        if self._entry is None:
+            raise ValueError(
+                f"{type(self).__name__} hasn't initialized self._entry")
+
+        return self._entry
+
+    def set_exit(self, exit: tuple[int, int] | None) -> None:
+        self._exit = exit
+
+    def set_entry(self, entry: tuple[int, int] | None) -> None:
+        self._entry = entry
+
 
 if __name__ == "__main__":
     maze = Maze(5)
-    dfs = DepthFirstSearch((1, 1), (1, 2), maze)
+    dfs = DepthFirstSearch(maze)
+    dfs.set_exit((1,1))
+    dfs.set_entry((2, 2))
     result = dfs.solver()
     print(result)
