@@ -8,12 +8,9 @@ from abc import ABC
 
 class Ghost(Character, ABC):
 
-    def __init__(self, maze: Maze, starting_position: tuple[int, int],
-                 pacman: Pacman, super_pacgum_cooldown: int,
-                 algorithm: DepthFirstSearch
-                 ) -> None:
+    def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
+                 algorithm: DepthFirstSearch) -> None:
         super().__init__(maze, super_pacgum_cooldown)
-        self.starting_position: tuple[int, int] = starting_position
         self.pacman: Pacman = pacman
 
         self.algorithm: DepthFirstSearch = algorithm
@@ -58,11 +55,10 @@ class Ghost(Character, ABC):
 
 class Shadow(Ghost):  # red chase
 
-    def __init__(self, maze: Maze, starting_position: tuple[int, int],
-                 pacman: Pacman, super_pacgum_cooldown: int,
+    def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
-        super().__init__(maze, starting_position, pacman,
-                         super_pacgum_cooldown, algorithm)
+        super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
+        self.starting_position: tuple[int, int] = self._set_starting_position()
 
     def get_goal(self) -> tuple[int, int]:
         if self.state == Character.State.RUNNING:
@@ -76,11 +72,10 @@ class Shadow(Ghost):  # red chase
 
 class Speedy(Ghost):  # pink flank
 
-    def __init__(self, maze: Maze, starting_position: tuple[int, int],
-                 pacman: Pacman, super_pacgum_cooldown: int,
+    def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
-        super().__init__(maze, starting_position, pacman,
-                         super_pacgum_cooldown, algorithm)
+        super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
+        self.starting_position: tuple[int, int] = self._set_starting_position()
 
     def get_goal(self) -> tuple[int, int]:
         if self.state == Character.State.RUNNING:
@@ -103,11 +98,10 @@ class Speedy(Ghost):  # pink flank
 
 class Bashful(Ghost):  # cyan random
 
-    def __init__(self, maze: Maze, starting_position: tuple[int, int],
-                 pacman: Pacman, super_pacgum_cooldown: int,
+    def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
-        super().__init__(maze, starting_position, pacman,
-                         super_pacgum_cooldown, algorithm)
+        super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
+        self.starting_position: tuple[int, int] = self._set_starting_position()
 
     def get_goal(self) -> tuple[int, int]:
         if self.state == Character.State.RUNNING:
@@ -127,11 +121,10 @@ class Bashful(Ghost):  # cyan random
 
 class Pokey(Ghost):  # orange chase + run away
 
-    def __init__(self, maze: Maze, starting_position: tuple[int, int],
-                 pacman: Pacman, super_pacgum_cooldown: int,
+    def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
-        super().__init__(maze, starting_position, pacman,
-                         super_pacgum_cooldown, algorithm)
+        super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
+        self.starting_position: tuple[int, int] = self._set_starting_position()
 
     def is_pacman_too_close(self) -> bool:
         if (self.line_pos - self.pacman.line_pos < 3 and
@@ -155,4 +148,7 @@ if __name__ == "__main__":
     maze = Maze()
     algo = DepthFirstSearch((3, 3), (0, 0), maze)
     pacman = Pacman(3, maze, 10)
-    ghost = Ghost(maze, (1, 1), pacman, 10, algo)
+    ghost1 = Pokey(maze, pacman, 10, algo)
+    ghost2 = Shadow(maze, pacman, 10, algo)
+    ghost3 = Speedy(maze, pacman, 10, algo)
+    ghost4 = Bashful(maze, pacman, 10, algo)
