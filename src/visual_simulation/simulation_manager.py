@@ -1,11 +1,13 @@
 from time import time, sleep
 import pygame
 from collections.abc import Callable
+from .. import GameState
+from typing import Any
 from .screen_manager import ScreenManager
 
 
 class SimulationManager():
-    def __init__(self) -> None:
+    def __init__(self, json_data: dict[str, Any]) -> None:
         pygame.init()
         pygame.display.set_caption("Pac-Man")
         self.fps: int = 60
@@ -20,7 +22,7 @@ class SimulationManager():
         self.up_pressed: bool = False
         self.down_pressed: bool = False
 
-
+        self.game_state: GameState = GameState(**json_data)
         self.screen_manager: ScreenManager = ScreenManager()
 
     def launch(self) -> None:
