@@ -5,13 +5,10 @@ from . import Screen
 
 
 class Level(Screen):
-    def __init__(self, simulation_manager: SimulationManager,
-                 seed: int = 0) -> None:
+    def __init__(self) -> None:
 
         # TODO fix init -> pacman/ghost created here or before ?
         # need fill ghosts and pacman
-        self.maze = Maze(seed=seed)
-        self.simulation_manager: SimulationManager = SimulationManager
         self.ghosts: list[Ghost] = [
             Pokey(
                 self.maze, self.simulation_manager.game_state.pacman,
