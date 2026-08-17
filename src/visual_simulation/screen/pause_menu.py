@@ -1,12 +1,9 @@
-from . import MainMenu, GamePlay, Screen
+from . import Screen
 import pygame
 from typing import Callable
 
 
 class PauseMenu(Screen):
-    def __init__(self, main_menu: MainMenu, game_play: GamePlay) -> None:
-        self.main_menu: MainMenu = main_menu
-        self.game_play: GamePlay = game_play
 
     def display_screen(self) -> bool:  # TODO
         pass

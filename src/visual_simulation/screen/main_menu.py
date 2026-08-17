@@ -1,12 +1,9 @@
-from . import GamePlay, LeaderBoard, Screen
+from . import Screen
 import pygame
 from typing import Callable
 
 
 class MainMenu(Screen):
-    def __init__(self, game_play: GamePlay, leaderboard: LeaderBoard) -> None:
-        self.game_play: GamePlay = game_play
-        self.leaderboard: LeaderBoard = leaderboard
 
     def show_instructions(self) -> None:  # TODO
         pass
