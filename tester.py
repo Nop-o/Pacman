@@ -6,7 +6,9 @@
 #---------------------------
 ##  algorithm
 
-##  - dfs
+##  - dfs - Working
+# from src.maze.maze import Maze
+# from src.algorithm.dfs import DepthFirstSearch
 # if __name__ == "__main__":
 #     maze = Maze(5)
 #     dfs = DepthFirstSearch(maze)
@@ -19,14 +21,15 @@
 
 ##  entity
 
-##  - character
-# if __name__ == "__main__":
-#     maze = Maze()
-#     chara = Character(maze, 10)
+##  - character - ABC class
 
-##  - entity
+##  - entity - ABC class
 
-##  - ghost
+##  - ghost - Working
+# from src.maze.maze import Maze
+# from src.entity.ghost import Shadow, Speedy, Pokey, Bashful
+# from src.entity.pacman import Pacman
+# from src.algorithm.dfs import DepthFirstSearch
 # if __name__ == "__main__":
 #     maze = Maze()
 #     algo = DepthFirstSearch(maze)
@@ -37,27 +40,31 @@
 #     ghost2 = Shadow(maze, pacman, 10, algo)
 #     ghost3 = Speedy(maze, pacman, 10, algo)
 #     ghost4 = Bashful(maze, pacman, 10, algo)
+#     print(pacman.column_pos, pacman.line_pos)
+#     print(ghost1.column_pos, ghost1.line_pos)
+#     print(ghost2.column_pos, ghost2.line_pos)
+#     print(ghost3.column_pos, ghost3.line_pos)
+#     print(ghost4.column_pos, ghost4.line_pos)
 
 
 ##  - pacgum
 
-##  - pacman
-# if __name__ == "__main__":
-#     maze = Maze()
-#     pacman = Pacman(lives=3, maze=maze, super_pacgum_cooldown=90) 
+##  - pacman - Working -> Ghost works
+
 
 #---------------------------
 
 ##  maze
 
-##  - case
-##  - maze
+##  - case - Working
+##  - maze - Working
 
 #---------------------------
 
 ##  parsing
 
-##  - json_parsing
+##  - json_parsing - Working
+# from src.parsing.json_parsing import JsonParsing
 # if __name__ == "__main__":
 #     parser = JsonParsing("settings.json", "setting.json")
 #     print(parser.file_content)
