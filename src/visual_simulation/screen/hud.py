@@ -2,8 +2,6 @@ from ... import GameState
 
 
 class HUD():
-    def __init__(self, game_state: GameState) -> None:
-        self.game_state = game_state
 
     def show_score(self) -> None:  # TODO
         pass
