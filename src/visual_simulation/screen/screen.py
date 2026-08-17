@@ -1,11 +1,16 @@
 from abc import ABC, abstractmethod
-from .. import SimulationManager, ScreenManager
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..simulation_manager import SimulationManager
+    from ..screen_manager import ScreenManager
 
 
 class Screen(ABC):
-    def __init__(self, simulation_manager: SimulationManager) -> None:
-        self.simulation_manager: SimulationManager = simulation_manager
-        self.screen_manager: ScreenManager = simulation_manager.screen_manager
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
+        self.simulation_manager: "SimulationManager" = simulation_manager
+        self.screen_manager: "ScreenManager" = simulation_manager.screen_manager
 
     @abstractmethod
     def display_screen(self) -> None: ...
