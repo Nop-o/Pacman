@@ -5,7 +5,7 @@ from .screen_manager import ScreenManager
 
 
 class SimulationManager():
-    def __init__(self) -> None:
+    def __init__(self, screen_manager: ScreenManager) -> None:
         pygame.init()
         pygame.display.set_caption("Pac-Man")
         self.fps: int = 60
@@ -20,8 +20,7 @@ class SimulationManager():
         self.up_pressed: bool = False
         self.down_pressed: bool = False
 
-
-        self.screen_manager: ScreenManager = ScreenManager()
+        self.screen_manager = screen_manager
 
     def launch(self) -> None:
         while self.active:
