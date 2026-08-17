@@ -38,16 +38,16 @@ class Ghost(Character, ABC):
         return self._shortest_path_to_goal
 
     def run_away(self) -> tuple[int, int]:
-        if self.pacman.line_pos <= len(maze.cases) // 2:
-            if self.pacman.column_pos <= len(maze.cases[0]) // 2:
+        if self.pacman.line_pos <= len(self.maze.cases) // 2:
+            if self.pacman.column_pos <= len(self.maze.cases[0]) // 2:
                 return (0, 0)
             else:
-                return (0, maze.nb_column - 1)
+                return (0, self.maze.nb_column - 1)
         else:
-            if self.pacman.column_pos <= len(maze.cases[0]) // 2:
-                return (maze.nb_line - 1, 0)
+            if self.pacman.column_pos <= len(self.maze.cases[0]) // 2:
+                return (self.maze.nb_line - 1, 0)
             else:
-                return (maze.nb_line - 1, maze.nb_column - 1)
+                return (self.maze.nb_line - 1, self.maze.nb_column - 1)
 
     def chase_pacman(self) -> tuple[int, int]:
         return (self.pacman.line_pos, self.pacman.column_pos)
@@ -93,7 +93,7 @@ class Speedy(Ghost):  # pink flank
         return self.chase_pacman()
 
     def _set_starting_position(self) -> tuple[int, int]:
-        return (0, maze.nb_column)
+        return (0, self.maze.nb_column)
 
 
 class Bashful(Ghost):  # cyan random
@@ -116,7 +116,7 @@ class Bashful(Ghost):  # cyan random
         return (new_line, new_column)
 
     def _set_starting_position(self) -> tuple[int, int]:
-        return (maze.nb_line, 0)
+        return (self.maze.nb_line, 0)
 
 
 class Pokey(Ghost):  # orange chase + run away
@@ -141,4 +141,4 @@ class Pokey(Ghost):  # orange chase + run away
             return self.chase_pacman()
 
     def _set_starting_position(self) -> tuple[int, int]:
-        return (maze.nb_line, maze.nb_column)
+        return (self.maze.nb_line, self.maze.nb_column)

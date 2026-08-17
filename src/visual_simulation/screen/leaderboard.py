@@ -54,5 +54,3 @@ class LeaderBoard(Screen):
 
     def event_manager(self) -> bool:  # TODO
         pass
-
-

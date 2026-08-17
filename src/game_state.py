@@ -4,6 +4,7 @@ from .entity.ghost import Ghost
 from .algorithm import DepthFirstSearch
 from .maze import Maze
 
+
 class GameState:
 
     def __init__(self, pacgum: int, points_per_pacgum: int,

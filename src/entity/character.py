@@ -22,25 +22,25 @@ class Character(Entity, ABC):
     def go_left(self) -> None:
         """Go one case left in the maze"""
         if self.maze.is_travelable(
-           maze.cases[self.line_pos][self.column_pos], Direction.W):
+           self.maze.cases[self.line_pos][self.column_pos], Direction.W):
             self.column_pos -= 1
 
     def go_right(self) -> None:
         """Go one case right in the maze"""
         if self.maze.is_travelable(
-           maze.cases[self.line_pos][self.column_pos], Direction.E):
+           self.maze.cases[self.line_pos][self.column_pos], Direction.E):
             self.column_pos += 1
 
     def go_up(self) -> None:
         """Go one case up in the maze"""
         if self.maze.is_travelable(
-           maze.cases[self.line_pos][self.column_pos], Direction.N):
+           self.maze.cases[self.line_pos][self.column_pos], Direction.N):
             self.line_pos -= 1
 
     def go_down(self) -> None:
         """Go one case down in the maze"""
         if self.maze.is_travelable(
-           maze.cases[self.line_pos][self.column_pos], Direction.S):
+           self.maze.cases[self.line_pos][self.column_pos], Direction.S):
             self.line_pos += 1
 
     def change_state(self) -> None:

@@ -1,5 +1,5 @@
 from ..simulation_manager import SimulationManager
-from ...entity import Ghost, Pacman, Pokey, Shadow, Speedy, Bashful
+from ...entity import Ghost, Pokey, Shadow, Speedy, Bashful
 from ...maze import Maze
 from . import Screen
 
@@ -8,6 +8,7 @@ class Level(Screen):
     def __init__(self, simulation_manager: SimulationManager,
                  seed: int = 0) -> None:
 
+        # TODO fix init -> pacman/ghost created here or before ?
         # need fill ghosts and pacman
         self.maze = Maze(seed=seed)
         self.simulation_manager: SimulationManager = SimulationManager
