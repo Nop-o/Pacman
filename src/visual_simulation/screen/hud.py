@@ -1,6 +1,3 @@
-from ... import GameState
-
-
 class HUD():
 
     def show_score(self) -> None:  # TODO

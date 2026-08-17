@@ -1,6 +1,4 @@
-from ..simulation_manager import SimulationManager
 from ...entity import Ghost, Pokey, Shadow, Speedy, Bashful
-from ...maze import Maze
 from . import Screen
 
 
