@@ -20,11 +20,11 @@ class Ghost(Character, ABC):
         """Reset the position of an entity to his starting position"""
         self.line_pos, self.column_pos = self.starting_position
 
-    def change_goal(self, new_goal: tuple[int, int]) -> None:
-        self.algorithm.exit = new_goal
+    def change_exit_position(self, new_goal: tuple[int, int]) -> None:
+        self.algorithm.set_exit(new_goal)
 
     def change_entry_position(self) -> None:
-        self.algorithm.entry = (self.line_pos, self.column_pos)
+        self.algorithm.set_entry((self.line_pos, self.column_pos))
 
     def find_shortest_path_to_exit(self) -> None:
         self._shortest_path_to_goal = self.algorithm.solver()
