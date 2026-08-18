@@ -25,15 +25,15 @@ class GameOver(Screen):
         congrat_message = self.font.render(
             "You lost", 1, (255, 255, 255)
             )
-        user_name = self.name_font.render(
+        user_name = self.big_font.render(
             self.user_name, 1, (255, 255, 255)
         )
-        input_prompt = self.name_font.render(
+        input_prompt = self.big_font.render(
             "Enter your name to save your score",
             1,
             (255, 255, 255)
         )
-        button_text = self.name_font.render(
+        button_text = self.big_font.render(
             "Save Highscore",
             1,
             (255, 255, 255)
