@@ -26,4 +26,3 @@ class GameOver(Screen):
                 if event.key == pygame.K_RETURN:
                     self.got_to_leaderboard()
                     return
-

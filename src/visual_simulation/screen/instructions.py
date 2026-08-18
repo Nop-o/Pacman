@@ -1,5 +1,6 @@
 from . import Screen
 from typing import TYPE_CHECKING
+import pygame
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager

@@ -22,12 +22,13 @@ class SimulationManager():
         self.right_pressed: bool = False
         self.up_pressed: bool = False
         self.down_pressed: bool = False
-        self.key_pressed: str|None = None
-        self.mouse_click: tuple[int, int]|None = None
+        self.key_pressed: str | None = None
+        self.mouse_click: tuple[int, int] | None = None
 
         self.current_level: Level = Level(self)
         self.game_state: GameState = GameState(**json_data)
-        self.screen_manager: ScreenManager = ScreenManager(self, self.current_level)
+        self.screen_manager: ScreenManager = ScreenManager(
+            self, self.current_level)
         self.state_to_call: Callable = \
             self.screen_manager.main_menu.display_screen
 
@@ -44,7 +45,7 @@ class SimulationManager():
             if elapsed < self.frame_duration:
                 sleep(self.frame_duration - elapsed)
 
-    def clear_last_frame(self, color: str = "black") -> None: #useless ?
+    def clear_last_frame(self, color: str = "black") -> None:  # useless ?
         """Clear the last frame, recover it with a screen with a color"""
         self.screen.fill(pygame.Color(color))
 

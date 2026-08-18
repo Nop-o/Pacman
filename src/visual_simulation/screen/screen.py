@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, Callable
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
-    from ..screen_manager import ScreenManager
 
 
 class Screen(ABC):

@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
 
+
 class Level:
     def __init__(self, simulation_manager: "SimulationManager") -> None:
 
