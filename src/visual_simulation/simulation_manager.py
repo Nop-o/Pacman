@@ -3,6 +3,7 @@ import pygame
 from typing import Any, Callable
 from .screen_manager import ScreenManager
 from ..game_state import GameState
+from .screen import Level
 
 
 class SimulationManager():
@@ -13,16 +14,17 @@ class SimulationManager():
         self.frame_duration: float = 1.0 / self.fps
         self.screen: pygame.Surface = pygame.display.set_mode((1500, 1000))
         # TODO set basic function to main menu
-        self.test = Test(self)
-        self.state_to_call: Callable = self.test.test1
         self.active: bool = True
         self.left_pressed: bool = False
         self.right_pressed: bool = False
         self.up_pressed: bool = False
         self.down_pressed: bool = False
 
+        self.current_level: Level = Level(self)
         self.game_state: GameState = GameState(**json_data)
-        self.screen_manager: ScreenManager = ScreenManager()
+        self.screen_manager: ScreenManager = ScreenManager(self, self.current_level)
+        self.state_to_call: Callable = \
+            self.screen_manager.main_menu.display_screen
 
     def launch(self) -> None:
         while self.active:
