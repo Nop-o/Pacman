@@ -233,3 +233,7 @@ if __name__ == "__main__":
 ###  - pause_menu
 ###  - screen
 ###  - victory
+if __name__ == "__main__":
+    from src.visual_simulation.screen.victory import Victory
+    victory = Victory(5555)
+    victory.display_screen()
