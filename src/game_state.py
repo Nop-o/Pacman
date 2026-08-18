@@ -1,29 +1,41 @@
 from .entity.character import Character
 from .entity.pacman import Pacman
-from .entity.ghost import Ghost
+from .entity.ghost import Ghost, Pokey, Shadow, Speedy, Bashful
 from .algorithm import DepthFirstSearch
 from .maze import Maze
 
 
 class GameState:
 
-    def __init__(self, pacgum: int, points_per_pacgum: int,
-                 points_per_super_pacgum: int, super_pacgum_time: int,
-                 points_per_ghost: int, seed: int, level_max_time: int,
-                 pacman: Pacman, ghosts: list[Ghost],
-                 algorithm: DepthFirstSearch, maze: Maze) -> None:
+    def __init__(self, lives: int, pacgum: int, points_per_pacgum: int,
+                 points_per_super_pacgum: int, super_pacgum_cooldown: int,
+                 points_per_ghost: int, seed: int, level_max_time: int
+                 ) -> None:
+
         self.pacgum: int = pacgum
         self.super_pacgum: int = 4
         self.points_per_pacgum: int = points_per_pacgum
         self.points_per_super_pacgum: int = points_per_super_pacgum
-        self.super_pacgum_time: int = super_pacgum_time
+        self.super_pacgum_cooldown: int = super_pacgum_cooldown
         self.points_per_ghost: int = points_per_ghost
         self.seed: int = seed
         self.level_max_time: int = level_max_time
-        self.pacman: Pacman = pacman
-        self.ghosts: list[Ghost] = ghosts
         self.score: int = 0
-        self.algorithm: DepthFirstSearch = DepthFirstSearch(maze)
+
+        self.maze: Maze = Maze(seed)
+        self.algorithm: DepthFirstSearch = DepthFirstSearch(self.maze)
+
+        self.pacman: Pacman = Pacman(lives, self.maze, super_pacgum_cooldown)
+        self.ghosts: list[Ghost] = [
+            Pokey(self.maze, self.pacman, self.super_pacgum_cooldown,
+                  self.algorithm),
+            Bashful(self.maze, self.pacman, self.super_pacgum_cooldown,
+                    self.algorithm),
+            Speedy(self.maze, self.pacman, self.super_pacgum_cooldown,
+                   self.algorithm),
+            Shadow(self.maze, self.pacman, self.super_pacgum_cooldown,
+                   self.algorithm),
+        ]
 
     def pacman_eat_pacgum(self) -> None:
         """Update pacgum count and score after pacman eats a pacgum"""
