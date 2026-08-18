@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
 
+
 class Level:
     def __init__(self, simulation_manager: "SimulationManager") -> None:
 
@@ -53,8 +54,8 @@ class Level:
     def win_game(self) -> None:
         pass
 
-    def display_screen(self) -> bool:
+    def display_screen(self) -> None:
         pass
 
-    def event_manager(self) -> bool:  # TODO
+    def event_manager(self) -> None:  # TODO
         pass

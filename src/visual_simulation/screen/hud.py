@@ -21,5 +21,5 @@ class HUD(Screen):
     def show_timer(self) -> None:  # TODO
         pass
 
-    def display_screen(self) -> bool:  # TODO
+    def display_screen(self) -> None:  # TODO
         pass

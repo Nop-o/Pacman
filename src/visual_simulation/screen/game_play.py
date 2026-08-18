@@ -13,9 +13,9 @@ class GamePlay(Screen):
         self.level = level
         self.hud: HUD = hud
 
-    def display_screen(self) -> bool:
+    def display_screen(self) -> None:
         self.level.display_screen()
         self.hud.display_screen()
 
-    def event_manager(self) -> bool:  # TODO
+    def event_manager(self) -> None:  # TODO
         pass

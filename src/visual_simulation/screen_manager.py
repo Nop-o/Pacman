@@ -18,7 +18,7 @@ class ScreenManager:
             simulation_manager=simulation_manager)
 
         self.game_play: GamePlay = GamePlay(
-            level=level, hud=HUD, 
+            level=level, hud=HUD,
             simulation_manager=simulation_manager)
         self.main_menu: MainMenu = MainMenu(
             simulation_manager=simulation_manager)
