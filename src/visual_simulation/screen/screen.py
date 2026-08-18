@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import pygame
 
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING, Callable, Any
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
@@ -43,17 +43,15 @@ class Screen(ABC):
                     text: pygame.Surface,
                     action: Callable,
                     px: int,
-                    py: int):
+                    py: int) -> None:
         width = text.get_width() + px
         height = text.get_height() + py
         position = (pos[0] - width // 2, pos[1])
         self.simulation_manager.draw_rectangle(
             position, width, height, (120, 78, 91))
         text_pos = (
-            position[0] + (width // 2) - \
-                (text.get_width() // 2),
-            position[1] + (height // 2) - \
-                (text.get_height() // 2)
+            position[0] + (width // 2) - (text.get_width() // 2),
+            position[1] + (height // 2) - (text.get_height() // 2)
         )
         self.simulation_manager.screen.blit(text, text_pos)
 
@@ -62,10 +60,20 @@ class Screen(ABC):
             mouse_width = False
             mouse_pos = self.simulation_manager.mouse_click
             if mouse_pos[0] >= position[0] and \
-                mouse_pos[0] <= position[0] + width:
+               mouse_pos[0] <= position[0] + width:
                 mouse_width = True
             if mouse_pos[1] >= position[1] and \
-                mouse_pos[1] <= position[1] + height:
+               mouse_pos[1] <= position[1] + height:
                 mouse_height = True
             if mouse_width is True and mouse_height is True:
                 action()
+
+    def draw_text(self, text: str, x: int, y: int,
+                  color: pygame.Color = pygame.Color("gray44"),
+                  font: Any = None) -> None:
+        """Draw text into the simulation"""
+        if font is None:
+            font = self.font
+
+        surface = font.render(text, True, color)
+        self.screen.blit(surface, (x, y))
