@@ -1,9 +1,8 @@
 from time import time, sleep
 import pygame
-from collections.abc import Callable
-from .. import GameState
-from typing import Any
+from typing import Any, Callable
 from .screen_manager import ScreenManager
+from ..game_state import GameState
 
 
 class SimulationManager():
@@ -82,48 +81,3 @@ class SimulationManager():
                 self.screen.set_at(
                     ((actual_width + coord[0]),
                      (actual_height + coord[1])), color)
-
-
-if __name__ == "__main__":
-    class Test():
-        def __init__(self, simulation_manager: SimulationManager) -> None:
-            self.simulation_manager = simulation_manager
-            self.color: tuple = (0, 0, 0)
-            self.horizontal = 0
-
-        def test1(self) -> None:
-            screen = self.simulation_manager.screen
-            screen.fill("black")
-            if self.simulation_manager.left_pressed:
-                self.horizontal -= 1
-            if self.simulation_manager.right_pressed:
-                self.horizontal += 1
-
-            self.simulation_manager.draw_rectangle((500, 500), 333, 666,
-                                                   self.color)
-
-            self.color = (self.color[0] + 1,
-                          self.color[1] + 1,
-                          self.color[2] + 1)
-            if self.color[0] == 255:
-                self.simulation_manager.state_to_call = self.test2
-
-        def test2(self) -> None:
-            screen = self.simulation_manager.screen
-            screen.fill("white")
-
-            if self.simulation_manager.left_pressed:
-                self.horizontal -= 1
-            if self.simulation_manager.right_pressed:
-                self.horizontal += 1
-
-            self.simulation_manager.draw_rectangle((500, 500), 333, 666,
-                                                   self.color)
-
-            self.color = (self.color[0] - 1,
-                          self.color[1] - 1,
-                          self.color[2] - 1)
-            if self.color[0] == 0:
-                self.simulation_manager.state_to_call = self.test1
-    simulation = SimulationManager()
-    simulation.launch()

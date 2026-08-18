@@ -7,16 +7,18 @@ class Pacman(Character):
     def __init__(self, lives: int, maze: Maze,
                  super_pacgum_cooldown: int) -> None:
         super().__init__(maze, super_pacgum_cooldown)
-        self.starting_position: tuple[int, int] = self._set_starting_position()
         self.lives: int = lives
+        self._last_move_direction: Direction
         self.reset_last_move_direction()
 
     def _set_starting_position(self) -> tuple[int, int]:
         """Find the starting position of pacman, at the middle if possible"""
         line_pos = (len(self.maze.cases) - 1) // 2
         column_pos = (len(self.maze.cases[0]) - 1) // 2
+
         if self.verif_position(line_pos, column_pos):
             return (line_pos, column_pos)
+
         i = 1
         while True:
             j = 0
@@ -49,7 +51,3 @@ class Pacman(Character):
 
     def reset_last_move_direction(self) -> None:
         self._last_move_direction = Direction.N
-
-
-if __name__ == "__main__":
-    maze = Maze()

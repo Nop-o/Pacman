@@ -54,11 +54,3 @@ class LeaderBoard(Screen):
 
     def event_manager(self) -> bool:  # TODO
         pass
-
-
-if __name__ == "__main__":
-    leaderboard = LeaderBoard()
-    print(f"{leaderboard.scores}: {leaderboard.names}")
-    leaderboard.update_leaderboard(1, 3000, "yohan")
-    leaderboard.add_new_highscore(10000, "nico")
-    print(f"{leaderboard.scores}: {leaderboard.names}")

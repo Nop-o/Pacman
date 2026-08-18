@@ -1,16 +1,30 @@
-from ... import GameState
-from ...entity import Ghost, Pacman
+from ...entity import Ghost, Pokey, Shadow, Speedy, Bashful
 from . import Screen
 
 
 class Level(Screen):
-    # On ne peut pas appeler simulation_manager -> ca fait des circular import,
-    # go importer game_state ?
-    def __init__(self, game_state: GameState) -> None:
-        self.game_state: GameState = game_state
+    def __init__(self) -> None:
+
+        # TODO fix init -> pacman/ghost created here or before ?
         # need fill ghosts and pacman
-        self.ghosts: list[Ghost] = []
-        self.pacman: Pacman
+        self.ghosts: list[Ghost] = [
+            Pokey(
+                self.maze, self.simulation_manager.game_state.pacman,
+                self.simulation_manager.game_state.super_pacgum_cooldown,
+                self.simulation_manager.game_state.algorithm),
+            Bashful(
+                self.maze, self.simulation_manager.game_state.pacman,
+                self.simulation_manager.game_state.super_pacgum_cooldown,
+                self.simulation_manager.game_state.algorithm),
+            Speedy(
+                self.maze, self.simulation_manager.game_state.pacman,
+                self.simulation_manager.game_state.super_pacgum_cooldown,
+                self.simulation_manager.game_state.algorithm),
+            Shadow(
+                self.maze, self.simulation_manager.game_state.pacman,
+                self.simulation_manager.game_state.super_pacgum_cooldown,
+                self.simulation_manager.game_state.algorithm),
+        ]
         # need pacgum, either in list with coord form or object
 
     # TODO Do the turn by calling in order move_pacman, move_ghost, load_maze,

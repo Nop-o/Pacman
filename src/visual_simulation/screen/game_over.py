@@ -1,4 +1,5 @@
-from . import LeaderBoard, Screen
+from .screen import Screen
+from .leaderboard import LeaderBoard
 import pygame
 
 
@@ -20,8 +21,3 @@ class GameOver(Screen):
                     return self.show_leaderboard()
 
         return False
-
-
-if __name__ == "__main__":
-    leaderboard = LeaderBoard()
-    game_over = GameOver(leaderboard)

@@ -1,14 +1,17 @@
 from .entity.character import Character
 from .entity.pacman import Pacman
 from .entity.ghost import Ghost
+from .algorithm import DepthFirstSearch
+from .maze import Maze
+
 
 class GameState:
-    #from .entity import Character, Pacman, Ghost
 
     def __init__(self, pacgum: int, points_per_pacgum: int,
                  points_per_super_pacgum: int, super_pacgum_time: int,
                  points_per_ghost: int, seed: int, level_max_time: int,
-                 pacman: Pacman, ghosts: list[Ghost]) -> None:
+                 pacman: Pacman, ghosts: list[Ghost],
+                 algorithm: DepthFirstSearch, maze: Maze) -> None:
         self.pacgum: int = pacgum
         self.super_pacgum: int = 4
         self.points_per_pacgum: int = points_per_pacgum
@@ -20,6 +23,7 @@ class GameState:
         self.pacman: Pacman = pacman
         self.ghosts: list[Ghost] = ghosts
         self.score: int = 0
+        self.algorithm: DepthFirstSearch = DepthFirstSearch(maze)
 
     def pacman_eat_pacgum(self) -> None:
         """Update pacgum count and score after pacman eats a pacgum"""

@@ -67,12 +67,3 @@ class DepthFirstSearch:
 
     def set_entry(self, entry: tuple[int, int] | None) -> None:
         self._entry = entry
-
-
-if __name__ == "__main__":
-    maze = Maze(5)
-    dfs = DepthFirstSearch(maze)
-    dfs.set_exit((1,1))
-    dfs.set_entry((2, 2))
-    result = dfs.solver()
-    print(result)
