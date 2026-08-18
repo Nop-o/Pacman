@@ -5,7 +5,6 @@ import pygame
 class Victory(Screen):
     def __init__(self, score: int) -> None:
         self.score: int = score
-        self.simulation: SimulationManager = simulation
         self.font: pygame.font.Font = pygame.font.Font(None, 80)
 
     def display_screen(self) -> None:  # TODO
