@@ -21,10 +21,10 @@ class Instructions(Screen):
     def event_manager(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.main_menu()
+                self.go_to_main_menu()
                 return
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    self.main_menu()
+                    self.go_to_main_menu()
                     return

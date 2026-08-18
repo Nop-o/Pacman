@@ -60,10 +60,6 @@ class Victory(Screen):
             user_name_pos[1] + user_name.get_height() + 75
         )
         self.make_button(button_pos, button_text,
-                         self.go_to_leader_bord,
+                         self.go_to_leaderboard,
                          50,
                          20)
-
-    def go_to_leader_bord(self):
-        self.simulation_manager.state_to_call = \
-            self.simulation_manager.screen_manager.leaderboard.display_screen

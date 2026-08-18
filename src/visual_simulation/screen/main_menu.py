@@ -24,7 +24,7 @@ class MainMenu(Screen):
     def event_manager(self) -> None:
         actions: list[Callable] = [
             self.resume_game,
-            self.got_to_leaderboard,
+            self.go_to_leaderboard,
             self.show_instructions,
             self.exit_game,
         ]
@@ -32,8 +32,8 @@ class MainMenu(Screen):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                return False
+                self.exit_game
+                return
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
@@ -50,3 +50,4 @@ class MainMenu(Screen):
 
                 if event.key == pygame.K_RETURN:
                     actions[position]()
+                    return

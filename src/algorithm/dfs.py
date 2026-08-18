@@ -9,14 +9,19 @@ class DepthFirstSearch:
         self.maze: Maze = maze
 
     def solver(self) -> list[tuple[int, int]] | None:
+        entry_ = self.entry
+        exit_ = self.exit
+        if entry_ is None or exit_ is None:
+            raise ValueError("Entry and exit must be set before solving")
+
         parent: dict[tuple[int, int],
-                     tuple[int, int] | None] = {self.entry: None}
-        visited: set[tuple[int, int]] = {self.entry}
-        file: deque[tuple[int, int]] = deque([self.entry])
+                     tuple[int, int] | None] = {entry_: None}
+        visited: set[tuple[int, int]] = {entry_}
+        file: deque[tuple[int, int]] = deque([entry_])
 
         while file:
             current_cell: tuple[int, int] = file.popleft()
-            if current_cell == self.exit:
+            if current_cell == exit_:
                 return self.get_path_way(parent)
             x, y = current_cell
             for neighbor in self.get_neighbors_coord(y, x):

@@ -63,8 +63,8 @@ class SimulationManager():
             if event.type == pygame.KEYDOWN:
                 self.key_pressed = event.unicode
                 if event.key == pygame.K_ESCAPE:
-                    self.active = (
-                        self.screen_manager.pause_menu.display_screen())
+                    self.state_to_call = (
+                        self.screen_manager.pause_menu.display_screen)
                 if (event.key == pygame.K_DELETE or
                         event.key == pygame.K_BACKSPACE):
                     self.delete_pressed = True
@@ -90,7 +90,7 @@ class SimulationManager():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.mouse_click = event.pos
 
-    def reset_event(self):
+    def reset_event(self) -> None:
         self.key_pressed = None
         self.mouse_click = None
         self.delete_pressed = False

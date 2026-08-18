@@ -79,4 +79,4 @@ class Screen(ABC):
             font = self.font
 
         surface = font.render(text, True, color)
-        self.screen.blit(surface, (x, y))
+        self.simulation_manager.screen.blit(surface, (x, y))

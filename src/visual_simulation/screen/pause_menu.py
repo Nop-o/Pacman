@@ -15,10 +15,10 @@ class PauseMenu(Screen):
             simulation_manager=simulation_manager,
             font=font, name_font=name_font)
 
-    def display_screen(self) -> bool:  # TODO
+    def display_screen(self) -> None:  # TODO
         pass
 
-    def event_manager(self) -> bool:
+    def event_manager(self) -> None:
         actions: list[Callable] = [
             self.resume_game,
             self.go_to_main_menu,
@@ -28,8 +28,8 @@ class PauseMenu(Screen):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                return False
+                self.exit_game()
+                return
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
@@ -45,6 +45,5 @@ class PauseMenu(Screen):
                         position = 2
 
                 if event.key == pygame.K_RETURN:
-                    return actions[position]()
-
-        return False
+                    actions[position]()
+                    return
