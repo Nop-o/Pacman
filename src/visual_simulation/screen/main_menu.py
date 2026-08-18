@@ -1,9 +1,14 @@
 from . import Screen
 import pygame
-from typing import Callable
+from typing import Callable, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..simulation_manager import SimulationManager
 
 
 class MainMenu(Screen):
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
+        super().__init__(simulation_manager=simulation_manager)
 
     def show_instructions(self) -> None:  # TODO
         pass

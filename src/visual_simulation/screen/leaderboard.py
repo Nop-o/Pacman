@@ -1,8 +1,13 @@
 from . import Screen
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..simulation_manager import SimulationManager
 
 
 class LeaderBoard(Screen):
-    def __init__(self) -> None:
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
+        super().__init__(simulation_manager=simulation_manager)
         self.scores: dict[int, int] = {}
         self.names: dict[int, str] = {}
         self._init_score()

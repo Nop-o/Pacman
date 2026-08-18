@@ -1,4 +1,13 @@
-class HUD():
+from . import Screen
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..simulation_manager import SimulationManager
+
+
+class HUD(Screen):
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
+        super().__init__(simulation_manager=simulation_manager)
 
     def show_score(self) -> None:  # TODO
         pass

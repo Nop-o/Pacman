@@ -1,10 +1,14 @@
 from . import Screen
 import pygame
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..simulation_manager import SimulationManager
 
 
 class Victory(Screen):
-    def __init__(self, score: int) -> None:
-        self.score: int = score
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
+        super().__init__(simulation_manager=simulation_manager)
         self.font: pygame.font.Font = pygame.font.Font(None, 80)
 
     def display_screen(self) -> None:  # TODO

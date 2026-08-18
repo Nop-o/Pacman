@@ -1,10 +1,16 @@
 from .screen import Screen
 from .leaderboard import LeaderBoard
 import pygame
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..simulation_manager import SimulationManager
 
 
 class GameOver(Screen):
-    def __init__(self, leaderboard: LeaderBoard) -> None:
+    def __init__(self, leaderboard: LeaderBoard,
+                 simulation_manager: "SimulationManager") -> None:
+        super().__init__(simulation_manager=simulation_manager)
         self.leaderboard: LeaderBoard = LeaderBoard
 
     def display_screen(self) -> bool:  # TODO

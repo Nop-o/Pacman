@@ -1,30 +1,15 @@
-from ...entity import Ghost, Pokey, Shadow, Speedy, Bashful
-from . import Screen
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from ..simulation_manager import SimulationManager
 
-class Level(Screen):
-    def __init__(self) -> None:
+class Level:
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
 
         # TODO fix init -> pacman/ghost created here or before ?
         # need fill ghosts and pacman
-        self.ghosts: list[Ghost] = [
-            Pokey(
-                self.maze, self.simulation_manager.game_state.pacman,
-                self.simulation_manager.game_state.super_pacgum_cooldown,
-                self.simulation_manager.game_state.algorithm),
-            Bashful(
-                self.maze, self.simulation_manager.game_state.pacman,
-                self.simulation_manager.game_state.super_pacgum_cooldown,
-                self.simulation_manager.game_state.algorithm),
-            Speedy(
-                self.maze, self.simulation_manager.game_state.pacman,
-                self.simulation_manager.game_state.super_pacgum_cooldown,
-                self.simulation_manager.game_state.algorithm),
-            Shadow(
-                self.maze, self.simulation_manager.game_state.pacman,
-                self.simulation_manager.game_state.super_pacgum_cooldown,
-                self.simulation_manager.game_state.algorithm),
-        ]
+        self.simulation_manager: SimulationManager = simulation_manager
+
         # need pacgum, either in list with coord form or object
 
     # TODO Do the turn by calling in order move_pacman, move_ghost, load_maze,
