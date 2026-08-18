@@ -9,11 +9,11 @@ if TYPE_CHECKING:
 class PauseMenu(Screen):
     def __init__(self, simulation_manager: "SimulationManager",
                  font: pygame.font.Font = pygame.font.Font(None, 80),
-                 name_font: pygame.font.Font = pygame.font.Font(None, 30)
+                 big_font: pygame.font.Font = pygame.font.Font(None, 30)
                  ) -> None:
         super().__init__(
             simulation_manager=simulation_manager,
-            font=font, name_font=name_font)
+            font=font, big_font=big_font)
 
     def display_screen(self) -> bool:  # TODO
         pass

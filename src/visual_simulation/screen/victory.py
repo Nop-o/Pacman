@@ -9,11 +9,11 @@ if TYPE_CHECKING:
 class Victory(Screen):
     def __init__(self, simulation_manager: "SimulationManager",
                  font: pygame.font.Font = pygame.font.Font(None, 80),
-                 name_font: pygame.font.Font = pygame.font.Font(None, 30)
+                 big_font: pygame.font.Font = pygame.font.Font(None, 30)
                  ) -> None:
         super().__init__(
             simulation_manager=simulation_manager,
-            font=font, name_font=name_font)
+            font=font, big_font=big_font)
         self.user_name = ""
 
     def display_screen(self) -> None:
@@ -25,15 +25,15 @@ class Victory(Screen):
         congrat_message = self.font.render(
             "Congratulation", 1, (255, 255, 255)
             )
-        user_name = self.name_font.render(
+        user_name = self.big_font.render(
             self.user_name, 1, (255, 255, 255)
         )
-        input_prompt = self.name_font.render(
+        input_prompt = self.big_font.render(
             "Enter your name to save your score",
             1,
             (255, 255, 255)
         )
-        button_text = self.name_font.render(
+        button_text = self.big_font.render(
             "Save Highscore",
             1,
             (255, 255, 255)

@@ -9,11 +9,11 @@ if TYPE_CHECKING:
 class LeaderBoard(Screen):
     def __init__(self, simulation_manager: "SimulationManager",
                  font: pygame.font.Font = pygame.font.Font(None, 80),
-                 name_font: pygame.font.Font = pygame.font.Font(None, 30)
+                 big_font: pygame.font.Font = pygame.font.Font(None, 30)
                  ) -> None:
         super().__init__(
             simulation_manager=simulation_manager,
-            font=font, name_font=name_font)
+            font=font, big_font=big_font)
         self.scores: dict[int, int] = {}
         self.names: dict[int, str] = {}
         self._init_score()
@@ -49,7 +49,7 @@ class LeaderBoard(Screen):
         self.scores[position] = score
         self.names[position] = name
 
-    def _is_score_in_top_10(self, score: int) -> None:
+    def _is_score_in_top_10(self, score: int) -> bool:
         """Verify if a new score can be in the leaderboard"""
         return score > self.scores[10]
 
@@ -60,8 +60,6 @@ class LeaderBoard(Screen):
                 return i
         return -1
 
-    def display_screen(self) -> None:  # TODO
-        pass
-
-    def event_manager(self) -> None:  # TODO
-        pass
+    def display_screen(self) -> None:
+        self.simulation_manager.screen.fill((0, 0, 0))
+        
