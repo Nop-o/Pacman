@@ -151,9 +151,11 @@
 ###screen
 
 ###  - game_over
-# if __name__ == "__main__":
-#     leaderboard = LeaderBoard()
-#     game_over = GameOver(leaderboard)
+from src.visual_simulation.screen.leaderboard import LeaderBoard
+from src.visual_simulation.screen.game_over import GameOver
+if __name__ == "__main__":
+    leaderboard = LeaderBoard()
+    game_over = GameOver(leaderboard)
 
 ###  - game_play
 # if __name__ == "__main__":
