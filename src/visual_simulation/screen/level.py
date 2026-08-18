@@ -53,8 +53,8 @@ class Level:
     def win_game(self) -> None:
         pass
 
-    def display_screen(self) -> bool:
+    def display_screen(self) -> None:
         pass
 
-    def event_manager(self) -> bool:  # TODO
+    def event_manager(self) -> None:  # TODO
         pass

@@ -13,13 +13,13 @@ class MainMenu(Screen):
     def show_instructions(self) -> None:  # TODO
         pass
 
-    def display_screen(self) -> bool:  # TODO
+    def display_screen(self) -> None:  # TODO
         pass
 
-    def event_manager(self) -> bool:
+    def event_manager(self) -> None:
         actions: list[Callable] = [
             self.resume_game,
-            self.show_leaderboard,
+            self.got_to_leaderboard,
             self.show_instructions,
             self.exit_game,
         ]
@@ -44,6 +44,4 @@ class MainMenu(Screen):
                         position = 3
 
                 if event.key == pygame.K_RETURN:
-                    return actions[position]()
-
-        return False
+                    actions[position]()

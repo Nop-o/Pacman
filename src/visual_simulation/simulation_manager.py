@@ -44,7 +44,7 @@ class SimulationManager():
             if elapsed < self.frame_duration:
                 sleep(self.frame_duration - elapsed)
 
-    def clear_last_frame(self, color: str = "black") -> None:
+    def clear_last_frame(self, color: str = "black") -> None: #useless ?
         """Clear the last frame, recover it with a screen with a color"""
         self.screen.fill(pygame.Color(color))
 

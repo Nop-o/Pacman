@@ -13,17 +13,17 @@ class GameOver(Screen):
         super().__init__(simulation_manager=simulation_manager)
         self.leaderboard: LeaderBoard = LeaderBoard
 
-    def display_screen(self) -> bool:  # TODO
+    def display_screen(self) -> None:  # TODO
         pass
 
-    def event_manager(self) -> bool:
+    def event_manager(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                return False
+                self.exit_game()
+                return
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    return self.show_leaderboard()
+                    self.got_to_leaderboard()
+                    return
 
-        return False

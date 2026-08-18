@@ -43,7 +43,7 @@ class LeaderBoard(Screen):
         self.scores[position] = score
         self.names[position] = name
 
-    def _is_score_in_top_10(self, score: int) -> bool:
+    def _is_score_in_top_10(self, score: int) -> None:
         """Verify if a new score can be in the leaderboard"""
         return score > self.scores[10]
 
@@ -54,8 +54,8 @@ class LeaderBoard(Screen):
                 return i
         return -1
 
-    def display_screen(self) -> bool:  # TODO
+    def display_screen(self) -> None:  # TODO
         pass
 
-    def event_manager(self) -> bool:  # TODO
+    def event_manager(self) -> None:  # TODO
         pass
