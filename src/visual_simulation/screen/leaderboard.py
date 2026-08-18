@@ -62,4 +62,3 @@ class LeaderBoard(Screen):
 
     def display_screen(self) -> None:
         self.simulation_manager.screen.fill((0, 0, 0))
-        
