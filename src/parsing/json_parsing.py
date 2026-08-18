@@ -27,7 +27,8 @@ class JsonParsing:
                 f, object_pairs_hook=JsonParsing._verify_duplicate_keys)
 
         os.remove(temp_file_path)
-
+        if isinstance(file_content, list):
+            file_content = file_content[0]
         return file_content
 
     @staticmethod
