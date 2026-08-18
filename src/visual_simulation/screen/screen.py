@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 
 class Screen(ABC):
     def __init__(self, simulation_manager: "SimulationManager") -> None:
+        self.font
         self.simulation_manager: "SimulationManager" = simulation_manager
 
     @abstractmethod

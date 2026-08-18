@@ -8,9 +8,14 @@ if TYPE_CHECKING:
 
 
 class GameOver(Screen):
-    def __init__(self, leaderboard: LeaderBoard,
-                 simulation_manager: "SimulationManager") -> None:
-        super().__init__(simulation_manager=simulation_manager)
+    def __init__(self, simulation_manager: "SimulationManager",
+                 leaderboard: LeaderBoard,
+                 font: pygame.font.Font = pygame.font.Font(None, 80),
+                 name_font: pygame.font.Font = pygame.font.Font(None, 30)
+                 ) -> None:
+        super().__init__(
+            simulation_manager=simulation_manager,
+            font=font, name_font=name_font)
         self.leaderboard: LeaderBoard = LeaderBoard
 
     def display_screen(self) -> None:  # TODO

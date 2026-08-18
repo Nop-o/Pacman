@@ -7,10 +7,13 @@ if TYPE_CHECKING:
 
 
 class Victory(Screen):
-    def __init__(self, simulation_manager: "SimulationManager") -> None:
-        super().__init__(simulation_manager=simulation_manager)
-        self.font: pygame.font.Font = pygame.font.Font(None, 80)
-        self.name_font: pygame.font.Font = pygame.font.Font(None, 30)
+    def __init__(self, simulation_manager: "SimulationManager",
+                 font: pygame.font.Font = pygame.font.Font(None, 80),
+                 name_font: pygame.font.Font = pygame.font.Font(None, 30)
+                 ) -> None:
+        super().__init__(
+            simulation_manager=simulation_manager,
+            font=font, name_font=name_font)
         self.user_name = ""
 
     def display_screen(self) -> None:

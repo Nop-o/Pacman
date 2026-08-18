@@ -1,13 +1,19 @@
 from . import Screen
 from typing import TYPE_CHECKING
+import pygame
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
 
 
 class HUD(Screen):
-    def __init__(self, simulation_manager: "SimulationManager") -> None:
-        super().__init__(simulation_manager=simulation_manager)
+    def __init__(self, simulation_manager: "SimulationManager",
+                 font: pygame.font.Font = pygame.font.Font(None, 80),
+                 name_font: pygame.font.Font = pygame.font.Font(None, 30)
+                 ) -> None:
+        super().__init__(
+            simulation_manager=simulation_manager,
+            font=font, name_font=name_font)
 
     def show_score(self) -> None:  # TODO
         pass
