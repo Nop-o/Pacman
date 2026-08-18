@@ -181,7 +181,8 @@ if __name__ == "__main__":
     simulation_manager = SimulationManager(json_parsing.file_content)
 
 ###  - game_over
-    # simulation_manager.screen_manager.game_over.display_screen()
+    # simulation_manager.state_to_call = simulation_manager.screen_manager.game_over.display_screen
+    # simulation_manager.launch()
 
 ###  - game_play -> hud + level
     # simulation_manager.screen_manager.game_play.display_screen()
@@ -196,8 +197,5 @@ if __name__ == "__main__":
     # simulation_manager.screen_manager.pause_menu.display_screen()
 
 ###  - victory
-    # while True:
-    #     simulation_manager.screen_manager.victory.display_screen()
-    #     pygame.display.flip()
-    simulation_manager.state_to_call = simulation_manager.screen_manager.victory.display_screen
-    simulation_manager.launch()
+    # simulation_manager.state_to_call = simulation_manager.screen_manager.victory.display_screen
+    # simulation_manager.launch()

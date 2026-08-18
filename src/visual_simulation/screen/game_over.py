@@ -1,5 +1,4 @@
 from .screen import Screen
-from .leaderboard import LeaderBoard
 import pygame
 from typing import TYPE_CHECKING
 
@@ -18,16 +17,54 @@ class GameOver(Screen):
             font=font, name_font=name_font)
         self.leaderboard: LeaderBoard = LeaderBoard
 
-    def display_screen(self) -> None:  # TODO
-        pass
+    def display_screen(self) -> None:
+        if self.simulation_manager.key_pressed is not None:
+            if self.simulation_manager.key_pressed.isprintable():
+                self.user_name += self.simulation_manager.key_pressed
+            if self.simulation_manager.delete_pressed is True:
+                self.user_name = self.user_name[0:-1]
+        congrat_message = self.font.render(
+            "You lost", 1, (255, 255, 255)
+            )
+        user_name = self.name_font.render(
+            self.user_name, 1, (255, 255, 255)
+        )
+        input_prompt = self.name_font.render(
+            "Enter your name to save your score",
+            1,
+            (255, 255, 255)
+        )
+        button_text = self.name_font.render(
+            "Save Highscore",
+            1,
+            (255, 255, 255)
+        )
+        self.simulation_manager.screen.fill((0, 0, 0))
+        congrat_pos = (
+            self.simulation_manager.width // 2 -
+            (congrat_message.get_width() // 2),
+            self.simulation_manager.height // 2 - 100)
+        self.simulation_manager.screen.blit(congrat_message, congrat_pos)
+        prompt_pos = (
+            self.simulation_manager.width // 2 -
+            (input_prompt.get_width() // 2),
+            congrat_pos[1] + 150
+        )
+        self.simulation_manager.screen.blit(input_prompt, prompt_pos)
+        user_name_pos = (
+            self.simulation_manager.width // 2 - (user_name.get_width() // 2),
+            prompt_pos[1] + input_prompt.get_height() + 50
+        )
+        self.simulation_manager.screen.blit(user_name, user_name_pos)
+        button_pos = (
+            self.simulation_manager.width // 2,
+            user_name_pos[1] + user_name.get_height() + 75
+        )
+        self.make_button(button_pos, button_text,
+                         self.go_to_leader_bord,
+                         50,
+                         20)
 
-    def event_manager(self) -> None:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.exit_game()
-                return
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    self.got_to_leaderboard()
-                    return
+    def go_to_leader_bord(self):
+        self.simulation_manager.state_to_call = \
+            self.simulation_manager.screen_manager.leaderboard.display_screen
