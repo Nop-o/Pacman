@@ -12,11 +12,9 @@ class ScreenManager:
         self.leaderboard: LeaderBoard = LeaderBoard(
             simulation_manager=simulation_manager)
         self.game_over: GameOver = GameOver(
-            leaderboard=self.leaderboard,
             simulation_manager=simulation_manager)
         self.hud: HUD = HUD(
             simulation_manager=simulation_manager)
-
         self.game_play: GamePlay = GamePlay(
             level=level, hud=HUD,
             simulation_manager=simulation_manager)
