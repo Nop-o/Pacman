@@ -159,6 +159,7 @@ if __name__ == "__main__":
     from src.visual_simulation.screen.hud import HUD
     from src.visual_simulation.simulation_manager import SimulationManager
     from src.parsing.json_parsing import JsonParsing, JsonData
+    import pygame
     maze = Maze()
     algo = DepthFirstSearch(maze=maze)
     pacman = Pacman(lives=10, maze=maze, super_pacgum_cooldown=10)
@@ -180,7 +181,7 @@ if __name__ == "__main__":
     simulation_manager = SimulationManager(json_parsing.file_content)
 
 ###  - game_over
-    simulation_manager.screen_manager.game_over.display_screen()
+    # simulation_manager.screen_manager.game_over.display_screen()
 
 ###  - game_play -> hud + level
     # simulation_manager.screen_manager.game_play.display_screen()
@@ -195,4 +196,8 @@ if __name__ == "__main__":
     # simulation_manager.screen_manager.pause_menu.display_screen()
 
 ###  - victory
-    # simulation_manager.screen_manager.victory.display_screen()
+    # while True:
+    #     simulation_manager.screen_manager.victory.display_screen()
+    #     pygame.display.flip()
+    simulation_manager.state_to_call = simulation_manager.screen_manager.victory.display_screen
+    simulation_manager.launch()

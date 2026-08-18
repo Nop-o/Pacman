@@ -14,9 +14,11 @@ class Victory(Screen):
         self.user_name = ""
 
     def display_screen(self) -> None:
-        if not self.simulation_manager.key_pressed is None:
+        if self.simulation_manager.key_pressed is not None:
             if self.simulation_manager.key_pressed.isprintable():
                 self.user_name += self.simulation_manager.key_pressed
+            if self.simulation_manager.delete_pressed is True:
+                self.user_name = self.user_name[0:-1]
         congrat_message = self.font.render(
             "Congratulation", 1, (255, 255, 255)
             )
@@ -35,17 +37,18 @@ class Victory(Screen):
         )
         self.simulation_manager.screen.fill((0, 0, 0))
         congrat_pos = (
-            self.simulation_manager.width - (congrat_message.get_width() // 2),
+            self.simulation_manager.width // 2 -
+            (congrat_message.get_width() // 2),
             self.simulation_manager.height // 2 - 100)
         self.simulation_manager.screen.blit(congrat_message, congrat_pos)
         prompt_pos = (
-            self.simulation_manager.width - (input_prompt.get_width() // 2),
+            self.simulation_manager.width // 2 -
+            (input_prompt.get_width() // 2),
             congrat_pos[1] + 150
         )
-        self.simulation_manager.screen.blit\
-            (input_prompt, prompt_pos)
+        self.simulation_manager.screen.blit(input_prompt, prompt_pos)
         user_name_pos = (
-            self.simulation_manager.width - (user_name.get_width() // 2),
+            self.simulation_manager.width // 2 - (user_name.get_width() // 2),
             prompt_pos[1] + input_prompt.get_height() + 50
         )
         self.simulation_manager.screen.blit(user_name, user_name_pos)

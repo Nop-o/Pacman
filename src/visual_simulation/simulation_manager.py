@@ -22,12 +22,14 @@ class SimulationManager():
         self.right_pressed: bool = False
         self.up_pressed: bool = False
         self.down_pressed: bool = False
-        self.key_pressed: str|None = None
-        self.mouse_click: tuple[int, int]|None = None
+        self.delete_pressed = False
+        self.key_pressed: str | None = None
+        self.mouse_click: tuple[int, int] | None = None
 
         self.current_level: Level = Level(self)
         self.game_state: GameState = GameState(**json_data)
-        self.screen_manager: ScreenManager = ScreenManager(self, self.current_level)
+        self.screen_manager: ScreenManager = ScreenManager(
+            self, self.current_level)
         self.state_to_call: Callable = \
             self.screen_manager.main_menu.display_screen
 
@@ -59,10 +61,13 @@ class SimulationManager():
                 pygame.quit()
                 self.active = False
             if event.type == pygame.KEYDOWN:
+                self.key_pressed = event.unicode
                 if event.key == pygame.K_ESCAPE:
                     self.active = (
                         self.screen_manager.pause_menu.display_screen())
-                    self.key_pressed = event.unicode
+                if (event.key == pygame.K_DELETE or
+                        event.key == pygame.K_BACKSPACE):
+                    self.delete_pressed = True
                 if event.key == pygame.K_LEFT:
                     self.left_pressed = True
                 if event.key == pygame.K_RIGHT:
@@ -88,6 +93,7 @@ class SimulationManager():
     def reset_event(self):
         self.key_pressed = None
         self.mouse_click = None
+        self.delete_pressed = False
 
     def draw_rectangle(self, coord: tuple[int, int],
                        width: int, height: int,
