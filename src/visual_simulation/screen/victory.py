@@ -8,7 +8,7 @@ class Victory(Screen):
         self.font: pygame.font.Font = pygame.font.Font(None, 80)
 
     def display_screen(self) -> None:  # TODO
-        self.simulation.screen.fill((0, 0, 0))
+        self.simulation_manager.screen.fill((0, 0, 0))
         congrat_message = self.font.render(
             "Congratulation", 1, (255, 255, 255)
             )
