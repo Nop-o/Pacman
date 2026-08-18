@@ -149,20 +149,6 @@
 #---------------------------
 
 ###screen
-
-###  - game_over - Need to fix Test()
-# from src.visual_simulation.screen.leaderboard import LeaderBoard
-# from src.visual_simulation.screen.game_over import GameOver
-# from src.visual_simulation.simulation_manager import SimulationManager
-# from src.parsing.json_parsing import JsonParsing
-# if __name__ == "__main__":
-#     json_data = JsonParsing("settings.json", "setting.json")
-#     simulation_manager = SimulationManager(json_data=json_data)
-#     leaderboard = LeaderBoard(simulation_manager=simulation_manager)
-#     game_over = GameOver(leaderboard=leaderboard,
-#                          simulation_manager=simulation_manager)
-
-###  - game_play - Need to fix Test()
 if __name__ == "__main__":
     from src.game_state import GameState
     from src.entity.pacman import Pacman
@@ -187,53 +173,26 @@ if __name__ == "__main__":
         maze=maze, pacman=pacman, super_pacgum_cooldown=10, algorithm=algo)
 
     json_parsing = JsonParsing("settings.json")
-    print(json_parsing.file_content[0])
+    print(json_parsing.file_content)
 
-    json_data = JsonData(**json_parsing.file_content[0])
+    json_data = JsonData(**json_parsing.file_content)
     
-    simulation_manager = SimulationManager(json_parsing.file_content[0])
-    simulation_manager.screen_manager.game_play.display_screen()
+    simulation_manager = SimulationManager(json_parsing.file_content)
 
-###  - hud
-# if __name__ == "__main__":
-#     from ... import GameState
-#     from ...entity import Pacman
-#     from ...entity import Ghost, Bashful, Shadow, Speedy, Pokey
-#     from ...maze import Maze
-#     from ...algorithm import DepthFirstSearch
-#     from . import Level
-#     maze = Maze()
-#     algo = DepthFirstSearch(maze=maze)
-#     pacman = Pacman(lives=10, maze=maze, super_pacgum_cooldown=10)
-#     ghost_1 = Bashful(maze=maze, starting_position=(10, 10), pacman=pacman,
-#                     super_pacgum_cooldown=10, algorithm=algo)
-#     ghost_2 = Shadow(maze=maze, starting_position=(11, 11), pacman=pacman,
-#                     super_pacgum_cooldown=10, algorithm=algo)
-#     ghost_3 = Speedy(maze=maze, starting_position=(12, 12), pacman=pacman,
-#                     super_pacgum_cooldown=10, algorithm=algo)
-#     ghost_4 = Pokey(maze=maze, starting_position=(13, 13), pacman=pacman,
-#                     super_pacgum_cooldown=10, algorithm=algo)
-#     game_state = GameState(pacgum=10, points_per_pacgum=100,
-#                            points_per_super_pacgum=10, super_pacgum_cooldown=10,
-#                            points_per_ghost=1000, seed=42, level_max_time=200,
-#                            pacman=pacman,
-#                            ghosts=[ghost_1, ghost_2, ghost_2, ghost_4])
-#     hud = HUD(game_state=game_state)
+###  - game_over
+    simulation_manager.screen_manager.game_over.display_screen()
+
+###  - game_play -> hud + level
+    # simulation_manager.screen_manager.game_play.display_screen()
 
 ###  - leaderboard
-# if __name__ == "__main__":
-#     leaderboard = LeaderBoard()
-#     print(f"{leaderboard.scores}: {leaderboard.names}")
-#     leaderboard.update_leaderboard(1, 3000, "yohan")
-#     leaderboard.add_new_highscore(10000, "nico")
-#     print(f"{leaderboard.scores}: {leaderboard.names}")
+    # simulation_manager.screen_manager.leaderboard.display_screen()
 
-###  - level
 ###  - main_menu
+    # simulation_manager.screen_manager.main_menu.display_screen()
+
 ###  - pause_menu
-###  - screen
+    # simulation_manager.screen_manager.pause_menu.display_screen()
+
 ###  - victory
-if __name__ == "__main__":
-    from src.visual_simulation.screen.victory import Victory
-    victory = Victory(5555)
-    victory.display_screen()
+    # simulation_manager.screen_manager.victory.display_screen()
