@@ -22,10 +22,18 @@ class Screen(ABC):
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.game_play.display_screen
 
-    def show_victory_screen(self) -> None:
+    def go_to_victory_screen(self) -> None:
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.victory.display_screen
 
     def start_game(self) -> None:
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.game_play.display_screen
+
+    def exit_game(self) -> None:
+        self.simulation_manager.state_to_call = \
+            self.simulation_manager.screen_manager.game_over.display_screen
+
+    def go_to_leaderboard(self) -> None:
+        self.simulation_manager.state_to_call = \
+            self.simulation_manager.screen_manager.leaderboard.display_screen
