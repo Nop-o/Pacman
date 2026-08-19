@@ -18,6 +18,7 @@ class Main:
             json_parsing = JsonParsing(sys.argv[1])
             simulation_manager = SimulationManager(json_parsing.file_content)
             simulation_manager.launch()
+            simulation_manager.screen_manager.leaderboard.export_highscore()
 
         except ValidationError as e:
             print(e.errors()[0]["msg"].replace("Value error, ", ""))

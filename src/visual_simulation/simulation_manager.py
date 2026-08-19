@@ -31,13 +31,15 @@ class SimulationManager():
         self.screen_manager: ScreenManager = ScreenManager(
             self, self.current_level)
         self.state_to_call: Callable = \
-            self.screen_manager.victory.display_screen
+            self.screen_manager.main_menu.display_screen
 
     def launch(self) -> None:
         while self.active:
             start_time = time()
 
             self.event_manager()
+            if not self.active:
+                break
             self.state_to_call()
             self.display_on_screen()
             self.reset_event()

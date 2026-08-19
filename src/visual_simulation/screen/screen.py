@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import pygame
 
-from typing import TYPE_CHECKING, Callable, Any
+from typing import TYPE_CHECKING, Callable
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
@@ -86,11 +86,15 @@ class Screen(ABC):
                 action()
 
     def draw_text(self, text: str, x: int, y: int,
-                  color: pygame.Color = pygame.Color("gray44"),
-                  font: Any = None) -> None:
+                  color: pygame.Color = pygame.Color("white"),
+                  font: pygame.font.Font | None = None,
+                  center: bool = True) -> None:
         """Draw text into the simulation"""
         if font is None:
             font = self.font
 
         surface = font.render(text, True, color)
+        if center:
+            x -= surface.get_width() // 2
+            y -= surface.get_height() // 2
         self.simulation_manager.screen.blit(surface, (x, y))

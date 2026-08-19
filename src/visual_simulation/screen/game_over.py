@@ -22,18 +22,18 @@ class GameOver(Screen):
                 self.user_name += self.simulation_manager.key_pressed
             if self.simulation_manager.delete_pressed is True:
                 self.user_name = self.user_name[0:-1]
-        congrat_message = self.font.render(
+        congrat_message = self.big_font.render(
             "You lost", 1, (255, 255, 255)
             )
-        user_name = self.big_font.render(
+        user_name = self.font.render(
             self.user_name, 1, (255, 255, 255)
         )
-        input_prompt = self.big_font.render(
+        input_prompt = self.font.render(
             "Enter your name to save your score",
             1,
             (255, 255, 255)
         )
-        button_text = self.big_font.render(
+        button_text = self.font.render(
             "Save Highscore",
             1,
             (255, 255, 255)
@@ -64,6 +64,11 @@ class GameOver(Screen):
                          self.leaderboard_screen,
                          50,
                          20)
+
+    def button_action(self) -> None:
+        self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
+            self.simulation_manager.game_state.score, self.user_name)
+        self.go_to_leaderboard()
 
     def screen_selector(self) -> None:
         for event in pygame.event.get():

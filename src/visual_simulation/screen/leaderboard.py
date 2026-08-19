@@ -1,6 +1,7 @@
 from . import Screen
 from typing import TYPE_CHECKING
 import pygame
+import json
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
@@ -16,10 +17,7 @@ class LeaderBoard(Screen):
             font=font, big_font=big_font)
         self.scores: dict[int, int] = {}
         self.names: dict[int, str] = {}
-        self._init_score()
-
-    def display_leaderboard(self) -> None:  # TODO
-        pass
+        self._import_highscore()
 
     def _init_score(self) -> None:
         """Initialize the leaderboard"""
@@ -62,6 +60,45 @@ class LeaderBoard(Screen):
 
     def display_screen(self) -> None:
         self.simulation_manager.screen.fill((0, 0, 0))
+        self.draw_text("PAC-MAN",
+                       self.simulation_manager.width // 2,
+                       100,
+                       pygame.Color("yellow"),
+                       self.big_font)
+        self.draw_text("Push SPACE to play",
+                       self.simulation_manager.width // 2,
+                       350)
+        self.draw_text("highscore:",
+                       self.simulation_manager.width // 2,
+                       400)
+        y = 400 + (self.font.get_height() * 2)
+        for i in range(1, 11, 1):
+            self.draw_text(f"{i + 1}. {self.names[i]} - "
+                           f"{self.scores[i]} pts",
+                           self.simulation_manager.width // 2,
+                           y,)
+            y += self.font.get_height() * 2
+
+    def export_highscore(self):
+        with open("scores/highscore.json", "w") as file:
+            file.write(json.dumps(self.scores))
+        with open("scores/highscore_name.json", "w") as file:
+            file.write(json.dumps(self.names))
+
+    def _import_highscore(self):
+        try:
+            with open("scores/highscore.json", "r") as file:
+                raw_scores = json.loads(file.read())
+                self.scores = {int(k): v for k, v in raw_scores.items()}
+            with open("scores/highscore_name.json", "r") as file:
+                raw_names = json.loads(file.read())
+                self.names = {int(k): v for k, v in raw_names.items()}
+        except FileNotFoundError:
+            self._init_score()
+
+    def event_manager(self) -> None:
+        if self.simulation_manager.key_pressed == " ":
+            self.start_game()
 
     def screen_selector(self) -> None:
         for event in pygame.event.get():
