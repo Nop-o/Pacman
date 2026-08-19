@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 class PauseMenu(Screen):
     def __init__(self, simulation_manager: "SimulationManager",
-                 font: pygame.font.Font = None,
-                 big_font: pygame.font.Font = None
+                 font: pygame.font.Font | None= None,
+                 big_font: pygame.font.Font | None = None
                  ) -> None:
         super().__init__(
             simulation_manager=simulation_manager,
