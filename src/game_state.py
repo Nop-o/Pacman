@@ -25,6 +25,9 @@ class GameState:
         self.maze: Maze = Maze(seed)
         self.algorithm: DepthFirstSearch = DepthFirstSearch(self.maze)
 
+        self.is_game_over: bool = False
+        self.is_game_won: bool = False
+
         self.pacman: Pacman = Pacman(lives, self.maze, super_pacgum_cooldown)
         self.ghosts: list[Ghost] = [
             Pokey(self.maze, self.pacman, self.super_pacgum_cooldown,
