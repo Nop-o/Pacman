@@ -68,7 +68,7 @@ class GameOver(Screen):
     def button_action(self) -> None:
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
             self.simulation_manager.game_state.score, self.user_name)
-        self.go_to_leaderboard()
+        self.leaderboard_screen()
 
     def screen_selector(self) -> None:
         for event in pygame.event.get():

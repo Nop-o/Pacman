@@ -61,31 +61,31 @@ class LeaderBoard(Screen):
     def display_screen(self) -> None:
         self.simulation_manager.screen.fill((0, 0, 0))
         self.draw_text("PAC-MAN",
-                       self.simulation_manager.width // 2,
+                       self.simulation_manager.screen_width // 2,
                        100,
                        pygame.Color("yellow"),
                        self.big_font)
         self.draw_text("Push SPACE to play",
-                       self.simulation_manager.width // 2,
+                       self.simulation_manager.screen_width // 2,
                        350)
         self.draw_text("highscore:",
-                       self.simulation_manager.width // 2,
+                       self.simulation_manager.screen_width // 2,
                        400)
         y = 400 + (self.font.get_height() * 2)
         for i in range(1, 11, 1):
             self.draw_text(f"{i + 1}. {self.names[i]} - "
                            f"{self.scores[i]} pts",
-                           self.simulation_manager.width // 2,
+                           self.simulation_manager.screen_width // 2,
                            y,)
             y += self.font.get_height() * 2
 
-    def export_highscore(self):
+    def export_highscore(self) -> None:
         with open("scores/highscore.json", "w") as file:
             file.write(json.dumps(self.scores))
         with open("scores/highscore_name.json", "w") as file:
             file.write(json.dumps(self.names))
 
-    def _import_highscore(self):
+    def _import_highscore(self) -> None:
         try:
             with open("scores/highscore.json", "r") as file:
                 raw_scores = json.loads(file.read())
@@ -98,7 +98,7 @@ class LeaderBoard(Screen):
 
     def event_manager(self) -> None:
         if self.simulation_manager.key_pressed == " ":
-            self.start_game()
+            self.game_play_screen()
 
     def screen_selector(self) -> None:
         for event in pygame.event.get():
