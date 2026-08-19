@@ -64,7 +64,7 @@ class GameOver(Screen):
                          50,
                          20)
 
-    def button_action(self):
+    def button_action(self) -> None:
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
             self.simulation_manager.game_state.score, self.user_name)
         self.go_to_leaderboard()

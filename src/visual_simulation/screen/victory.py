@@ -19,7 +19,7 @@ class Victory(Screen):
     def display_screen(self) -> None:
         if self.simulation_manager.key_pressed is not None:
             if self.simulation_manager.key_pressed.isprintable() and \
-                len(self.user_name) < 10:
+                 len(self.user_name) < 10:
                 self.user_name += self.simulation_manager.key_pressed
             if self.simulation_manager.delete_pressed is True:
                 self.user_name = self.user_name[0:-1]
@@ -65,7 +65,7 @@ class Victory(Screen):
                          50,
                          20)
 
-    def button_action(self):
+    def button_action(self) -> None:
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
             self.simulation_manager.game_state.score, self.user_name)
         self.go_to_leaderboard()

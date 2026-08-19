@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import pygame
 
-from typing import TYPE_CHECKING, Callable, Any
+from typing import TYPE_CHECKING, Callable
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager

@@ -78,8 +78,6 @@ class LeaderBoard(Screen):
                            y,)
             y += self.font.get_height() * 2
 
-
-    def event_manager(self):
+    def event_manager(self) -> None:
         if self.simulation_manager.key_pressed == " ":
             self.start_game()
-
