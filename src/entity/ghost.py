@@ -3,7 +3,7 @@ from . import Character
 from ..algorithm.dfs import DepthFirstSearch
 import random
 from ..maze import Maze, Direction
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class Ghost(Character, ABC):
@@ -13,24 +13,34 @@ class Ghost(Character, ABC):
         super().__init__(maze, super_pacgum_cooldown)
         self.pacman: Pacman = pacman
 
+        self.freeze: bool = False
         self.algorithm: DepthFirstSearch = algorithm
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
+
+    @abstractmethod
+    def get_goal(self) -> tuple[int, int]:
+        """Decide if the ghost run away or chase pacman"""
+        ...
 
     def reset_starting_position(self) -> None:
         """Reset the position of an entity to his starting position"""
         self.line_pos, self.column_pos = self.starting_position
 
     def change_exit_position(self, new_goal: tuple[int, int]) -> None:
+        """Update exit position"""
         self.algorithm.set_exit(new_goal)
 
     def change_entry_position(self) -> None:
+        """Update entry position"""
         self.algorithm.set_entry((self.line_pos, self.column_pos))
 
     def find_shortest_path_to_exit(self) -> None:
+        """Update solver"""
         self._shortest_path_to_goal = self.algorithm.solver()
 
     @property
     def shortest_path_to_goal(self) -> list[tuple[int, int]] | None:
+        """Get _shortest_path_to_goal"""
         if self._shortest_path_to_goal is None:
             raise ValueError(
                 f"{type(self).__name__} doesn't have a path to its goal")
@@ -38,6 +48,7 @@ class Ghost(Character, ABC):
         return self._shortest_path_to_goal
 
     def run_away(self) -> tuple[int, int]:
+        """Update exit position to the furthest corner of the maze"""
         if self.pacman.line_pos <= len(self.maze.cases) // 2:
             if self.pacman.column_pos <= len(self.maze.cases[0]) // 2:
                 return (0, 0)
@@ -50,6 +61,7 @@ class Ghost(Character, ABC):
                 return (self.maze.nb_line - 1, self.maze.nb_column - 1)
 
     def chase_pacman(self) -> tuple[int, int]:
+        """Update exit position to pacman position"""
         return (self.pacman.line_pos, self.pacman.column_pos)
 
 
@@ -61,6 +73,7 @@ class Shadow(Ghost):  # red chase
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
     def get_goal(self) -> tuple[int, int]:
+        """Overwrite the abstract method of Ghost class"""
         if self.state == Character.State.RUNNING:
             return self.run_away()
 
@@ -78,6 +91,7 @@ class Speedy(Ghost):  # pink flank
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
     def get_goal(self) -> tuple[int, int]:
+        """Overwrite the abstract method of Ghost class"""
         if self.state == Character.State.RUNNING:
             return self.run_away()
 
@@ -104,6 +118,7 @@ class Bashful(Ghost):  # cyan random
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
     def get_goal(self) -> tuple[int, int]:
+        """Overwrite the abstract method of Ghost class"""
         if self.state == Character.State.RUNNING:
             return self.run_away()
 
@@ -126,6 +141,13 @@ class Pokey(Ghost):  # orange chase + run away
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
+    def get_goal(self) -> tuple[int, int]:
+        """Overwrite the abstract method of Ghost class"""
+        if self.state == Character.State.RUNNING or self.is_pacman_too_close():
+            return self.run_away()
+        else:
+            return self.chase_pacman()
+
     def is_pacman_too_close(self) -> bool:
         if (self.line_pos - self.pacman.line_pos < 3 and
            self.line_pos - self.pacman.line_pos > -3):
@@ -133,12 +155,6 @@ class Pokey(Ghost):  # orange chase + run away
                self.column_pos - self.pacman.column_pos > -3):
                 return True
         return False
-
-    def get_goal(self) -> tuple[int, int]:
-        if self.state == Character.State.RUNNING or self.is_pacman_too_close():
-            return self.run_away()
-        else:
-            return self.chase_pacman()
 
     def _set_starting_position(self) -> tuple[int, int]:
         return (self.maze.nb_line, self.maze.nb_column)
