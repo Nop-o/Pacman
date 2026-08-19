@@ -13,9 +13,9 @@ class SimulationManager():
 
         self.fps: int = 60
         self.frame_duration: float = 1.0 / self.fps
-        self.height: int = 1000
-        self.width: int = 1500
-        self.screen: pygame.Surface = pygame.display.set_mode((1500, 1000))
+        self.screen_height: int
+        self.screen_width: int
+        self.screen: pygame.Surface = self._adjust_screen_size()
         self.active: bool = True
 
         self.left_pressed: bool = False
@@ -46,6 +46,20 @@ class SimulationManager():
             if elapsed < self.frame_duration:
                 sleep(self.frame_duration - elapsed)
 
+    @staticmethod
+    def mlx_get_screen_size() -> tuple[int, int]:
+        info = pygame.display.Info()
+        return info.current_w, info.current_h
+
+    def _adjust_screen_size(self) -> pygame.Surface:
+        """Resize the pygame window so it fits within the physical display."""
+        screen_height, screen_width = self.mlx_get_screen_size()
+
+        self.screen_height = screen_height
+        self.screen_width = screen_width
+
+        return pygame.display.set_mode((screen_height, screen_width))
+
     def clear_last_frame(self, color: str = "black") -> None:  # useless ?
         """Clear the last frame, recover it with a screen with a color"""
         self.screen.fill(pygame.Color(color))
@@ -60,11 +74,13 @@ class SimulationManager():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 self.active = False
+
             if event.type == pygame.KEYDOWN:
                 self.key_pressed = event.unicode
                 if event.key == pygame.K_ESCAPE:
                     self.state_to_call = (
                         self.screen_manager.pause_menu.display_screen)
+
                 if (event.key == pygame.K_DELETE or
                         event.key == pygame.K_BACKSPACE):
                     self.delete_pressed = True
