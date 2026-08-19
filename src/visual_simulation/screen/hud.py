@@ -27,5 +27,9 @@ class HUD(Screen):
     def show_timer(self) -> None:  # TODO
         pass
 
-    def display_screen(self) -> None:  # TODO
-        pass
+    def display_screen(self) -> None:
+        self.simulation_manager.screen.fill(())
+        self.show_score()
+        self.show_lives()
+        self.show_level()
+        self.show_timer()

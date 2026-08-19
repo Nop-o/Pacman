@@ -14,6 +14,7 @@ class MainMenu(Screen):
         super().__init__(
             simulation_manager=simulation_manager,
             font=font, big_font=big_font)
+        self.current_choice_position: int = 0
 
     def show_instructions(self) -> None:  # TODO
         pass
@@ -21,33 +22,32 @@ class MainMenu(Screen):
     def display_screen(self) -> None:  # TODO
         pass
 
-    def event_manager(self) -> None:
+    def screen_selector(self) -> None:
         actions: list[Callable] = [
-            self.resume_game,
-            self.go_to_leaderboard,
+            self.game_play_screen,
+            self.leaderboard_screen,
             self.show_instructions,
             self.exit_game,
         ]
-        position: int = 0
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.exit_game
+                self.exit_game()
                 return
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
-                    if position < 3:
-                        position = position + 1
+                    if self.current_choice_position < 3:
+                        self.current_choice_position += 1
                     else:
-                        position = 0
+                        self.current_choice_position = 0
 
                 if event.key == pygame.K_UP:
-                    if position > 0:
-                        position = position - 1
+                    if self.current_choice_position > 0:
+                        self.current_choice_position -= 1
                     else:
-                        position = 3
+                        self.current_choice_position = 3
 
                 if event.key == pygame.K_RETURN:
-                    actions[position]()
+                    actions[self.current_choice_position]()
                     return

@@ -18,13 +18,13 @@ class Instructions(Screen):
     def display_screen(self) -> None:  # TODO
         pass
 
-    def event_manager(self) -> None:
+    def screen_selector(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.go_to_main_menu()
+                self.exit_game()
                 return
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    self.go_to_main_menu()
+                    self.main_menu_screen()
                     return

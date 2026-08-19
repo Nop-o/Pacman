@@ -21,8 +21,21 @@ class GamePlay(Screen):
         self.hud: HUD = hud
 
     def display_screen(self) -> None:
+        if self.simulation_manager.game_state.is_game_over:
+            self.game_over_screen()
+        if self.simulation_manager.game_state.is_game_won:
+            self.victory_screen()
+
         self.level.display_screen()
         self.hud.display_screen()
 
-    def event_manager(self) -> None:  # TODO
-        pass
+    def screen_selector(self) -> None:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.exit_game()
+                return
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.pause_screen
+                    return

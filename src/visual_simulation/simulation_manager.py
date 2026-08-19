@@ -93,6 +93,27 @@ class SimulationManager():
                 if event.key == pygame.K_UP:
                     self.up_pressed = True
 
+            if (self.state_to_call ==
+               self.screen_manager.game_play.display_screen):
+                self.screen_manager.game_play.screen_selector()
+            elif (self.state_to_call ==
+                  self.screen_manager.main_menu.display_screen):
+                self.screen_manager.main_menu.screen_selector()
+            elif (self.state_to_call ==
+                  self.screen_manager.pause_menu.display_screen):
+                self.screen_manager.pause_menu.screen_selector()
+            elif (self.state_to_call ==
+                  self.screen_manager.game_over.display_screen):
+                self.screen_manager.game_over.screen_selector()
+            elif (self.state_to_call ==
+                  self.screen_manager.victory.display_screen):
+                self.screen_manager.victory.screen_selector()
+            elif (self.state_to_call ==
+                  self.screen_manager.instructions.display_screen):
+                self.screen_manager.instructions.screen_selector()
+            else:
+                self.screen_manager.leaderboard.screen_selector()
+
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     self.left_pressed = False

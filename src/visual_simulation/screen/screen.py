@@ -24,29 +24,36 @@ class Screen(ABC):
     @abstractmethod
     def display_screen(self) -> None: ...
 
-    def go_to_main_menu(self) -> None:
+    def main_menu_screen(self) -> None:
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.main_menu.display_screen
 
-    def resume_game(self) -> None:
-        self.simulation_manager.state_to_call = \
-            self.simulation_manager.screen_manager.game_play.display_screen
-
-    def go_to_victory_screen(self) -> None:
+    def victory_screen(self) -> None:
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.victory.display_screen
 
-    def start_game(self) -> None:
-        self.simulation_manager.state_to_call = \
-            self.simulation_manager.screen_manager.game_play.display_screen
-
-    def exit_game(self) -> None:
+    def game_over_screen(self) -> None:
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.game_over.display_screen
 
-    def go_to_leaderboard(self) -> None:
+    def game_play_screen(self) -> None:
+        self.simulation_manager.state_to_call = \
+            self.simulation_manager.screen_manager.game_play.display_screen
+
+    def leaderboard_screen(self) -> None:
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.leaderboard.display_screen
+
+    def pause_screen(self) -> None:
+        self.simulation_manager.state_to_call = \
+            self.simulation_manager.screen_manager.pause_menu.display_screen
+
+    def instructions_screen(self) -> None:
+        self.simulation_manager.state_to_call = \
+            self.simulation_manager.screen_manager.instructions.display_screen
+
+    def exit_game(self) -> None:
+        self.simulation_manager.active = False
 
     def make_button(self,
                     pos: tuple[int, int],

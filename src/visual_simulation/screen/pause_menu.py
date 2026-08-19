@@ -14,17 +14,17 @@ class PauseMenu(Screen):
         super().__init__(
             simulation_manager=simulation_manager,
             font=font, big_font=big_font)
+        self.current_choice_position: int = 0
 
     def display_screen(self) -> None:  # TODO
         pass
 
-    def event_manager(self) -> None:
+    def screen_selector(self) -> None:
         actions: list[Callable] = [
-            self.resume_game,
-            self.go_to_main_menu,
+            self.game_play_screen,
+            self.main_menu_screen,
             self.exit_game,
         ]
-        position: int = 0
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -33,17 +33,17 @@ class PauseMenu(Screen):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
-                    if position < 2:
-                        position = position + 1
+                    if self.current_choice_position < 2:
+                        self.current_choice_position += 1
                     else:
-                        position = 0
+                        self.current_choice_position = 0
 
                 if event.key == pygame.K_UP:
-                    if position > 0:
-                        position = position - 1
+                    if self.current_choice_position > 0:
+                        self.current_choice_position -= 1
                     else:
-                        position = 2
+                        self.current_choice_position = 2
 
                 if event.key == pygame.K_RETURN:
-                    actions[position]()
+                    actions[self.current_choice_position]()
                     return

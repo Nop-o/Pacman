@@ -63,3 +63,14 @@ class Victory(Screen):
                          self.go_to_leaderboard,
                          50,
                          20)
+
+    def screen_selector(self) -> None:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.exit_game()
+                return
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.pause_screen
+                    return

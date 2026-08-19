@@ -62,3 +62,9 @@ class LeaderBoard(Screen):
 
     def display_screen(self) -> None:
         self.simulation_manager.screen.fill((0, 0, 0))
+
+    def screen_selector(self) -> None:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.exit_game()
+                return
