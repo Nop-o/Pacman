@@ -79,7 +79,7 @@ class Screen(ABC):
                 action()
 
     def draw_text(self, text: str, x: int, y: int,
-                  color: pygame.Color = pygame.Color("gray44"),
+                  color: pygame.Color = pygame.Color("white"),
                   font: pygame.font.Font | None = None,
                   center: bool = True) -> None:
         """Draw text into the simulation"""

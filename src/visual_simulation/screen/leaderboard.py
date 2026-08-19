@@ -18,9 +18,6 @@ class LeaderBoard(Screen):
         self.names: dict[int, str] = {}
         self._init_score()
 
-    def display_leaderboard(self) -> None:  # TODO
-        pass
-
     def _init_score(self) -> None:
         """Initialize the leaderboard"""
         for i in range(1, 11, 1):
@@ -62,3 +59,27 @@ class LeaderBoard(Screen):
 
     def display_screen(self) -> None:
         self.simulation_manager.screen.fill((0, 0, 0))
+        self.draw_text("PAC-MAN",
+                       self.simulation_manager.width // 2,
+                       100,
+                       pygame.Color("yellow"),
+                       self.big_font)
+        self.draw_text("Push SPACE to play",
+                       self.simulation_manager.width // 2,
+                       350)
+        self.draw_text("highscore:",
+                       self.simulation_manager.width // 2,
+                       400)
+        y = 400 + (self.font.get_height() * 2)
+        for i in range(10):
+            self.draw_text(f"{i + 1}. {self.names[i + 1]} - "
+                           f"{self.scores[i + 1]} pts",
+                           self.simulation_manager.width // 2,
+                           y,)
+            y += self.font.get_height() * 2
+
+
+    def event_manager(self):
+        if self.simulation_manager.key_pressed == " ":
+            self.start_game()
+
