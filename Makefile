@@ -1,6 +1,7 @@
 PYTHON := python3
 SRC_DIR := src
 VENV := .venv
+ARG ?= config.json
 
 .DEFAULT_GOAL := help
 
@@ -21,10 +22,10 @@ install:
 	uv sync
 
 run: install
-	uv run $(PYTHON) -m $(SRC_DIR)
+	uv run $(PYTHON) -m $(SRC_DIR) $(ARG)
 
 debug: install
-	uv run $(PYTHON) -m pdb -m $(SRC_DIR)
+	uv run $(PYTHON) -m pdb -m $(SRC_DIR) $(ARG)
 
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} +
