@@ -1,7 +1,7 @@
 import sys
 from pydantic import ValidationError
 from .parsing import JsonParsing
-from .maze import Maze
+from .visual_simulation import SimulationManager
 import json
 
 
@@ -16,9 +16,8 @@ class Main:
 
         try:
             json_parsing = JsonParsing(sys.argv[1])
-            print(json_parsing.file_content)
-            maze = Maze(json_parsing.file_content[0]["seed"])
-            print(maze)
+            simulation_manager = SimulationManager(json_parsing.file_content)
+            simulation_manager.launch()
 
         except ValidationError as e:
             print(e.errors()[0]["msg"].replace("Value error, ", ""))
