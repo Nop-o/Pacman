@@ -40,27 +40,28 @@ class Victory(Screen):
         )
         self.simulation_manager.screen.fill((0, 0, 0))
         congrat_pos = (
-            self.simulation_manager.width // 2 -
+            self.simulation_manager.screen_width // 2 -
             (congrat_message.get_width() // 2),
-            self.simulation_manager.height // 2 - 100)
+            self.simulation_manager.screen_height // 2 - 100)
         self.simulation_manager.screen.blit(congrat_message, congrat_pos)
         prompt_pos = (
-            self.simulation_manager.width // 2 -
+            self.simulation_manager.screen_width // 2 -
             (input_prompt.get_width() // 2),
             congrat_pos[1] + 150
         )
         self.simulation_manager.screen.blit(input_prompt, prompt_pos)
         user_name_pos = (
-            self.simulation_manager.width // 2 - (user_name.get_width() // 2),
+            self.simulation_manager.screen_width // 2 - (
+                user_name.get_width() // 2),
             prompt_pos[1] + input_prompt.get_height() + 50
         )
         self.simulation_manager.screen.blit(user_name, user_name_pos)
         button_pos = (
-            self.simulation_manager.width // 2,
+            self.simulation_manager.screen_width // 2,
             user_name_pos[1] + user_name.get_height() + 75
         )
         self.make_button(button_pos, button_text,
-                         self.go_to_leaderboard,
+                         self.leaderboard_screen,
                          50,
                          20)
 
