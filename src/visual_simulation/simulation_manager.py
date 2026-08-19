@@ -72,7 +72,9 @@ class SimulationManager():
         pygame.display.flip()
 
     def event_manager(self) -> None:
-        for event in pygame.event.get():
+        events = pygame.event.get()
+
+        for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 self.active = False
@@ -96,27 +98,6 @@ class SimulationManager():
                 if event.key == pygame.K_UP:
                     self.up_pressed = True
 
-            if (self.state_to_call ==
-               self.screen_manager.game_play.display_screen):
-                self.screen_manager.game_play.screen_selector()
-            elif (self.state_to_call ==
-                  self.screen_manager.main_menu.display_screen):
-                self.screen_manager.main_menu.screen_selector()
-            elif (self.state_to_call ==
-                  self.screen_manager.pause_menu.display_screen):
-                self.screen_manager.pause_menu.screen_selector()
-            elif (self.state_to_call ==
-                  self.screen_manager.game_over.display_screen):
-                self.screen_manager.game_over.screen_selector()
-            elif (self.state_to_call ==
-                  self.screen_manager.victory.display_screen):
-                self.screen_manager.victory.screen_selector()
-            elif (self.state_to_call ==
-                  self.screen_manager.instructions.display_screen):
-                self.screen_manager.instructions.screen_selector()
-            else:
-                self.screen_manager.leaderboard.screen_selector()
-
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     self.left_pressed = False
@@ -129,6 +110,23 @@ class SimulationManager():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.mouse_click = event.pos
+
+        function_to_call = self._get_matching_screen()
+        function_to_call.screen_selector(events)
+
+    def _get_matching_screen(self) -> Any:
+        screens = (
+            self.screen_manager.game_play,
+            self.screen_manager.main_menu,
+            self.screen_manager.pause_menu,
+            self.screen_manager.game_over,
+            self.screen_manager.victory,
+            self.screen_manager.instructions,
+            self.screen_manager.leaderboard
+        )
+        return next(
+            (screen for screen in screens
+             if self.state_to_call == screen.display_screen))
 
     def reset_event(self) -> None:
         self.key_pressed = None
