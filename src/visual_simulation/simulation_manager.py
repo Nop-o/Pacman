@@ -10,12 +10,12 @@ class SimulationManager():
     def __init__(self, json_data: dict[str, Any]) -> None:
         pygame.init()
         pygame.display.set_caption("Pac-Man")
+
         self.fps: int = 60
         self.frame_duration: float = 1.0 / self.fps
         self.height: int = 1000
         self.width: int = 1500
         self.screen: pygame.Surface = pygame.display.set_mode((1500, 1000))
-        # TODO set basic function to main menu
         self.active: bool = True
 
         self.left_pressed: bool = False

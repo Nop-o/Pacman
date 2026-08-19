@@ -11,6 +11,8 @@ class Pacman(Character):
         self._last_move_direction: Direction
         self.reset_last_move_direction()
 
+        self.invincible: bool = False
+
     def _set_starting_position(self) -> tuple[int, int]:
         """Find the starting position of pacman, at the middle if possible"""
         line_pos = (len(self.maze.cases) - 1) // 2
