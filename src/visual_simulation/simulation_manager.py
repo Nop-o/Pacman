@@ -76,6 +76,7 @@ class SimulationManager():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 self.active = False
+                break
 
             if event.type == pygame.KEYDOWN:
                 self.key_pressed = event.unicode
