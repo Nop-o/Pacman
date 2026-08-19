@@ -38,6 +38,8 @@ class SimulationManager():
             start_time = time()
 
             self.event_manager()
+            if not self.active:
+                break
             self.state_to_call()
             self.display_on_screen()
             self.reset_event()
@@ -60,6 +62,7 @@ class SimulationManager():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 self.active = False
+                return
             if event.type == pygame.KEYDOWN:
                 self.key_pressed = event.unicode
                 if event.key == pygame.K_ESCAPE:
