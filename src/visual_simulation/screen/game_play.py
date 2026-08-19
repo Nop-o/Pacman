@@ -29,7 +29,7 @@ class GamePlay(Screen):
         self.level.display_screen()
         self.hud.display_screen()
 
-    def screen_selector(self) -> None:
+    def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit_game()

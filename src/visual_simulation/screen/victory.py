@@ -71,7 +71,7 @@ class Victory(Screen):
             self.simulation_manager.game_state.score, self.user_name)
         self.leaderboard_screen()
 
-    def screen_selector(self) -> None:
+    def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit_game()

@@ -18,7 +18,7 @@ class Instructions(Screen):
     def display_screen(self) -> None:  # TODO
         pass
 
-    def screen_selector(self) -> None:
+    def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit_game()

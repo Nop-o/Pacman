@@ -96,11 +96,9 @@ class LeaderBoard(Screen):
         except FileNotFoundError:
             self._init_score()
 
-    def event_manager(self) -> None:
+    def screen_selector(self, events: list[pygame.event.Event]) -> None:
         if self.simulation_manager.key_pressed == " ":
             self.game_play_screen()
-
-    def screen_selector(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit_game()
