@@ -1,5 +1,12 @@
-class Cheat():
-    def __init__(self) -> None:
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .visual_simulation import SimulationManager
+
+
+class Cheat:
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
+        self.simulation_manager: "SimulationManager" = simulation_manager
         self.invicibility: bool = False
         self.ghost_freeze: bool = False
 
@@ -7,9 +14,14 @@ class Cheat():
     def skip_level(self) -> None:
         pass
 
-    # TODO
     def give_extra_lives(self) -> None:
-        pass
+        self.simulation_manager.game_state.pacman.lives += 1
+
+    def turn_on_invincibility(self) -> None:
+        self.invicibility = True
+
+    def turn_off_invincibility(self) -> None:
+        self.invicibility = False
 
     # TODO
     def increase_speed(self) -> None:
