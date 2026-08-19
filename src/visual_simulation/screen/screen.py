@@ -10,8 +10,14 @@ if TYPE_CHECKING:
 class Screen(ABC):
     def __init__(self, simulation_manager: "SimulationManager",
                  font: pygame.font.Font, big_font: pygame.font.Font) -> None:
-        self.font: pygame.font.Font = font
-        self.big_font: pygame.font.Font = big_font
+        if font is None:
+            self.font = pygame.font.Font(None, 80)
+        else:
+            self.font = font
+        if big_font is None:
+            self.font = pygame.font.Font(None, 80)
+        else:
+            self.font = big_font
         self.simulation_manager: "SimulationManager" = simulation_manager
 
     @abstractmethod

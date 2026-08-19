@@ -11,8 +11,8 @@ if TYPE_CHECKING:
 class GamePlay(Screen):
     def __init__(self, simulation_manager: "SimulationManager",
                  level: Level, hud: HUD,
-                 font: pygame.font.Font = pygame.font.Font(None, 80),
-                 big_font: pygame.font.Font = pygame.font.Font(None, 30)
+                 font: pygame.font.Font = None,
+                 big_font: pygame.font.Font = None
                  ) -> None:
         super().__init__(
             simulation_manager=simulation_manager,
