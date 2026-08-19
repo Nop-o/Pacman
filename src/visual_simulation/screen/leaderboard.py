@@ -79,13 +79,13 @@ class LeaderBoard(Screen):
                            y,)
             y += self.font.get_height() * 2
 
-    def export_highscore(self):
+    def export_highscore(self) -> None:
         with open("scores/highscore.json", "w") as file:
             file.write(json.dumps(self.scores))
         with open("scores/highscore_name.json", "w") as file:
             file.write(json.dumps(self.names))
 
-    def _import_highscore(self):
+    def _import_highscore(self) -> None:
         try:
             with open("scores/highscore.json", "r") as file:
                 raw_scores = json.loads(file.read())
