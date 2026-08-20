@@ -16,50 +16,44 @@ class GameOver(Screen):
             font=font, big_font=big_font)
         self.user_name = ""
 
-    def display_screen(self) -> None:
+    def _handle_keyboard_input(self) -> None:
         if self.simulation_manager.key_pressed is not None:
             if self.simulation_manager.key_pressed.isprintable():
                 self.user_name += self.simulation_manager.key_pressed
             if self.simulation_manager.delete_pressed is True:
                 self.user_name = self.user_name[0:-1]
+
+    def display_screen(self) -> None:
+        self._handle_keyboard_input()
+
         congrat_message = self.big_font.render(
             "You lost", 1, (255, 255, 255)
             )
-        user_name = self.font.render(
-            self.user_name, 1, (255, 255, 255)
-        )
         input_prompt = self.font.render(
             "Enter your name to save your score",
             1,
             (255, 255, 255)
+        )
+        user_name = self.font.render(
+            self.user_name, 1, (255, 255, 255)
         )
         button_text = self.font.render(
             "Save Highscore",
             1,
             (255, 255, 255)
         )
+
         self.simulation_manager.screen.fill((0, 0, 0))
-        congrat_pos = (
-            self.simulation_manager.screen_width // 2 -
-            (congrat_message.get_width() // 2),
-            self.simulation_manager.screen_height // 2 - 100)
+
+        congrat_pos = self.get_text_pos(congrat_message, height_adjust=-100)
+        prompt_pos = self.get_text_pos(input_prompt, height_adjust=50)
+        user_name_pos = self.get_text_pos(user_name, height_adjust=100)
+        button_pos = self.get_text_pos(button_text, height_adjust=175)
+
         self.simulation_manager.screen.blit(congrat_message, congrat_pos)
-        prompt_pos = (
-            self.simulation_manager.screen_width // 2 -
-            (input_prompt.get_width() // 2),
-            congrat_pos[1] + 150
-        )
         self.simulation_manager.screen.blit(input_prompt, prompt_pos)
-        user_name_pos = (
-            self.simulation_manager.screen_width // 2 - (
-                user_name.get_width() // 2),
-            prompt_pos[1] + input_prompt.get_height() + 50
-        )
         self.simulation_manager.screen.blit(user_name, user_name_pos)
-        button_pos = (
-            self.simulation_manager.screen_width // 2,
-            user_name_pos[1] + user_name.get_height() + 75
-        )
+
         self.make_button(button_pos, button_text,
                          self.leaderboard_screen,
                          50,
