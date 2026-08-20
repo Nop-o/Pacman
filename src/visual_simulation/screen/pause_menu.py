@@ -20,7 +20,7 @@ class PauseMenu(Screen):
         pass
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
-        actions: list[Callable] = [
+        actions: list[Callable[[], None]] = [
             self.game_play_screen,
             self.main_menu_screen,
             self.exit_game,

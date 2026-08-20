@@ -30,7 +30,7 @@ class SimulationManager():
         self.game_state: GameState = GameState(**json_data)
         self.screen_manager: ScreenManager = ScreenManager(
             self, self.current_level)
-        self.state_to_call: Callable = \
+        self.state_to_call: Callable[[], None] = \
             self.screen_manager.main_menu.display_screen
 
     def launch(self) -> None:

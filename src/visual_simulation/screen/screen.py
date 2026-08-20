@@ -58,7 +58,7 @@ class Screen(ABC):
     def make_button(self,
                     pos: tuple[int, int],
                     text: pygame.Surface,
-                    action: Callable,
+                    action: Callable[[], None],
                     px: int,
                     py: int) -> None:
         width = text.get_width() + px
