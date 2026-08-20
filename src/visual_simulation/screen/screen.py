@@ -98,3 +98,12 @@ class Screen(ABC):
             x -= surface.get_width() // 2
             y -= surface.get_height() // 2
         self.simulation_manager.screen.blit(surface, (x, y))
+
+    def get_text_pos(self, text: pygame.Surface,
+                     height_adjust: int = 0,
+                     width_adjust: int = 0) -> tuple[int, int]:
+        return (
+            self.simulation_manager.screen_width // 2 -
+            (text.get_width() // 2) + width_adjust,
+            self.simulation_manager.screen_height // 2 -
+            (text.get_height() // 2) + height_adjust)
