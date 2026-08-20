@@ -13,6 +13,7 @@ class GameState:
                  ) -> None:
 
         self.pacgum: int = pacgum
+        self.current_pacgum_count: int = pacgum
         self.super_pacgum: int = 4
         self.points_per_pacgum: int = points_per_pacgum
         self.points_per_super_pacgum: int = points_per_super_pacgum
@@ -60,3 +61,10 @@ class GameState:
         self.pacman.reset_super_pacgum_cooldown()
         for ghost in self.ghosts:
             ghost.reset_super_pacgum_cooldown()
+
+    def reset_game_state(self) -> None:
+        self.score = 0
+        self.super_pacgum = 4
+        self.is_game_over = False
+        self.is_game_won = False
+        self.current_pacgum_count = self.pacgum
