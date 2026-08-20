@@ -2,6 +2,7 @@ from time import time, sleep
 import pygame
 from typing import Any, Callable
 from .screen_manager import ScreenManager
+from .text_rendering import TextRendering
 from ..game_state import GameState
 from .screen import Level
 
@@ -27,6 +28,7 @@ class SimulationManager():
         self.mouse_click: tuple[int, int] | None = None
 
         self.current_level: Level = Level(self)
+        self.text_rendering = TextRendering()
         self.game_state: GameState = GameState(**json_data)
         self.screen_manager: ScreenManager = ScreenManager(
             self, self.current_level)
