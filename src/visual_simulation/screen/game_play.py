@@ -30,12 +30,19 @@ class GamePlay(Screen):
         self.hud.display_screen()
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
-        for event in pygame.event.get():
+        for event in events:
             if event.type == pygame.QUIT:
                 self.exit_game()
                 return
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.pause_screen
-                    return
+                    self.pause_screen()
+                elif event.key in [pygame.K_LEFT, pygame.K_a]:
+                    self.simulation_manager.game_state.pacman.go_left()
+                elif event.key [pygame.K_RIGHT, pygame.K_d]:
+                    self.simulation_manager.game_state.pacman.go_right()
+                elif event.key [pygame.K_UP, pygame.K_w]:
+                    self.simulation_manager.game_state.pacman.go_up()
+                elif event.key [pygame.K_DOWN, pygame.K_s]:
+                    self.simulation_manager.game_state.pacman.go_down()

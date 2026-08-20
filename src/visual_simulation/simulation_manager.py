@@ -32,7 +32,7 @@ class SimulationManager():
         self.game_state: GameState = GameState(**json_data)
         self.screen_manager: ScreenManager = ScreenManager(
             self, self.current_level)
-        self.state_to_call: Callable = \
+        self.state_to_call: Callable[[], None] = \
             self.screen_manager.main_menu.display_screen
 
     def launch(self) -> None:
@@ -57,12 +57,12 @@ class SimulationManager():
 
     def _adjust_screen_size(self) -> pygame.Surface:
         """Resize the pygame window so it fits within the physical display."""
-        screen_height, screen_width = self.mlx_get_screen_size()
+        screen_width, screen_height = self.mlx_get_screen_size()
 
         self.screen_height = screen_height
         self.screen_width = screen_width
 
-        return pygame.display.set_mode((screen_height, screen_width))
+        return pygame.display.set_mode((screen_width, screen_height))
 
     def clear_last_frame(self, color: str = "black") -> None:  # useless ?
         """Clear the last frame, recover it with a screen with a color"""

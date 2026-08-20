@@ -3,7 +3,7 @@ from .screen import (GameOver, GamePlay, HUD, LeaderBoard, MainMenu,
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from simulation_manager import SimulationManager
+    from .simulation_manager import SimulationManager
 
 
 class ScreenManager:
