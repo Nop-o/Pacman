@@ -99,7 +99,7 @@ class LeaderBoard(Screen):
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         if self.simulation_manager.key_pressed == " ":
             self.game_play_screen()
-        for event in pygame.event.get():
+        for event in events:
             if event.type == pygame.QUIT:
                 self.exit_game()
                 return

@@ -72,7 +72,7 @@ class Victory(Screen):
         self.leaderboard_screen()
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
-        for event in pygame.event.get():
+        for event in events:
             if event.type == pygame.QUIT:
                 self.exit_game()
                 return

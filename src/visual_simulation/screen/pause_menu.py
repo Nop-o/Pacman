@@ -26,7 +26,7 @@ class PauseMenu(Screen):
             self.exit_game,
         ]
 
-        for event in pygame.event.get():
+        for event in events:
             if event.type == pygame.QUIT:
                 self.exit_game()
                 return
