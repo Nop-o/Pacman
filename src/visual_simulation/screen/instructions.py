@@ -16,7 +16,9 @@ class Instructions(Screen):
             font=font, big_font=big_font)
 
     def display_screen(self) -> None:  # TODO
-        pass
+        test_message = self.big_font.render(
+            "Instructions", 1, (255, 255, 255)
+            )
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in events:

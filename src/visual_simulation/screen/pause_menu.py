@@ -17,7 +17,15 @@ class PauseMenu(Screen):
         self.current_choice_position: int = 0
 
     def display_screen(self) -> None:  # TODO
-        pass
+        choices = ["game_play_screen", "main_menu_screen", "exit_game"]
+
+        test_message = self.font.render(
+            "main_menu", 1, (255, 255, 255)
+            )
+
+        current_choice = self.big_font.render(
+            f"current choice: {choices[self.current_choice_position]}", 1, (255, 255, 255)
+            )
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         actions: list[Callable[[], None]] = [
