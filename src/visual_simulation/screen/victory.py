@@ -78,6 +78,6 @@ class Victory(Screen):
                 return
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    self.pause_screen
+                if event.key == pygame.K_RETURN:
+                    self.main_menu_screen()
                     return
