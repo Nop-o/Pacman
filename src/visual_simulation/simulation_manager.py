@@ -41,6 +41,7 @@ class SimulationManager():
 
             self.event_manager()
             if not self.active:
+                pygame.quit()
                 break
             self.state_to_call()
             self.display_on_screen()
@@ -78,7 +79,6 @@ class SimulationManager():
 
         for event in events:
             if event.type == pygame.QUIT:
-                pygame.quit()
                 self.active = False
                 break
 
