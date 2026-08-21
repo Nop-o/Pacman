@@ -102,3 +102,10 @@ class LeaderBoard(Screen):
             if event.type == pygame.QUIT:
                 self.exit_game()
                 return
+            if event.type == pygame.KEYDOWN:
+                if event.type == pygame.K_SPACE:
+                    self.simulation_manager.game_state.reset_game_state()
+                    self.game_play_screen()
+                if event.type == pygame.K_RETURN:
+                    self.simulation_manager.game_state.reset_game_state()
+                    self.main_menu_screen()
