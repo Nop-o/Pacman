@@ -19,10 +19,13 @@ class GamePlay(Screen):
         self.hud: HUD = hud
 
     def display_screen(self) -> None:
-        if self.simulation_manager.game_state.is_game_over:
+        if self.simulation_manager.game_state.is_game_over is True:
             self.game_over_screen()
-        if self.simulation_manager.game_state.is_game_won:
+
+        elif self.simulation_manager.game_state.is_game_won is True:
             self.victory_screen()
+
+        self.simulation_manager.screen.fill((0, 0, 0))
 
         self.level.display_screen()
         self.hud.display_screen()

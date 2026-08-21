@@ -12,50 +12,35 @@ class Victory(Screen):
         self.user_name = ""
 
     def display_screen(self) -> None:
+        self.simulation_manager.screen.fill((0, 0, 0))
         self.handle_user_writing()
 
-        congrat_message = self.simulation_manager.text_rendering.render_small_title(
-            "Congratulation", 1, (255, 255, 255)
-            )
-        user_name = self.simulation_manager.text_rendering.render_regular_text(
-            self.user_name, 1, (255, 255, 255)
-        )
-        input_prompt = self.simulation_manager.text_rendering.render_regular_text(
-            "Enter your name to save your score",
-            1,
-            (255, 255, 255)
-        )
-        button_text = self.simulation_manager.text_rendering.render_regular_text(
-            "Save Highscore",
-            1,
-            (255, 255, 255)
-        )
-        self.simulation_manager.screen.fill((0, 0, 0))
-        congrat_pos = (
-            self.simulation_manager.screen_width // 2 -
-            (congrat_message.get_width() // 2),
-            self.simulation_manager.screen_height // 2 - 100)
+        congrat_message = \
+            self.simulation_manager.text_rendering.render_small_title(
+                "Congratulation", (255, 255, 255))
+        user_name = \
+            self.simulation_manager.text_rendering.render_regular_text(
+                self.user_name, (255, 255, 255))
+        input_prompt = \
+            self.simulation_manager.text_rendering.render_regular_text(
+                "Enter your name to save your score", (255, 255, 255))
+        button_text = \
+            self.simulation_manager.text_rendering.render_regular_text(
+            "Save Highscore", (255, 255, 255))
+
+        congrat_pos = self.get_text_pos(congrat_message, height_adjust=-100)
+        prompt_pos = self.get_text_pos(congrat_message, height_adjust=150)
+        user_name_pos = self.get_text_pos(congrat_message, height_adjust=50)
+        button_pos = self.get_text_pos(congrat_message, height_adjust=75)
+
         self.simulation_manager.screen.blit(congrat_message, congrat_pos)
-        prompt_pos = (
-            self.simulation_manager.screen_width // 2 -
-            (input_prompt.get_width() // 2),
-            congrat_pos[1] + 150
-        )
         self.simulation_manager.screen.blit(input_prompt, prompt_pos)
-        user_name_pos = (
-            self.simulation_manager.screen_width // 2 - (
-                user_name.get_width() // 2),
-            prompt_pos[1] + input_prompt.get_height() + 50
-        )
         self.simulation_manager.screen.blit(user_name, user_name_pos)
-        button_pos = (
-            self.simulation_manager.screen_width // 2,
-            user_name_pos[1] + user_name.get_height() + 75
-        )
-        self.make_button(button_pos, button_text,
-                         self.button_action,
-                         50,
-                         20)
+
+        self.make_button(button_pos, button_text, self.button_action,
+                         50, 20)
+
+
 
     def button_action(self) -> None:
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(

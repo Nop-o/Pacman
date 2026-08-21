@@ -12,25 +12,24 @@ class GameOver(Screen):
         self.user_name = ""
 
     def display_screen(self) -> None:
+        self.simulation_manager.screen.fill((0, 0, 0))
         self.handle_user_writing()
 
         congrat_message = \
             self.simulation_manager.text_rendering.render_small_title(
-                "You lost", 1, (255, 255, 255))
+                "You lost", (255, 255, 255))
 
         input_prompt = \
             self.simulation_manager.text_rendering.render_regular_text(
-                "Enter your name to save your score", 1, (255, 255, 255))
+                "Enter your name to save your score", (255, 255, 255))
 
         user_name = \
             self.simulation_manager.text_rendering.render_regular_text(
-                self.user_name, 1, (255, 255, 255))
+                self.user_name, (255, 255, 255))
 
         button_text = \
             self.simulation_manager.text_rendering.render_regular_text(
-                "Save Highscore", 1, (255, 255, 255))
-
-        self.simulation_manager.screen.fill((0, 0, 0))
+                "Save Highscore", (255, 255, 255))
 
         congrat_pos = self.get_text_pos(congrat_message, height_adjust=-100)
         prompt_pos = self.get_text_pos(input_prompt, height_adjust=50)
@@ -41,10 +40,8 @@ class GameOver(Screen):
         self.simulation_manager.screen.blit(input_prompt, prompt_pos)
         self.simulation_manager.screen.blit(user_name, user_name_pos)
 
-        self.make_button(button_pos, button_text,
-                         self.leaderboard_screen,
-                         50,
-                         20)
+        self.make_button(button_pos, button_text, self.leaderboard_screen,
+                         50, 20)
 
     def button_action(self) -> None:
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(

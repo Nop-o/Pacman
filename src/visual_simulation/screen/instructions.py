@@ -11,9 +11,11 @@ class Instructions(Screen):
         super().__init__(simulation_manager=simulation_manager)
 
     def display_screen(self) -> None:  # TODO
+        self.simulation_manager.screen.fill((0, 0, 0))
+
         test_message = \
             self.simulation_manager.text_rendering.render_small_title(
-                "Instructions", 1, (255, 255, 255))
+                "Instructions", (255, 255, 255))
 
         test_message_pos = self.get_text_pos(test_message, height_adjust=-200)
         self.simulation_manager.screen.blit(test_message, test_message_pos)

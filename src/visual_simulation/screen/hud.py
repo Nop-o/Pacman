@@ -22,7 +22,13 @@ class HUD(Screen):
         pass
 
     def display_screen(self) -> None:
-        self.simulation_manager.screen.fill((0, 0, 0))
+        test_message = \
+            self.simulation_manager.text_rendering.render_small_title(
+                "HUD", (255, 255, 255))
+
+        test_message_pos = self.get_text_pos(test_message, height_adjust=-400)
+        self.simulation_manager.screen.blit(test_message, test_message_pos)
+
         self.show_score()
         self.show_lives()
         self.show_level()

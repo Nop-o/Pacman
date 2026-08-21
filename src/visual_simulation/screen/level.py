@@ -1,10 +1,12 @@
+from .screen import Screen
+
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
 
 
-class Level:
+class Level(Screen):
     def __init__(self, simulation_manager: "SimulationManager") -> None:
 
         # TODO fix init -> pacman/ghost created here or before ?
@@ -55,4 +57,9 @@ class Level:
         pass
 
     def display_screen(self) -> None:
-        pass
+        test_message = \
+            self.simulation_manager.text_rendering.render_small_title(
+                "level", (255, 255, 255))
+
+        test_message_pos = self.get_text_pos(test_message, height_adjust=-200)
+        self.simulation_manager.screen.blit(test_message, test_message_pos)
