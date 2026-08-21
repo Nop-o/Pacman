@@ -12,13 +12,9 @@ class Victory(Screen):
         self.user_name = ""
 
     def display_screen(self) -> None:
-        if self.simulation_manager.key_pressed is not None:
-            if self.simulation_manager.key_pressed.isprintable() and \
-                 len(self.user_name) < 10:
-                self.user_name += self.simulation_manager.key_pressed
-            if self.simulation_manager.delete_pressed is True:
-                self.user_name = self.user_name[0:-1]
-        congrat_message = self.big_font.render(
+        self.handle_user_writing()
+
+        congrat_message = self.simulation_manager.text_rendering.render_small_title(
             "Congratulation", 1, (255, 255, 255)
             )
         user_name = self.font.render(

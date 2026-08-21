@@ -11,13 +11,6 @@ class GameOver(Screen):
         super().__init__(simulation_manager=simulation_manager)
         self.user_name = ""
 
-    def _handle_keyboard_input(self) -> None:
-        if self.simulation_manager.key_pressed is not None:
-            if self.simulation_manager.key_pressed.isprintable():
-                self.user_name += self.simulation_manager.key_pressed
-            if self.simulation_manager.delete_pressed is True:
-                self.user_name = self.user_name[0:-1]
-
     def display_screen(self) -> None:
         self._handle_keyboard_input()
 
