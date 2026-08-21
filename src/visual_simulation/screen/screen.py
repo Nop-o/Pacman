@@ -76,14 +76,11 @@ class Screen(ABC):
                 action()
 
     def draw_text(self, text: str, x: int, y: int,
-                  color: pygame.Color = pygame.Color("white"),
-                  font: pygame.font.Font | None = None,
+                  color: pygame.Color, font: pygame.font.Font,
                   center: bool = True) -> None:
         """Draw text into the simulation"""
-        if font is None:
-            font = self.font
-
         surface = font.render(text, True, color)
+
         if center:
             x -= surface.get_width() // 2
             y -= surface.get_height() // 2

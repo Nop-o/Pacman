@@ -55,24 +55,30 @@ class LeaderBoard(Screen):
 
     def display_screen(self) -> None:
         self.simulation_manager.screen.fill((0, 0, 0))
+
         self.draw_text("PAC-MAN",
-                       self.simulation_manager.screen_width // 2,
-                       100,
+                       self.simulation_manager.screen_width // 2, 100,
                        pygame.Color("yellow"),
-                       self.big_font)
+                       self.simulation_manager.text_rendering.small_title)
         self.draw_text("Push SPACE to play",
-                       self.simulation_manager.screen_width // 2,
-                       350)
+                       self.simulation_manager.screen_width // 2, 350,
+                       pygame.Color("white"),
+                       self.simulation_manager.text_rendering.regular_text)
         self.draw_text("highscore:",
                        self.simulation_manager.screen_width // 2,
-                       400)
-        y = 400 + (self.font.get_height() * 2)
+                       400,
+                       pygame.Color("white"),
+                       self.simulation_manager.text_rendering.regular_text)
+
+        font = self.simulation_manager.text_rendering.regular_text
+        y = 400 + (font.get_height() * 2)
         for i in range(1, 11, 1):
             self.draw_text(f"{i + 1}. {self.names[i]} - "
                            f"{self.scores[i]} pts",
-                           self.simulation_manager.screen_width // 2,
-                           y,)
-            y += self.font.get_height() * 2
+                           self.simulation_manager.screen_width // 2, y,
+                           pygame.Color("white"),
+                           font)
+            y += font.get_height() * 2
 
     def export_highscore(self) -> None:
         with open("scores/highscore.json", "w") as file:
@@ -92,8 +98,6 @@ class LeaderBoard(Screen):
             self._init_score()
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
-        if self.simulation_manager.key_pressed == " ":
-            self.game_play_screen()
         for event in events:
             if event.type == pygame.QUIT:
                 self.exit_game()

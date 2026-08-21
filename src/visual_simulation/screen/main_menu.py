@@ -15,11 +15,13 @@ class MainMenu(Screen):
         pass
 
     def display_screen(self) -> None:  # TODO
+        self.simulation_manager.screen.fill((0, 0, 0))
+
         choices = ["game_play_screen", "leaderboard_screen",
                    "show_instructions", "exit_game"]
 
-        test_message = self.big_font.render(
-            "main_menu", 1, (255, 255, 255)
+        test_message = self.simulation_manager.text_rendering.render_small_title(
+            "main_menu", (255, 255, 255)
             )
 
         current_choice = self.big_font.render(

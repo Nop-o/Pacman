@@ -17,15 +17,15 @@ class Victory(Screen):
         congrat_message = self.simulation_manager.text_rendering.render_small_title(
             "Congratulation", 1, (255, 255, 255)
             )
-        user_name = self.font.render(
+        user_name = self.simulation_manager.text_rendering.render_regular_text(
             self.user_name, 1, (255, 255, 255)
         )
-        input_prompt = self.font.render(
+        input_prompt = self.simulation_manager.text_rendering.render_regular_text(
             "Enter your name to save your score",
             1,
             (255, 255, 255)
         )
-        button_text = self.font.render(
+        button_text = self.simulation_manager.text_rendering.render_regular_text(
             "Save Highscore",
             1,
             (255, 255, 255)
