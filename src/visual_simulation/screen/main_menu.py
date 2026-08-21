@@ -7,13 +7,8 @@ if TYPE_CHECKING:
 
 
 class MainMenu(Screen):
-    def __init__(self, simulation_manager: "SimulationManager",
-                 font: pygame.font.Font | None = None,
-                 big_font: pygame.font.Font | None = None
-                 ) -> None:
-        super().__init__(
-            simulation_manager=simulation_manager,
-            font=font, big_font=big_font)
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
+        super().__init__(simulation_manager=simulation_manager)
         self.current_choice_position: int = 0
 
     def show_instructions(self) -> None:  # TODO

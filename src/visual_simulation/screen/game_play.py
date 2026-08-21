@@ -14,9 +14,7 @@ class GamePlay(Screen):
                  font: pygame.font.Font | None = None,
                  big_font: pygame.font.Font | None = None
                  ) -> None:
-        super().__init__(
-            simulation_manager=simulation_manager,
-            font=font, big_font=big_font)
+        super().__init__(simulation_manager=simulation_manager)
         self.level: Level = level
         self.hud: HUD = hud
 
