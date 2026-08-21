@@ -12,24 +12,23 @@ class GameOver(Screen):
         self.user_name = ""
 
     def display_screen(self) -> None:
-        self._handle_keyboard_input()
+        self.handle_user_writing()
 
-        congrat_message = self.big_font.render(
-            "You lost", 1, (255, 255, 255)
-            )
-        input_prompt = self.font.render(
-            "Enter your name to save your score",
-            1,
-            (255, 255, 255)
-        )
-        user_name = self.font.render(
-            self.user_name, 1, (255, 255, 255)
-        )
-        button_text = self.font.render(
-            "Save Highscore",
-            1,
-            (255, 255, 255)
-        )
+        congrat_message = \
+            self.simulation_manager.text_rendering.render_small_title(
+                "You lost", 1, (255, 255, 255))
+
+        input_prompt = \
+            self.simulation_manager.text_rendering.render_regular_text(
+                "Enter your name to save your score", 1, (255, 255, 255))
+
+        user_name = \
+            self.simulation_manager.text_rendering.render_regular_text(
+                self.user_name, 1, (255, 255, 255))
+
+        button_text = \
+            self.simulation_manager.text_rendering.render_regular_text(
+                "Save Highscore", 1, (255, 255, 255))
 
         self.simulation_manager.screen.fill((0, 0, 0))
 

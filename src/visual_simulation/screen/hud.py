@@ -22,7 +22,7 @@ class HUD(Screen):
         pass
 
     def display_screen(self) -> None:
-        self.simulation_manager.screen.fill(())
+        self.simulation_manager.screen.fill((0, 0, 0))
         self.show_score()
         self.show_lives()
         self.show_level()

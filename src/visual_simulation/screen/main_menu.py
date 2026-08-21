@@ -24,9 +24,17 @@ class MainMenu(Screen):
             "main_menu", (255, 255, 255)
             )
 
-        current_choice = self.big_font.render(
-            f"current choice: {choices[self.current_choice_position]}", 1, (255, 255, 255)
-            )
+        current_choice = \
+            self.simulation_manager.text_rendering.render_small_title(
+                f"current choice: {choices[self.current_choice_position]}",
+                (255, 255, 255))
+
+        test_message_pos = self.get_text_pos(test_message, height_adjust=-200)
+        current_choice_pos = self.get_text_pos(current_choice)
+
+        self.simulation_manager.screen.blit(test_message, test_message_pos)
+        self.simulation_manager.screen.blit(current_choice, current_choice_pos)
+
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         actions: list[Callable[[], None]] = [
