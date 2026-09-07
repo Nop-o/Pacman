@@ -4,6 +4,7 @@ from ..algorithm.dfs import DepthFirstSearch
 import random
 from ..maze import Maze, Direction
 from abc import ABC, abstractmethod
+import pygame
 
 
 class Ghost(Character, ABC):
@@ -17,10 +18,29 @@ class Ghost(Character, ABC):
         self.algorithm: DepthFirstSearch = algorithm
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
 
+        self.running_away_1: pygame.Surface = self.sprite.get_sprite(
+            "src/png/entities_sprite.png", 54, 554, 35)
+        self.running_away_2: pygame.Surface = self.sprite.get_sprite(
+            "src/png/entities_sprite.png", 54, 604, 35, 35)
+        self.running_away_3: pygame.Surface = self.sprite.get_sprite(
+            "src/png/entities_sprite.png", 104, 554, 35, 35)
+        self.running_away_4: pygame.Surface = self.sprite.get_sprite(
+            "src/png/entities_sprite.png", 104, 604, 35, 35)
+
     @abstractmethod
     def get_goal(self) -> tuple[int, int]:
         """Decide if the ghost run away or chase pacman"""
         ...
+
+    def get_running_ghost_sprites(self) -> list[pygame.Surface]:
+        running_ghost_sprites: list[pygame.Surface] = [
+            self.running_away_1, self.running_away_2]
+
+        if self.simulation_manager.game_state.super_pacgum_cooldown > 5:
+            running_ghost_sprites.extend(
+                [self.running_away_3, self.running_away_4])
+
+        return running_ghost_sprites
 
     def reset_starting_position(self) -> None:
         """Reset the position of an entity to his starting position"""
@@ -72,6 +92,26 @@ class Shadow(Ghost):  # red chase
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
+        self.ghost_right_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+            "src/png/entities_sprite.png", 4, 4 + (i * 50), 35, 35)
+            for i in range(0, 2, 1)]
+
+        self.ghost_down_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 4, 104 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
+        self.ghost_left_sprites: list[pygame.Surface] = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 4, 204 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
+        self.ghost_up_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 4, 304 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
     def get_goal(self) -> tuple[int, int]:
         """Overwrite the abstract method of Ghost class"""
         if self.state == Character.State.RUNNING:
@@ -89,6 +129,26 @@ class Speedy(Ghost):  # pink flank
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
+
+        self.ghost_right_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+            "src/png/entities_sprite.png", 54, 4 + (i * 50), 35, 35)
+            for i in range(0, 2, 1)]
+
+        self.ghost_down_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 54, 104 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
+        self.ghost_left_sprites: list[pygame.Surface] = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 54, 204 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
+        self.ghost_up_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 54, 304 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
 
     def get_goal(self) -> tuple[int, int]:
         """Overwrite the abstract method of Ghost class"""
@@ -117,6 +177,26 @@ class Bashful(Ghost):  # cyan random
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
+        self.ghost_right_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+            "src/png/entities_sprite.png", 104, 4 + (i * 50), 35, 35)
+            for i in range(0, 2, 1)]
+
+        self.ghost_down_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 104, 104 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
+        self.ghost_left_sprites: list[pygame.Surface] = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 104, 204 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
+        self.ghost_up_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 104, 304 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
     def get_goal(self) -> tuple[int, int]:
         """Overwrite the abstract method of Ghost class"""
         if self.state == Character.State.RUNNING:
@@ -140,6 +220,26 @@ class Pokey(Ghost):  # orange chase + run away
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
+
+        self.ghost_right_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+            "src/png/entities_sprite.png", 154, 4 + (i * 50), 35, 35)
+            for i in range(0, 2, 1)]
+
+        self.ghost_down_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 154, 104 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
+        self.ghost_left_sprites: list[pygame.Surface] = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 154, 204 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
+
+        self.ghost_up_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 154, 304 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
 
     def get_goal(self) -> tuple[int, int]:
         """Overwrite the abstract method of Ghost class"""

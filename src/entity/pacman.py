@@ -1,5 +1,6 @@
 from . import Character
 from ..maze import Maze, Direction
+import pygame
 
 
 class Pacman(Character):
@@ -12,6 +13,26 @@ class Pacman(Character):
         self.reset_last_move_direction()
 
         self.invincible: bool = False
+
+        self.pacman_right_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+            "src/png/entities_sprite.png", 854, 4 + (i * 50), 35, 35)
+            for i in range(0, 3, 1)]
+
+        self.pacman_down_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 854, 154 + (i * 50), 35, 35)
+             for i in range(0, 3, 1)]
+
+        self.pacman_left_sprites: list[pygame.Surface] = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 854, 304 + (i * 50), 35, 35)
+             for i in range(0, 3, 1)]
+
+        self.pacman_up_sprites: pygame.Surface = \
+            [self.sprite.get_sprite(
+             "src/png/entities_sprite.png", 854, 554 + (i * 50), 35, 35)
+             for i in range(0, 3, 1)]
 
     def _set_starting_position(self) -> tuple[int, int]:
         """Find the starting position of pacman, at the middle if possible"""
