@@ -11,6 +11,8 @@ class Character(Entity, ABC):
         RUNNING = 1
 
     def __init__(self, maze: Maze, super_pacgum_cooldown: int) -> None:
+        from src.visual_simulation.sprites.sprites import Sprites
+
         super().__init__()
         self.maze: Maze = maze
         self.starting_position: tuple[int, int] = self._set_starting_position()
@@ -18,6 +20,7 @@ class Character(Entity, ABC):
         self.column_pos: int = self.starting_position[1]
         self.super_pacgum_cooldown: int = super_pacgum_cooldown
         self.state: Character.State = self.State.RUNNING
+        self.sprite: Sprites = Sprites()
 
     def go_left(self) -> None:
         """Go one case left in the maze"""
