@@ -26,7 +26,7 @@ class Victory(Screen):
                 "Enter your name to save your score", (255, 255, 255))
         button_text = \
             self.simulation_manager.text_rendering.render_regular_text(
-            "Save Highscore", (255, 255, 255))
+                "Save Highscore", (255, 255, 255))
 
         congrat_pos = self.get_text_pos(congrat_message, height_adjust=-100)
         prompt_pos = self.get_text_pos(congrat_message, height_adjust=150)
@@ -40,12 +40,17 @@ class Victory(Screen):
         self.make_button(button_pos, button_text, self.button_action,
                          50, 20)
 
-
-
     def button_action(self) -> None:
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
             self.simulation_manager.game_state.score, self.user_name)
         self.leaderboard_screen()
+
+    def handle_user_writing(self) -> None:
+        if self.simulation_manager.key_pressed is not None:
+            if self.simulation_manager.key_pressed.isprintable():
+                self.user_name += self.simulation_manager.key_pressed
+            if self.simulation_manager.delete_pressed is True:
+                self.user_name = self.user_name[0:-1]
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in events:

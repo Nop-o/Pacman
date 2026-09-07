@@ -17,7 +17,7 @@ class GameOver(Screen):
 
         congrat_message = \
             self.simulation_manager.text_rendering.render_small_title(
-                "You lost", (255, 255, 255))
+                "GAME OVER", (255, 255, 255))
 
         input_prompt = \
             self.simulation_manager.text_rendering.render_regular_text(
@@ -47,6 +47,13 @@ class GameOver(Screen):
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
             self.simulation_manager.game_state.score, self.user_name)
         self.leaderboard_screen()
+
+    def handle_user_writing(self) -> None:
+        if self.simulation_manager.key_pressed is not None:
+            if self.simulation_manager.key_pressed.isprintable():
+                self.user_name += self.simulation_manager.key_pressed
+            if self.simulation_manager.delete_pressed is True:
+                self.user_name = self.user_name[0:-1]
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in events:

@@ -20,8 +20,9 @@ class MainMenu(Screen):
         choices = ["game_play_screen", "leaderboard_screen",
                    "show_instructions", "exit_game"]
 
-        test_message = self.simulation_manager.text_rendering.render_small_title(
-            "main_menu", (255, 255, 255)
+        test_message = \
+            self.simulation_manager.text_rendering.render_small_title(
+                "main_menu", (255, 255, 255)
             )
 
         current_choice = \
@@ -34,7 +35,6 @@ class MainMenu(Screen):
 
         self.simulation_manager.screen.blit(test_message, test_message_pos)
         self.simulation_manager.screen.blit(current_choice, current_choice_pos)
-
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         actions: list[Callable[[], None]] = [

@@ -28,12 +28,12 @@ class SimulationManager():
         self.mouse_click: tuple[int, int] | None = None
 
         self.current_level: Level = Level(self)
-        self.text_rendering = TextRendering()
+        self.text_rendering: TextRendering = TextRendering()
         self.game_state: GameState = GameState(**json_data)
         self.screen_manager: ScreenManager = ScreenManager(
             self, self.current_level)
         self.state_to_call: Callable[[], None] = \
-            self.screen_manager.main_menu.display_screen
+            self.screen_manager.launch_game.display_screen
 
     def launch(self) -> None:
         while self.active:

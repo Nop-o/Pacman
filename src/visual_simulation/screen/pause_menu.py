@@ -30,7 +30,6 @@ class PauseMenu(Screen):
 
         self.simulation_manager.screen.blit(test_message, test_message_pos)
         self.simulation_manager.screen.blit(current_choice, current_choice_pos)
-        
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         actions: list[Callable[[], None]] = [
