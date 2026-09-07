@@ -5,7 +5,9 @@ class Sprites:
 
     def get_sprite(self, file_path: str, x: int, y: int,
                    width: int, height: int) -> pygame.Surface:
+        source_image = pygame.image.load(file_path).convert_alpha()
+
         image = pygame.Surface((width, height), pygame.SRCALPHA)
-        image.blit(file_path, (0, 0), (x, y, width, height))
+        image.blit(source_image, (0, 0), (x, y, width, height))
 
         return image

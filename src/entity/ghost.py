@@ -19,7 +19,7 @@ class Ghost(Character, ABC):
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
 
         self.running_away_1: pygame.Surface = self.sprite.get_sprite(
-            "src/png/entities_sprite.png", 54, 554, 35)
+            "src/png/entities_sprite.png", 54, 554, 35, 35)
         self.running_away_2: pygame.Surface = self.sprite.get_sprite(
             "src/png/entities_sprite.png", 54, 604, 35, 35)
         self.running_away_3: pygame.Surface = self.sprite.get_sprite(
@@ -36,7 +36,7 @@ class Ghost(Character, ABC):
         running_ghost_sprites: list[pygame.Surface] = [
             self.running_away_1, self.running_away_2]
 
-        if self.simulation_manager.game_state.super_pacgum_cooldown > 5:
+        if self.super_pacgum_cooldown > 5:
             running_ghost_sprites.extend(
                 [self.running_away_3, self.running_away_4])
 
@@ -92,12 +92,12 @@ class Shadow(Ghost):  # red chase
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
-        self.ghost_right_sprites: pygame.Surface = \
+        self.ghost_right_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
-            "src/png/entities_sprite.png", 4, 4 + (i * 50), 35, 35)
-            for i in range(0, 2, 1)]
+             "src/png/entities_sprite.png", 4, 4 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
 
-        self.ghost_down_sprites: pygame.Surface = \
+        self.ghost_down_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
              "src/png/entities_sprite.png", 4, 104 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
@@ -107,7 +107,7 @@ class Shadow(Ghost):  # red chase
              "src/png/entities_sprite.png", 4, 204 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
 
-        self.ghost_up_sprites: pygame.Surface = \
+        self.ghost_up_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
              "src/png/entities_sprite.png", 4, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
@@ -130,12 +130,12 @@ class Speedy(Ghost):  # pink flank
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
-        self.ghost_right_sprites: pygame.Surface = \
+        self.ghost_right_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
-            "src/png/entities_sprite.png", 54, 4 + (i * 50), 35, 35)
-            for i in range(0, 2, 1)]
+             "src/png/entities_sprite.png", 54, 4 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
 
-        self.ghost_down_sprites: pygame.Surface = \
+        self.ghost_down_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
              "src/png/entities_sprite.png", 54, 104 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
@@ -145,7 +145,7 @@ class Speedy(Ghost):  # pink flank
              "src/png/entities_sprite.png", 54, 204 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
 
-        self.ghost_up_sprites: pygame.Surface = \
+        self.ghost_up_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
              "src/png/entities_sprite.png", 54, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
@@ -177,12 +177,12 @@ class Bashful(Ghost):  # cyan random
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
-        self.ghost_right_sprites: pygame.Surface = \
+        self.ghost_right_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
-            "src/png/entities_sprite.png", 104, 4 + (i * 50), 35, 35)
-            for i in range(0, 2, 1)]
+             "src/png/entities_sprite.png", 104, 4 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
 
-        self.ghost_down_sprites: pygame.Surface = \
+        self.ghost_down_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
              "src/png/entities_sprite.png", 104, 104 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
@@ -192,7 +192,7 @@ class Bashful(Ghost):  # cyan random
              "src/png/entities_sprite.png", 104, 204 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
 
-        self.ghost_up_sprites: pygame.Surface = \
+        self.ghost_up_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
              "src/png/entities_sprite.png", 104, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
@@ -221,12 +221,12 @@ class Pokey(Ghost):  # orange chase + run away
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
-        self.ghost_right_sprites: pygame.Surface = \
+        self.ghost_right_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
-            "src/png/entities_sprite.png", 154, 4 + (i * 50), 35, 35)
-            for i in range(0, 2, 1)]
+             "src/png/entities_sprite.png", 154, 4 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)]
 
-        self.ghost_down_sprites: pygame.Surface = \
+        self.ghost_down_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
              "src/png/entities_sprite.png", 154, 104 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
@@ -236,7 +236,7 @@ class Pokey(Ghost):  # orange chase + run away
              "src/png/entities_sprite.png", 154, 204 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
 
-        self.ghost_up_sprites: pygame.Surface = \
+        self.ghost_up_sprites: list[pygame.Surface] = \
             [self.sprite.get_sprite(
              "src/png/entities_sprite.png", 154, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]
