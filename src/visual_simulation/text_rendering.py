@@ -6,7 +6,7 @@ class TextRendering:
         self.regular_text: pygame.font.Font = pygame.font.Font(None, 30)
         self.small_title: pygame.font.Font = pygame.font.Font(None, 80)
         self.small_pacman: pygame.font.Font = pygame.font.Font(None, 120)
-        self.big_pacman: pygame.font.Font = pygame.font.Font(None, 150)
+        self.big_pacman: pygame.font.Font = pygame.font.Font(None, 350)
 
     @staticmethod
     def render_text(text: str, color: tuple[int, int, int],
