@@ -8,6 +8,7 @@ from .pause_menu import PauseMenu
 from .victory import Victory
 from .level import Level
 from .instructions import Instructions
+from .launch_game import LaunchGame
 
 __all__ = ["Screen", "GameOver", "GamePlay", "HUD", "LeaderBoard", "MainMenu",
-           "PauseMenu", "Victory", "Level", "Instructions"]
+           "PauseMenu", "Victory", "Level", "Instructions", "LaunchGame"]

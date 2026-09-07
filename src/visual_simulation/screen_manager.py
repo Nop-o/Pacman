@@ -1,5 +1,5 @@
 from .screen import (GameOver, GamePlay, HUD, LeaderBoard, MainMenu,
-                     PauseMenu, Victory, Level, Instructions)
+                     PauseMenu, Victory, Level, Instructions, LaunchGame)
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -24,4 +24,6 @@ class ScreenManager:
             simulation_manager=simulation_manager)
         self.victory: Victory = Victory(simulation_manager=simulation_manager)
         self.instructions: Instructions = Instructions(
+            simulation_manager=simulation_manager)
+        self.launch_game: LaunchGame = LaunchGame(
             simulation_manager=simulation_manager)

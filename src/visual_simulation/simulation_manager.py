@@ -124,7 +124,8 @@ class SimulationManager():
             self.screen_manager.game_over,
             self.screen_manager.victory,
             self.screen_manager.instructions,
-            self.screen_manager.leaderboard
+            self.screen_manager.leaderboard,
+            self.screen_manager.launch_game
         )
         return next(
             (screen for screen in screens
