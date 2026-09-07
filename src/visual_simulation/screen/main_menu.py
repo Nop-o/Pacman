@@ -20,21 +20,32 @@ class MainMenu(Screen):
         choices = ["game_play_screen", "leaderboard_screen",
                    "show_instructions", "exit_game"]
 
-        test_message = \
+        main_menu_title = \
             self.simulation_manager.text_rendering.render_small_title(
-                "main_menu", (255, 255, 255)
-            )
-
-        current_choice = \
+                "Main Menu", (255, 255, 255))
+        start_game_text = \
+            self.simulation_manager.text_rendering.render_big_text(
+                "Start Game", (255, 255, 255))
+        leaderboard_text = \
+            self.simulation_manager.text_rendering.render_big_text(
+                "View Highscores", (255, 255, 255))
+        instructions_text = \
+            self.simulation_manager.text_rendering.render_big_text(
+                "Instructions", (255, 255, 255))
+        exit_game_text = \
+            self.simulation_manager.text_rendering.render_big_text(
+                "Exit", (255, 255, 255))
+        current_choice_text = \
             self.simulation_manager.text_rendering.render_small_title(
                 f"current choice: {choices[self.current_choice_position]}",
                 (255, 255, 255))
 
-        test_message_pos = self.get_text_pos(test_message, height_adjust=-200)
-        current_choice_pos = self.get_text_pos(current_choice)
-
-        self.simulation_manager.screen.blit(test_message, test_message_pos)
-        self.simulation_manager.screen.blit(current_choice, current_choice_pos)
+        self.draw_text(main_menu_title, width_adjust=0, height_adjust=-300)
+        self.draw_text(start_game_text, width_adjust=0, height_adjust=100)
+        self.draw_text(leaderboard_text, width_adjust=0, height_adjust=-300)
+        self.draw_text(instructions_text, width_adjust=0, height_adjust=100)
+        self.draw_text(exit_game_text, width_adjust=0, height_adjust=100)
+        self.draw_text(current_choice_text, width_adjust=0, height_adjust=100)
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         actions: list[Callable[[], None]] = [

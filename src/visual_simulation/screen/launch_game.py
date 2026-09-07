@@ -10,6 +10,10 @@ class LaunchGame(Screen):
     def __init__(self, simulation_manager: "SimulationManager") -> None:
         super().__init__(simulation_manager=simulation_manager)
 
+        self.logo: pygame.Surface = self.sprite.get_sprite(
+            "src/png/logo_sprite.png", 54, 554, 35, 35
+        )  # TODO : adjust the variable
+
     def display_screen(self) -> None:
         self.simulation_manager.screen.fill((0, 0, 0))
 
@@ -18,13 +22,10 @@ class LaunchGame(Screen):
                 "PAC-MAN", (255, 255, 0))
         welcome_text = \
             self.simulation_manager.text_rendering.render_small_title(
-                "Press return to enter the game ...", (255, 255, 255))
+                "Press RETURN to enter the game ...", (255, 255, 255))
 
-        pacman_title_pos = self.get_text_pos(pacman_title, height_adjust=-165)
-        welcome_text_pos = self.get_text_pos(welcome_text, height_adjust=200)
-
-        self.simulation_manager.screen.blit(pacman_title, pacman_title_pos)
-        self.simulation_manager.screen.blit(welcome_text, welcome_text_pos)
+        self.draw_text(pacman_title, width_adjust=0, height_adjust=-165)
+        self.draw_text(welcome_text, width_adjust=0, height_adjust=200)
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in events:
