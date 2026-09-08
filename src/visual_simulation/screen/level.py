@@ -1,9 +1,9 @@
 from .screen import Screen
-
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
+    from ...entity.ghost import Ghost
 
 
 class Level(Screen):
@@ -12,7 +12,8 @@ class Level(Screen):
         # TODO fix init -> pacman/ghost created here or before ?
         # need fill ghosts and pacman
         self.simulation_manager: SimulationManager = simulation_manager
-
+        # need to fill ghost list
+        self.ghosts: list[Ghost] = []
         # need pacgum, either in list with coord form or object
 
     # TODO Do the turn by calling in order move_pacman, move_ghost, load_maze,
@@ -26,7 +27,8 @@ class Level(Screen):
 
     # TODO move the ghosts
     def move_ghosts(self) -> None:
-        pass
+        for ghost in self.ghosts:
+            ghost.get_goal()
 
     # TODO load in pygame the background and the wall of the maze
     def load_maze(self) -> None:
