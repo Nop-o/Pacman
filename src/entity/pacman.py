@@ -14,25 +14,19 @@ class Pacman(Character):
 
         self.invincible: bool = False
 
-        self.pacman_right_sprites: list[pygame.Surface] = \
-            [self.sprite.get_sprite(
-             "src/png/entities_sprite.png", 854, 4 + (i * 50), 35, 35)
-             for i in range(0, 3, 1)]
-
-        self.pacman_down_sprites: list[pygame.Surface] = \
-            [self.sprite.get_sprite(
-             "src/png/entities_sprite.png", 854, 154 + (i * 50), 35, 35)
-             for i in range(0, 3, 1)]
-
-        self.pacman_left_sprites: list[pygame.Surface] = \
-            [self.sprite.get_sprite(
-             "src/png/entities_sprite.png", 854, 304 + (i * 50), 35, 35)
-             for i in range(0, 3, 1)]
-
-        self.pacman_up_sprites: list[pygame.Surface] = \
-            [self.sprite.get_sprite(
-             "src/png/entities_sprite.png", 854, 554 + (i * 50), 35, 35)
-             for i in range(0, 3, 1)]
+        self.pacman_sprites: list[list[pygame.Surface]] = \
+            [[self.get_sprite(
+             "png/entities_sprite.png", 854, 4 + (i * 50), 35, 35)
+             for i in range(0, 3, 1)],
+            [self.get_sprite(
+             "png/entities_sprite.png", 854, 154 + (i * 50), 35, 35)
+             for i in range(0, 3, 1)],
+            [self.get_sprite(
+             "png/entities_sprite.png", 854, 304 + (i * 50), 35, 35)
+             for i in range(0, 3, 1)],
+            [self.get_sprite(
+             "png/entities_sprite.png", 854, 454 + (i * 50), 35, 35)
+             for i in range(0, 3, 1)]]
 
     def _set_starting_position(self) -> tuple[int, int]:
         """Find the starting position of pacman, at the middle if possible"""
