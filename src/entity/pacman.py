@@ -68,3 +68,15 @@ class Pacman(Character):
 
     def reset_last_move_direction(self) -> None:
         self._last_move_direction = Direction.N
+
+    def do_move(self, direction: Direction | None) -> None:
+        if direction is None:
+            return
+        elif direction == Direction.N:
+            self.go_up()
+        elif direction == Direction.E:
+            self.go_right()
+        elif direction == Direction.S:
+            self.go_down()
+        elif direction == Direction.W:
+            self.go_left()

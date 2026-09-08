@@ -32,7 +32,7 @@ class DepthFirstSearch:
         return None
 
     def get_neighbors_coord(self, x: int, y: int) -> list[tuple[int, int]]:
-        neighbors = self.maze.get_neighbors(self.maze.get_case(y, x))
+        neighbors = self.maze.get_neighbors(self.maze.get_case((x, y)))
         neighbors_coord = []
         for neighbor in neighbors:
             neighbors_coord.append(neighbor.get_coordinate())

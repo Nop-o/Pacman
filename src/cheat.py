@@ -14,8 +14,8 @@ class Cheat:
     def skip_level(self) -> None:
         pass
 
-    def give_extra_lives(self) -> None:
-        self.simulation_manager.game_state.pacman.lives += 1
+    # def give_extra_lives(self) -> None:
+    #     self.simulation_manager.game_state.pacman.lives += 1
 
     def turn_on_invincibility(self) -> None:
         self.invicibility = True

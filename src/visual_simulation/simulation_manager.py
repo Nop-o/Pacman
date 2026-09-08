@@ -27,9 +27,9 @@ class SimulationManager():
         self.key_pressed: str | None = None
         self.mouse_click: tuple[int, int] | None = None
 
+        self.game_state: GameState = GameState(**json_data)
         self.current_level: Level = Level(self)
         self.text_rendering: TextRendering = TextRendering()
-        self.game_state: GameState = GameState(**json_data)
         self.screen_manager: ScreenManager = ScreenManager(
             self, self.current_level)
         self.state_to_call: Callable[[], None] = \
@@ -135,12 +135,3 @@ class SimulationManager():
         self.key_pressed = None
         self.mouse_click = None
         self.delete_pressed = False
-
-    def draw_rectangle(self, coord: tuple[int, int],
-                       width: int, height: int,
-                       color: tuple[int, int, int]) -> None:
-        for actual_width in range(width):
-            for actual_height in range(height):
-                self.screen.set_at(
-                    ((actual_width + coord[0]),
-                     (actual_height + coord[1])), color)

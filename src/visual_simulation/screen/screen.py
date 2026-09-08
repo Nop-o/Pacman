@@ -53,8 +53,7 @@ class Screen(ABC):
         width = text.get_width() + px
         height = text.get_height() + py
         position = (pos[0] - width // 2, pos[1])
-        self.simulation_manager.draw_rectangle(
-            position, width, height, (120, 78, 91))
+        self.draw_rectangle(position, width, height, (120, 78, 91))
         text_pos = (
             position[0] + (width // 2) - (text.get_width() // 2),
             position[1] + (height // 2) - (text.get_height() // 2)
@@ -91,3 +90,19 @@ class Screen(ABC):
             (text.get_width() // 2) + width_adjust,
             self.simulation_manager.screen_height // 2 -
             (text.get_height() // 2) + height_adjust)
+
+    def draw_rectangle(self, coord: tuple[int, int],
+                       width: int, height: int,
+                       color: tuple[int, int, int],
+                       center_width: bool = False,
+                       center_height: bool = False) -> None:
+        modified_coord = [coord[0], coord[1]]
+        if center_width is True:
+            modified_coord[0] -= width // 2
+        if center_height is True:
+            modified_coord[1] -= height // 2
+        for actual_width in range(width):
+            for actual_height in range(height):
+                self.simulation_manager.screen.set_at(
+                    ((actual_width + modified_coord[0]),
+                     (actual_height + modified_coord[1])), color)
