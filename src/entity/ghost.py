@@ -96,15 +96,15 @@ class Shadow(Ghost):  # red chase
             [[self.get_sprite(
              "png/entities_sprite.png", 4, 4 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 4, 104 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 4, 204 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 4, 304 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)]]
+             [self.get_sprite(
+              "png/entities_sprite.png", 4, 104 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 4, 204 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 4, 304 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
         """Overwrite the abstract method of Ghost class"""
@@ -126,17 +126,17 @@ class Speedy(Ghost):  # pink flank
 
         self.speedy_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-             "png/entities_sprite.png", 54, 4 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 54, 104 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 54, 204 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 54, 304 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)]]
+              "png/entities_sprite.png", 54, 4 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 54, 104 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 54, 204 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 54, 304 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
         """Overwrite the abstract method of Ghost class"""
@@ -167,17 +167,17 @@ class Bashful(Ghost):  # cyan random
 
         self.bashful_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-             "png/entities_sprite.png", 104, 4 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 104, 104 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 104, 204 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 104, 304 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)]]
+              "png/entities_sprite.png", 104, 4 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 104, 104 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 104, 204 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 104, 304 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
         """Overwrite the abstract method of Ghost class"""
@@ -205,17 +205,17 @@ class Pokey(Ghost):  # orange chase + run away
 
         self.pokey_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-             "png/entities_sprite.png", 154, 4 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 154, 104 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 154, 204 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite(
-             "png/entities_sprite.png", 154, 304 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)]]
+              "png/entities_sprite.png", 154, 4 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 154, 104 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 154, 204 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)],
+             [self.get_sprite(
+              "png/entities_sprite.png", 154, 304 + (i * 50), 35, 35)
+              for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
         """Overwrite the abstract method of Ghost class"""
