@@ -62,9 +62,6 @@ class LeaderBoard(Screen):
         leaderboard_text = \
             self.simulation_manager.text_rendering.render_small_title(
                 "Leaderboard:", (255, 255, 255))
-        # leaderboard_text = \
-        #     self.simulation_manager.text_rendering.render_small_title(
-        #         f"R:", (255, 255, 255))
 
         self.draw_text(pacman_title, width_adjust=0, height_adjust=-275)
         self.draw_text(leaderboard_text, width_adjust=0, height_adjust=-100)

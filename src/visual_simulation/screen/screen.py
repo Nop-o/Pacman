@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 import pygame
-from ..sprites import Sprites
-
 from typing import TYPE_CHECKING, Callable
 
 if TYPE_CHECKING:
@@ -11,7 +9,6 @@ if TYPE_CHECKING:
 class Screen(ABC):
     def __init__(self, simulation_manager: "SimulationManager") -> None:
         self.simulation_manager: "SimulationManager" = simulation_manager
-        self.sprite: Sprites = Sprites()
 
     @abstractmethod
     def display_screen(self) -> None: ...
