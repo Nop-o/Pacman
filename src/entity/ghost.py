@@ -17,14 +17,12 @@ class Ghost(Character, ABC):
         self.algorithm: DepthFirstSearch = algorithm
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
 
-        self.running_away_1: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 54, 554, 35, 35)
-        self.running_away_2: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 54, 604, 35, 35)
-        self.running_away_3: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 104, 554, 35, 35)
-        self.running_away_4: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 104, 604, 35, 35)
+        self.ghost_running_away_sprites: list[list[pygame.Surface]] = [
+            [self.get_sprite("png/entities_sprite.png", 1, 554 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)],
+            [self.get_sprite("png/entities_sprite.png", 51, 554 + (i * 50), 35, 35)
+             for i in range(0, 2, 1)],
+             ]
 
     @abstractmethod
     def get_goal(self) -> tuple[int, int]:
@@ -108,16 +106,16 @@ class Shadow(Ghost):  # red chase
 
         self.shadow_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-             "png/entities_sprite.png", 4, 4 + (i * 50), 35, 35)
+             "png/entities_sprite.png", 1, 4 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 4, 104 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 1, 104 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 4, 204 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 1, 204 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 4, 304 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 1, 304 + (i * 50), 35, 35)
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
@@ -140,16 +138,16 @@ class Speedy(Ghost):  # pink flank
 
         self.speedy_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-              "png/entities_sprite.png", 54, 4 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 51, 4 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 54, 104 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 51, 104 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 54, 204 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 51, 204 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 54, 304 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 51, 304 + (i * 50), 35, 35)
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
@@ -181,16 +179,16 @@ class Bashful(Ghost):  # cyan random
 
         self.bashful_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-              "png/entities_sprite.png", 104, 4 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 101, 4 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 104, 104 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 101, 104 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 104, 204 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 101, 204 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 104, 304 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 101, 304 + (i * 50), 35, 35)
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
@@ -219,16 +217,16 @@ class Pokey(Ghost):  # orange chase + run away
 
         self.pokey_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-              "png/entities_sprite.png", 154, 4 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 151, 4 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 154, 104 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 151, 104 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 154, 204 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 151, 204 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 154, 304 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 151, 304 + (i * 50), 35, 35)
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
