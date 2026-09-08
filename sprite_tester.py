@@ -119,6 +119,10 @@ class Entities:
              for i in range(0, 2, 1)],
              ]
 
+        self.pacman_logo_sprite: pygame.Surface = self.get_sprite(
+            "png/small_pacman_logo.png", 10, 120, 295, 75
+        )
+
     def launch_simulation(self) -> None:
         frame_time_elapse: float = 0.0
         movement_time_elapse: float = 0.0
@@ -147,7 +151,6 @@ class Entities:
             frame_time_elapse += time.monotonic() - start_time
             movement_time_elapse += time.monotonic() - start_time
 
-
     def display_entities(self) -> None:
         self.screen.fill(pygame.Color("black"))
 
@@ -161,12 +164,14 @@ class Entities:
             self.frame_count % 2], self.pokey_position)
         self.screen.blit(self.pacman_moving_sprites[self.current_direction.value][
             self.frame_count % 3], self.pacman_position)
-        self.screen.blit(self.super_pacgum_sprite, (50, 100))
-        self.screen.blit(self.pacgum_sprite, (100, 100))
-        self.screen.blit(self.pacman_dying_sprites[self.frame_count % 11], (150, 150))
+        self.screen.blit(self.super_pacgum_sprite, (50, 50))
+        self.screen.blit(self.pacgum_sprite, (50, 100))
+        self.screen.blit(self.pacman_dying_sprites[self.frame_count % 11], (50, 150))
 
-        self.screen.blit(self.ghost_running_away_sprites[0][self.frame_count % 2], (200, 200))
-        self.screen.blit(self.ghost_running_away_sprites[1][self.frame_count % 2], (250, 200))
+        self.screen.blit(self.ghost_running_away_sprites[0][self.frame_count % 2], (50, 200))
+        self.screen.blit(self.ghost_running_away_sprites[1][self.frame_count % 2], (50, 250))
+
+        self.screen.blit(self.pacman_logo_sprite, (50, 300))
 
         pygame.display.flip()
     
