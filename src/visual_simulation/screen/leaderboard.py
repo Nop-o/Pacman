@@ -56,28 +56,25 @@ class LeaderBoard(Screen):
     def display_screen(self) -> None:
         self.simulation_manager.screen.fill((0, 0, 0))
 
-        self.draw_text("PAC-MAN",
-                       self.simulation_manager.screen_width // 2, 100,
-                       pygame.Color("yellow"),
-                       self.simulation_manager.text_rendering.small_title)
-        self.draw_text("Push SPACE to play",
-                       self.simulation_manager.screen_width // 2, 350,
-                       pygame.Color("white"),
-                       self.simulation_manager.text_rendering.regular_text)
-        self.draw_text("highscore:",
-                       self.simulation_manager.screen_width // 2,
-                       400,
-                       pygame.Color("white"),
-                       self.simulation_manager.text_rendering.regular_text)
+        pacman_title = \
+            self.simulation_manager.text_rendering.render_big_pacman(
+                "PAC-MAN", (255, 255, 0))
+        leaderboard_text = \
+            self.simulation_manager.text_rendering.render_small_title(
+                "Leaderboard:", (255, 255, 255))
+
+        self.draw_text(pacman_title, width_adjust=0, height_adjust=-275)
+        self.draw_text(leaderboard_text, width_adjust=0, height_adjust=-100)
 
         font = self.simulation_manager.text_rendering.regular_text
-        y = 400 + (font.get_height() * 2)
+        y = - 50 + (font.get_height() * 2)
         for i in range(1, 11, 1):
-            self.draw_text(f"{i + 1}. {self.names[i]} - "
-                           f"{self.scores[i]} pts",
-                           self.simulation_manager.screen_width // 2, y,
-                           pygame.Color("white"),
-                           font)
+            leaderboard_line_text =  \
+                self.simulation_manager.text_rendering.render_big_text(
+                    f"{i:<15}. {self.names[i]:^15} {self.scores[i]:>15}",
+                    (255, 255, 255))
+            self.draw_text(
+                leaderboard_line_text, width_adjust=0, height_adjust=y)
             y += font.get_height() * 2
 
     def export_highscore(self) -> None:

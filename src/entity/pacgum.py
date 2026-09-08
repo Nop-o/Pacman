@@ -1,4 +1,5 @@
 from . import Entity
+import pygame
 
 
 class Pacgum(Entity):
@@ -7,3 +8,9 @@ class Pacgum(Entity):
         super().__init__()
         self.line_pos: int = line_pos
         self.column_pos: int = column_pos
+
+        self.pacgum_sprite: pygame.Surface = self.get_sprite(
+            "png/entities_sprite.png", 404, 404, 35, 35)
+
+        self.super_pacgum_sprite: pygame.Surface = self.get_sprite(
+            "png/entities_sprite.png", 404, 454, 35, 35)

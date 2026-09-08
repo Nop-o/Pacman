@@ -6,11 +6,18 @@ from . import Entity
 
 class Character(Entity, ABC):
 
+    class Direction(Enum):
+        RIGHT = 0
+        DOWN = 1
+        LEFT = 2
+        UP = 3
+
     class State(Enum):
         HUNTING = 0
         RUNNING = 1
 
     def __init__(self, maze: Maze, super_pacgum_cooldown: int) -> None:
+
         super().__init__()
         self.maze: Maze = maze
         self.starting_position: tuple[int, int] = self._set_starting_position()
@@ -18,6 +25,7 @@ class Character(Entity, ABC):
         self.column_pos: int = self.starting_position[1]
         self.super_pacgum_cooldown: int = super_pacgum_cooldown
         self.state: Character.State = self.State.RUNNING
+        self.direction: Character.Direction = self.Direction.RIGHT
 
     def go_left(self) -> None:
         """Go one case left in the maze"""

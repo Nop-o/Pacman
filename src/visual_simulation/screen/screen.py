@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 import pygame
-
 from typing import TYPE_CHECKING, Callable
 
 if TYPE_CHECKING:
@@ -74,20 +73,18 @@ class Screen(ABC):
             if mouse_width is True and mouse_height is True:
                 action()
 
-    def draw_text(self, text: str, x: int, y: int,
-                  color: pygame.Color, font: pygame.font.Font,
-                  center: bool = True) -> None:
+    def draw_text(self, text: pygame.Surface,
+                  width_adjust: int = 0,
+                  height_adjust: int = 0) -> None:
         """Draw text into the simulation"""
-        surface = font.render(text, True, color)
+        x, y = self.get_text_pos(
+            text, width_adjust=width_adjust, height_adjust=height_adjust)
 
-        if center:
-            x -= surface.get_width() // 2
-            y -= surface.get_height() // 2
-        self.simulation_manager.screen.blit(surface, (x, y))
+        self.simulation_manager.screen.blit(text, (x, y))
 
     def get_text_pos(self, text: pygame.Surface,
-                     height_adjust: int = 0,
-                     width_adjust: int = 0) -> tuple[int, int]:
+                     width_adjust: int = 0,
+                     height_adjust: int = 0) -> tuple[int, int]:
         return (
             self.simulation_manager.screen_width // 2 -
             (text.get_width() // 2) + width_adjust,

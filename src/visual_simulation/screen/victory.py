@@ -13,32 +13,44 @@ class Victory(Screen):
 
     def display_screen(self) -> None:
         self.simulation_manager.screen.fill((0, 0, 0))
-        self.handle_user_writing()
 
-        congrat_message = \
+        game_over_text = \
             self.simulation_manager.text_rendering.render_small_title(
-                "Congratulation", (255, 255, 255))
-        user_name = \
-            self.simulation_manager.text_rendering.render_regular_text(
-                self.user_name, (255, 255, 255))
-        input_prompt = \
-            self.simulation_manager.text_rendering.render_regular_text(
-                "Enter your name to save your score", (255, 255, 255))
-        button_text = \
-            self.simulation_manager.text_rendering.render_regular_text(
-                "Save Highscore", (255, 255, 255))
+                "VICTORY", (255, 255, 255))
 
-        congrat_pos = self.get_text_pos(congrat_message, height_adjust=-100)
-        prompt_pos = self.get_text_pos(congrat_message, height_adjust=150)
-        user_name_pos = self.get_text_pos(congrat_message, height_adjust=50)
-        button_pos = self.get_text_pos(congrat_message, height_adjust=75)
+        if self.is_score_in_leaderboard() is True:
+            self.handle_user_writing()
 
-        self.simulation_manager.screen.blit(congrat_message, congrat_pos)
-        self.simulation_manager.screen.blit(input_prompt, prompt_pos)
-        self.simulation_manager.screen.blit(user_name, user_name_pos)
+            text_prompt = \
+                self.simulation_manager.text_rendering.render_regular_text(
+                    "Enter your name to save your score", (255, 255, 255))
 
-        self.make_button(button_pos, button_text, self.button_action,
-                         50, 20)
+            user_name = \
+                self.simulation_manager.text_rendering.render_regular_text(
+                    self.user_name, (255, 255, 255))
+            button_text = \
+                self.simulation_manager.text_rendering.render_regular_text(
+                    "Save Highscore", (255, 255, 255))
+
+            self.draw_text(user_name, width_adjust=0, height_adjust=100)
+
+            button_pos = self.get_text_pos(button_text, height_adjust=175)
+            self.make_button(
+                button_pos, button_text, self.leaderboard_screen, 50, 20)
+
+        else:
+            text_prompt = \
+                self.simulation_manager.text_rendering.render_regular_text(
+                    "Press RETURN to go back to main menu ...", (255, 255, 255)
+                    )
+
+        self.draw_text(game_over_text, width_adjust=0, height_adjust=-100)
+        self.draw_text(text_prompt, width_adjust=0, height_adjust=50)
+
+    def is_score_in_leaderboard(self) -> bool:
+        return (
+            self.simulation_manager.game_state.score >
+            self.simulation_manager.screen_manager.leaderboard.scores[9])
 
     def button_action(self) -> None:
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
