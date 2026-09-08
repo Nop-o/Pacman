@@ -23,109 +23,99 @@ class Entities:
         self.frame_time: float = 0.15
         self.movement_time: float = 0.15
         self.frame_count: int = 0
-        self.extra_pixel: int = 4
 
         self.current_direction: Entities.Direction = Entities.Direction.RIGHT
 
         self.shadow_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-             "png/entities_sprite.png", self.extra_pixel,
-             self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 4, 4 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", self.extra_pixel, 100 +
-             self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 4, 104 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", self.extra_pixel, 200 +
-             self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 4, 204 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", self.extra_pixel, 300 +
-             self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 4, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]]
         self.shadow_position: tuple[int, int] = (
-            self.extra_pixel, self.extra_pixel)
+            4, 4)
         
         self.speedy_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-             "png/entities_sprite.png", 50 + self.extra_pixel,
-             self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 54, 4 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 50 + self.extra_pixel,
-             100 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 54, 104 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 50 + self.extra_pixel,
-             200 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 54, 204 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 50 + self.extra_pixel,
-             300 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 54, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]]
         self.speedy_position: tuple[int, int] = (
-            50 + self.extra_pixel, self.extra_pixel)
+            54, 4)
 
         self.bashful_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-             "png/entities_sprite.png", 100 + self.extra_pixel,
-             self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 104, 4 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 100 + self.extra_pixel,
-             100 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 104, 104 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 100 + self.extra_pixel,
-             200 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 104, 204 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 100 + self.extra_pixel,
-             300 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 104, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]]
         self.bashful_position: tuple[int, int] = (
-            100 + self.extra_pixel, self.extra_pixel)
+            104, 4)
 
         self.pokey_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-             "png/entities_sprite.png", 150 + self.extra_pixel,
-             self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 154, 4 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 150 + self.extra_pixel,
-             100 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 154, 104 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 150 + self.extra_pixel,
-             200 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 154, 204 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 150 + self.extra_pixel,
-             300 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 154, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]]
         self.pokey_position: tuple[int, int] = (
-            150 + self.extra_pixel, self.extra_pixel)
+            154, 4)
 
-        self.pacman_sprites: list[list[pygame.Surface]] = \
+        self.pacman_moving_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-             "png/entities_sprite.png", 850 + self.extra_pixel,
-             self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 854, 4 + (i * 50), 35, 35)
              for i in range(0, 3, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 850 + self.extra_pixel,
-             150 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 854, 154 + (i * 50), 35, 35)
              for i in range(0, 3, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 850 + self.extra_pixel,
-             300 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 854, 304 + (i * 50), 35, 35)
              for i in range(0, 3, 1)],
             [self.get_sprite(
-             "png/entities_sprite.png", 850 + self.extra_pixel,
-             450 + self.extra_pixel + (i * 50), 35, 35)
+             "png/entities_sprite.png", 854, 454 + (i * 50), 35, 35)
              for i in range(0, 3, 1)]]
         self.pacman_position: tuple[int, int] = (
-            200 + self.extra_pixel, self.extra_pixel)
+            204, 4)
+
+        self.pacman_dying_sprites: list[pygame.Surface] = \
+            [self.get_sprite(
+              "png/entities_sprite.png", 354, 4 + (i * 50), 35, 35)
+              for i in range(0, 11, 1)]
+
+        self.pacgum_sprite: pygame.Surface = self.get_sprite(
+            "png/entities_sprite.png", 404, 404, 35, 35)
+
+        self.super_pacgum_sprite: pygame.Surface = self.get_sprite(
+            "png/entities_sprite.png", 404, 454, 35, 35)
 
     def launch_simulation(self) -> None:
         frame_time_elapse: float = 0.0
@@ -167,8 +157,11 @@ class Entities:
             self.frame_count % 2], self.bashful_position)
         self.screen.blit(self.pokey_sprites[self.current_direction.value][
             self.frame_count % 2], self.pokey_position)
-        self.screen.blit(self.pacman_sprites[self.current_direction.value][
+        self.screen.blit(self.pacman_moving_sprites[self.current_direction.value][
             self.frame_count % 3], self.pacman_position)
+        self.screen.blit(self.super_pacgum_sprite, (54, 104))
+        self.screen.blit(self.pacgum_sprite, (104, 104))
+        self.screen.blit(self.pacman_dying_sprites[self.frame_count % 11], (154, 154))
 
         pygame.display.flip()
     
@@ -183,13 +176,13 @@ class Entities:
         if self.screen_width <= pacman_x + 35:
             self.pacman_position = tuple(a - b for a, b in zip(
                 self.pacman_position, (self.screen_width, 0)))
-        elif self.extra_pixel >= pacman_x - 35:
+        elif 4 >= pacman_x - 35:
             self.pacman_position = tuple(a + b for a, b in zip(
                 self.pacman_position, (self.screen_width, 0)))
         elif self.screen_height <= pacman_y + 35:
             self.pacman_position = tuple(a - b for a, b in zip(
                 self.pacman_position, (0, self.screen_height)))
-        elif self.extra_pixel > pacman_y + 35:
+        elif 4 > pacman_y + 35:
             self.pacman_position = tuple(a + b for a, b in zip(
                 self.pacman_position, (0, self.screen_height)))
 
