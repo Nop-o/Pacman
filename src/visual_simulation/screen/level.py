@@ -1,9 +1,10 @@
 from .screen import Screen
 from typing import TYPE_CHECKING
+from ...maze import Direction
+from ...entity.ghost import Ghost, Pacman
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
-    from ...entity.ghost import Ghost
 
 
 class Level(Screen):
@@ -14,6 +15,8 @@ class Level(Screen):
         self.simulation_manager: SimulationManager = simulation_manager
         # need to fill ghost list
         self.ghosts: list[Ghost] = []
+        # need to see what information pacman need
+        self.pacman: Pacman
         # need pacgum, either in list with coord form or object
 
     # TODO Do the turn by calling in order move_pacman, move_ghost, load_maze,
@@ -23,7 +26,16 @@ class Level(Screen):
 
     # TODO move pacman according to the direection input
     def move_pacman(self) -> None:
-        pass
+        if self.simulation_manager.up_pressed:
+            self.pacman.do_move(Direction.N)
+        elif self.simulation_manager.right_pressed:
+            self.pacman.do_move(Direction.E)
+        elif self.simulation_manager.down_pressed:
+            self.pacman.do_move(Direction.S)
+        elif self.simulation_manager.left_pressed:
+            self.pacman.do_move(Direction.W)
+        else:
+            self.pacman.do_move(None)
 
     # TODO move the ghosts
     def move_ghosts(self) -> None:
