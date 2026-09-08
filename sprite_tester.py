@@ -119,8 +119,16 @@ class Entities:
              for i in range(0, 2, 1)],
              ]
 
-        self.pacman_logo_sprite: pygame.Surface = self.get_sprite(
+        self.small_pacman_logo_sprite: pygame.Surface = self.get_sprite(
             "png/small_pacman_logo.png", 10, 120, 295, 75
+        )
+
+        self.small_pacman_logo_2_sprite: pygame.Surface = self.get_sprite(
+            "png/small_pacman_logo_2.png", 19, 48, 745, 160
+        )
+
+        self.big_pacman_logo_sprite: pygame.Surface = self.get_sprite(
+            "png/big_pacman_logo.png", 2, 2, 1480, 700
         )
 
     def launch_simulation(self) -> None:
@@ -171,7 +179,9 @@ class Entities:
         self.screen.blit(self.ghost_running_away_sprites[0][self.frame_count % 2], (50, 200))
         self.screen.blit(self.ghost_running_away_sprites[1][self.frame_count % 2], (50, 250))
 
-        self.screen.blit(self.pacman_logo_sprite, (50, 300))
+        self.screen.blit(self.small_pacman_logo_sprite, (50, 300))
+        self.screen.blit(self.small_pacman_logo_2_sprite, (50, 400))
+        self.screen.blit(self.big_pacman_logo_sprite, (50, 600))
 
         pygame.display.flip()
     
