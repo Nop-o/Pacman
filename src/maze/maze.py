@@ -66,7 +66,7 @@ class Maze():
         return self.cases[coord[1]][coord[0]]
 
     def get_direction_between_case(self, case1: Case, case2: Case)\
-        -> Direction | None:
+            -> Direction | None:
         for direction in Direction:
             adjacent_case = self.get_adjacent_case(case1, direction)
             if adjacent_case == case2:

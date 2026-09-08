@@ -37,12 +37,19 @@ class Ghost(Character, ABC):
         """Update solver"""
         self._shortest_path_to_goal = self.algorithm.solver()
 
-    def do_turn(self):
+    def do_turn(self) -> None:
         self.algorithm.set_entry(self.get_coord())
         self.algorithm.set_exit(self.get_goal())
         self.find_shortest_path_to_exit()
+        if self.shortest_path_to_goal is None:
+            raise ValueError("shortest_path_to_goal cannot be None")
         direction =\
-            self.maze.get_direction_between_case(self.shortest_path_to_goal[0])
+            self.maze.get_direction_between_case(
+                self.maze.get_case(self.get_coord()),
+                self.maze.get_case(self.shortest_path_to_goal[0])
+                )
+        if direction is None:
+            raise ValueError("direction cannot be None")
         self.move(direction)
 
     @property

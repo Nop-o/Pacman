@@ -24,11 +24,11 @@ class Level(Screen):
         self.ghosts.append(Shadow(self.maze, self.pacman,
                                   super_pacgum_cooldown, self.algo))
         self.ghosts.append(Speedy(self.maze, self.pacman,
-                            super_pacgum_cooldown, self.algo))
+                                  super_pacgum_cooldown, self.algo))
         self.ghosts.append(Bashful(self.maze, self.pacman,
-                            super_pacgum_cooldown, self.algo))
+                                   super_pacgum_cooldown, self.algo))
         self.ghosts.append(Pokey(self.maze, self.pacman,
-                            super_pacgum_cooldown, self.algo))
+                                 super_pacgum_cooldown, self.algo))
         # need pacgum, either in list with coord form or object
         self.CASE_SIZE = 50
         self.CASE_LINE_THICKNESS = 3
@@ -83,12 +83,12 @@ class Level(Screen):
         print("test 1")
         self.make_walls()
 
-    def make_walls(self):
+    def make_walls(self) -> None:
         for i, line in enumerate(self.maze.cases):
             for j, case in enumerate(line):
                 if case.wall_north is True:
                     coord = (j * (self.CASE_SIZE + self.CASE_LINE_THICKNESS),
-                            i * (self.CASE_SIZE + self.CASE_LINE_THICKNESS))
+                             i * (self.CASE_SIZE + self.CASE_LINE_THICKNESS))
                     self.draw_rectangle(coord=coord,
                                         width=self.CASE_SIZE,
                                         height=self.CASE_LINE_THICKNESS,
@@ -97,8 +97,8 @@ class Level(Screen):
                                         )
                 if case.wall_east is True:
                     coord = ((j + 1) *
-                            (self.CASE_SIZE + self.CASE_LINE_THICKNESS),
-                            i * (self.CASE_SIZE + self.CASE_LINE_THICKNESS))
+                             (self.CASE_SIZE + self.CASE_LINE_THICKNESS),
+                             i * (self.CASE_SIZE + self.CASE_LINE_THICKNESS))
                     self.draw_rectangle(coord=coord,
                                         width=self.CASE_LINE_THICKNESS,
                                         height=self.CASE_SIZE,
@@ -107,8 +107,8 @@ class Level(Screen):
                                         )
                 if case.wall_south is True:
                     coord = (j * (self.CASE_SIZE + self.CASE_LINE_THICKNESS),
-                            (i + 1) *
-                            (self.CASE_SIZE + self.CASE_LINE_THICKNESS))
+                             (i + 1) *
+                             (self.CASE_SIZE + self.CASE_LINE_THICKNESS))
                     self.draw_rectangle(coord=coord,
                                         width=self.CASE_SIZE,
                                         height=self.CASE_LINE_THICKNESS,
@@ -117,7 +117,7 @@ class Level(Screen):
                                         )
                 if case.wall_west is True:
                     coord = (j * (self.CASE_SIZE + self.CASE_LINE_THICKNESS),
-                            i * (self.CASE_SIZE + self.CASE_LINE_THICKNESS))
+                             i * (self.CASE_SIZE + self.CASE_LINE_THICKNESS))
                     self.draw_rectangle(coord=coord,
                                         width=self.CASE_LINE_THICKNESS,
                                         height=self.CASE_SIZE,

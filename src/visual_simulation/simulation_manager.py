@@ -135,4 +135,3 @@ class SimulationManager():
         self.key_pressed = None
         self.mouse_click = None
         self.delete_pressed = False
-
