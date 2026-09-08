@@ -43,6 +43,16 @@ class Character(Entity, ABC):
            self.maze.cases[self.line_pos][self.column_pos], Direction.S):
             self.line_pos += 1
 
+    def move(self, direction: Direction) -> None:
+        if direction == Direction.N:
+            self.go_up()
+        elif direction == Direction.E:
+            self.go_right()
+        elif direction == Direction.S:
+            self.go_down()
+        else:
+            self.go_left()
+
     def change_state(self) -> None:
         """Alternate the state between hunting and running for entities"""
         if self.state == self.State.HUNTING:

@@ -12,7 +12,6 @@ class Ghost(Character, ABC):
                  algorithm: DepthFirstSearch) -> None:
         super().__init__(maze, super_pacgum_cooldown)
         self.pacman: Pacman = pacman
-
         self.freeze: bool = False
         self.algorithm: DepthFirstSearch = algorithm
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
@@ -37,6 +36,14 @@ class Ghost(Character, ABC):
     def find_shortest_path_to_exit(self) -> None:
         """Update solver"""
         self._shortest_path_to_goal = self.algorithm.solver()
+
+    def do_turn(self):
+        self.algorithm.set_entry(self.get_coord())
+        self.algorithm.set_exit(self.get_goal())
+        self.find_shortest_path_to_exit()
+        direction =\
+            self.maze.get_direction_between_case(self.shortest_path_to_goal[0])
+        self.move(direction)
 
     @property
     def shortest_path_to_goal(self) -> list[tuple[int, int]] | None:

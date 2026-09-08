@@ -62,5 +62,13 @@ class Maze():
     def is_accessible(self, line_pos: int, column_pos: int) -> bool:
         return not self.cases[line_pos][column_pos].is_enclosed
 
-    def get_case(self, line: int, column: int) -> Case:
-        return self.cases[line][column]
+    def get_case(self, coord: tuple[int, int]) -> Case:
+        return self.cases[coord[1]][coord[0]]
+
+    def get_direction_between_case(self, case1: Case, case2: Case)\
+        -> Direction | None:
+        for direction in Direction:
+            adjacent_case = self.get_adjacent_case(case1, direction)
+            if adjacent_case == case2:
+                return direction
+        return None
