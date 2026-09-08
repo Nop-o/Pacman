@@ -80,7 +80,6 @@ class Level(Screen):
     # TODO Do the turn by calling in order move_pacman, move_ghost, load_maze,
     # load_pacgum, load_ghost and load_pacman
     def display_screen(self) -> None:
-        print("test 1")
         self.make_walls()
 
     def make_walls(self) -> None:
