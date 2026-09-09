@@ -1,5 +1,5 @@
 from ..maze import Maze, Direction
-from enum import IntEnum
+from enum import Enum, IntEnum
 from abc import abstractmethod, ABC
 from . import Entity
 
