@@ -16,21 +16,21 @@ class Pacman(Character):
 
         self.pacman_moving_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
-              "png/entities_sprite.png", 854, 4 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 851, 4 + (i * 50), 35, 35)
               for i in range(0, 3, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 854, 154 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 851, 154 + (i * 50), 35, 35)
               for i in range(0, 3, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 854, 304 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 851, 304 + (i * 50), 35, 35)
               for i in range(0, 3, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 854, 454 + (i * 50), 35, 35)
+              "png/entities_sprite.png", 851, 454 + (i * 50), 35, 35)
               for i in range(0, 3, 1)]]
 
         self.pacman_dying_sprites: list[pygame.Surface] = \
             [self.get_sprite(
-             "png/entities_sprite.png", 354, 4 + (i * 50), 35, 35)
+             "png/entities_sprite.png", 351, 4 + (i * 50), 35, 35)
              for i in range(0, 11, 1)]
 
     def _set_starting_position(self) -> tuple[int, int]:
