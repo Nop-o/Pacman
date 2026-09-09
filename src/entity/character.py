@@ -1,12 +1,12 @@
 from ..maze import Maze, Direction
-from enum import Enum
+from enum import Enum, IntEnum
 from abc import abstractmethod, ABC
 from . import Entity
 
 
 class Character(Entity, ABC):
 
-    class Direction(Enum):
+    class Direction(IntEnum):
         RIGHT = 0
         DOWN = 1
         LEFT = 2

@@ -17,27 +17,19 @@ class Ghost(Character, ABC):
         self.algorithm: DepthFirstSearch = algorithm
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
 
-        self.ghost_running_away_sprites: list[list[pygame.Surface]] = [
-            [self.get_sprite("png/entities_sprite.png", 1, 554 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-            [self.get_sprite("png/entities_sprite.png", 51, 554 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-             ]
+        self.ghost_running_away_sprites: list[pygame.Surface] = [
+            self.get_sprite("png/entities_sprite.png", 1, 554 + (i * 50),
+                            35, 35)
+            for i in range(0, 2, 1)]
+        self.ghost_running_away_sprites.extend(
+            [self.get_sprite("png/entities_sprite.png", 51, 554 + (i * 50),
+                             35, 35)
+             for i in range(0, 2, 1)])
 
     @abstractmethod
     def get_goal(self) -> tuple[int, int]:
         """Decide if the ghost run away or chase pacman"""
         ...
-
-    def get_running_ghost_sprites(self) -> list[pygame.Surface]:
-        running_ghost_sprites: list[pygame.Surface] = [
-            self.running_away_1, self.running_away_2]
-
-        if self.super_pacgum_cooldown > 5:
-            running_ghost_sprites.extend(
-                [self.running_away_3, self.running_away_4])
-
-        return running_ghost_sprites
 
     def reset_starting_position(self) -> None:
         """Reset the position of an entity to his starting position"""
