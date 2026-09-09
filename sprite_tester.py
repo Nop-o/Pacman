@@ -229,7 +229,6 @@ class Entities:
         else:
             image_count = 4
 
-        reverse_direction = self.get_reverse_direction(self.pacman_direction)
 
         self.screen.blit(self.ghost_running_away_sprites[
             self.frame_count % image_count], self.shadow_position)
@@ -239,7 +238,7 @@ class Entities:
             self.frame_count % image_count], self.bashful_position)
         self.screen.blit(self.ghost_running_away_sprites[
             self.frame_count % image_count], self.pokey_position)
-        self.screen.blit(self.pacman_moving_sprites[reverse_direction][
+        self.screen.blit(self.pacman_moving_sprites[self.pacman_direction][
             self.frame_count % 3], self.pacman_position)
 
     def display_entities(self) -> None:
@@ -336,15 +335,6 @@ class Entities:
         elif direction == self.Direction.LEFT:
             return (-50, 0)
         return (50, 0)
-
-    def get_reverse_direction(self, direction) -> Any:
-        if direction == self.Direction.UP:
-            return self.Direction.DOWN
-        elif direction == self.Direction.DOWN:
-            return self.Direction.UP
-        elif direction == self.Direction.LEFT:
-            return self.Direction.RIGHT
-        return self.Direction.LEFT
 
     @staticmethod
     def mlx_get_screen_size() -> tuple[int, int]:

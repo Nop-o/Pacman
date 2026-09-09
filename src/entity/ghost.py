@@ -52,14 +52,17 @@ class Ghost(Character, ABC):
         self.algorithm.set_exit(self.get_goal())
         self.find_shortest_path_to_exit()
         if self.shortest_path_to_goal is None:
-            raise ValueError("shortest_path_to_goal cannot be None")
+            raise ValueError("shortest_path_to_goal cannot be None in" \
+            "ghost.do_turn")
+        if len(self.shortest_path_to_goal) < 2:
+            return
         direction =\
             self.maze.get_direction_between_case(
                 self.maze.get_case(self.get_coord()),
-                self.maze.get_case(self.shortest_path_to_goal[0])
+                self.maze.get_case(self.shortest_path_to_goal[1])
                 )
         if direction is None:
-            raise ValueError("direction cannot be None")
+            raise ValueError("direction cannot be None in ghost.do_turn")
         self.move(direction)
 
     @property
@@ -159,7 +162,7 @@ class Speedy(Ghost):  # pink flank
         return self.chase_pacman()
 
     def _set_starting_position(self) -> tuple[int, int]:
-        return (0, self.maze.nb_column)
+        return (0, self.maze.nb_column - 1)
 
 
 class Bashful(Ghost):  # cyan random
@@ -197,7 +200,7 @@ class Bashful(Ghost):  # cyan random
         return (new_line, new_column)
 
     def _set_starting_position(self) -> tuple[int, int]:
-        return (self.maze.nb_line, 0)
+        return (self.maze.nb_line - 1, 0)
 
 
 class Pokey(Ghost):  # orange chase + run away
@@ -237,4 +240,4 @@ class Pokey(Ghost):  # orange chase + run away
         return False
 
     def _set_starting_position(self) -> tuple[int, int]:
-        return (self.maze.nb_line, self.maze.nb_column)
+        return (self.maze.nb_line - 1, self.maze.nb_column - 1)

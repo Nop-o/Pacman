@@ -11,7 +11,7 @@ class LaunchGame(Screen):
         super().__init__(simulation_manager=simulation_manager)
 
         self.logo: pygame.Surface = self.get_sprite(
-            "png/logo_sprite.png", 54, 554, 35, 35
+            "png/old_pacman_logo.png", 54, 554, 35, 35
         )  # TODO : adjust the variable
 
     def display_screen(self) -> None:
