@@ -1,4 +1,4 @@
-from time import time, sleep
+import time
 import pygame
 from typing import Any, Callable
 from .screen_manager import ScreenManager
@@ -11,6 +11,9 @@ class SimulationManager():
     def __init__(self, json_data: dict[str, Any]) -> None:
         pygame.init()
         pygame.display.set_caption("Pac-Man")
+
+        self.frame_count: int = 0
+        self.frame_time: float = 0.1
 
         self.fps: int = 60
         self.frame_duration: float = 1.0 / self.fps
@@ -36,20 +39,28 @@ class SimulationManager():
             self.screen_manager.launch_game.display_screen
 
     def launch(self) -> None:
+        frame_time_elapse: float = 0.0
+
         while self.active:
-            start_time = time()
+            start_time = time.monotonic()
 
             self.event_manager()
             if not self.active:
                 pygame.quit()
                 break
+
+            if frame_time_elapse > self.frame_time:
+                frame_time_elapse -= self.frame_time
+                self.frame_count += 1
+
+            if self.frame_count == 60:
+                self.frame_count = 0
+
             self.state_to_call()
             self.display_on_screen()
             self.reset_event()
 
-            elapsed = time() - start_time
-            if elapsed < self.frame_duration:
-                sleep(self.frame_duration - elapsed)
+            frame_time_elapse += time.monotonic() - start_time
 
     @staticmethod
     def mlx_get_screen_size() -> tuple[int, int]:
