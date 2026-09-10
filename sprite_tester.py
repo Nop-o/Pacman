@@ -1,13 +1,12 @@
 import pygame
 import time
-from time import sleep
 from enum import IntEnum
 from typing import Any
 
 
 class Entities:
 
-    class Direction(IntEnum):
+    class FacingDirection(IntEnum):
         RIGHT = 0
         DOWN = 1
         LEFT = 2
@@ -26,8 +25,8 @@ class Entities:
         self.movement_time: float = 0.15
         self.frame_count: int = 0
 
-        self.ghost_chasing: bool = False
-        self.current_choice: Entities.Direction = Entities.Direction.RIGHT
+        self.ghost_chasing: bool = True
+        self.current_choice: Entities.FacingDirection = Entities.FacingDirection.RIGHT
 
         self.shadow_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
@@ -43,7 +42,7 @@ class Entities:
              "png/entities_sprite.png", 1, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]]
         self.shadow_position: tuple[int, int]
-        self.shadow_direction: Entities.Direction = Entities.Direction.RIGHT
+        self.shadow_direction: Entities.FacingDirection = Entities.FacingDirection.RIGHT
         
         self.speedy_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
@@ -59,7 +58,7 @@ class Entities:
              "png/entities_sprite.png", 51, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]]
         self.speedy_position: tuple[int, int]
-        self.speedy_direction: Entities.Direction = Entities.Direction.RIGHT
+        self.speedy_direction: Entities.FacingDirection = Entities.FacingDirection.RIGHT
 
         self.bashful_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
@@ -75,7 +74,7 @@ class Entities:
              "png/entities_sprite.png", 101, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]]
         self.bashful_position: tuple[int, int]
-        self.bashful_direction: Entities.Direction = Entities.Direction.RIGHT
+        self.bashful_direction: Entities.FacingDirection = Entities.FacingDirection.RIGHT
 
         self.pokey_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
@@ -91,7 +90,7 @@ class Entities:
              "png/entities_sprite.png", 151, 304 + (i * 50), 35, 35)
              for i in range(0, 2, 1)]]
         self.pokey_position: tuple[int, int]
-        self.pokey_direction: Entities.Direction = Entities.Direction.RIGHT
+        self.pokey_direction: Entities.FacingDirection = Entities.FacingDirection.RIGHT
 
         self.pacman_moving_sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
@@ -107,7 +106,7 @@ class Entities:
              "png/entities_sprite.png", 851, 454 + (i * 50), 35, 35)
              for i in range(0, 3, 1)]]
         self.pacman_position: tuple[int, int]
-        self.pacman_direction: Entities.Direction = Entities.Direction.RIGHT
+        self.pacman_direction: Entities.FacingDirection = Entities.FacingDirection.RIGHT
 
         self._init_entity_starting_pos()
 
@@ -159,7 +158,7 @@ class Entities:
             "png/running_pacman.png", 10, 0, 715, 800)
 
         self.old_pacman_logo: pygame.Surface = self.get_sprite(
-            "png/old_pacman_logo.png", 30, 100, 10000, 10000)
+            "png/old_pacman_logo.png", 30, 100, 1250, 500)
 
         self.old_pacman_logo_big: pygame.Surface = self.get_sprite(
             "png/old_pacman_logo_big.png", 30, 100, 10000, 10000)
@@ -180,7 +179,6 @@ class Entities:
             self.display_entities()
             self.display_titles()
             pygame.display.flip()
-
 
             if frame_time_elapse > self.frame_time:
                 frame_time_elapse -= self.frame_time
@@ -229,7 +227,6 @@ class Entities:
         else:
             image_count = 4
 
-
         self.screen.blit(self.ghost_running_away_sprites[
             self.frame_count % image_count], self.shadow_position)
         self.screen.blit(self.ghost_running_away_sprites[
@@ -252,10 +249,10 @@ class Entities:
         # self.screen.blit(self.ghost_running_away_sprites[self.frame_count % 4], (50, 250))
         # self.screen.blit(self.pacman_dying_sprites[self.frame_count % 11], (50, 200))
 
-        # self.screen.blit(self.buttons_sprite[Entities.Direction.RIGHT], (150, 150))
-        # self.screen.blit(self.buttons_sprite[Entities.Direction.DOWN], (100, 200))
-        # self.screen.blit(self.buttons_sprite[Entities.Direction.LEFT], (50, 150))
-        # self.screen.blit(self.buttons_sprite[Entities.Direction.UP], (100, 100))
+        # self.screen.blit(self.buttons_sprite[Entities.FacingDirection.RIGHT], (150, 150))
+        # self.screen.blit(self.buttons_sprite[Entities.FacingDirection.DOWN], (100, 200))
+        # self.screen.blit(self.buttons_sprite[Entities.FacingDirection.LEFT], (50, 150))
+        # self.screen.blit(self.buttons_sprite[Entities.FacingDirection.UP], (100, 100))
 
         # self.screen.blit(self.fruits_sprites[self.frame_count % 7], (150, 200))
 
@@ -294,25 +291,6 @@ class Entities:
 
         self.travel_back_to_opposite_screen_side()
 
-    def update_direction(self, old_pos: tuple[int, int],
-                         new_pos: tuple[int, int]) -> Any:
-        old_x, old_y = old_pos
-        next_x, next_y = new_pos
-
-        if old_x > next_x:
-            direction = Entities.Direction.LEFT
-        elif old_x < next_x:
-            direction = Entities.Direction.RIGHT
-        elif old_y > next_y:
-            direction = Entities.Direction.UP
-        else:
-            direction = Entities.Direction.DOWN
-
-        new_position = tuple(a + b for a, b in zip(
-            old_pos, self.get_direction_value(direction)))
-
-        return (direction, new_position)
-
     def travel_back_to_opposite_screen_side(self) -> None:
         for attr in ("pacman_position", "shadow_position", "speedy_position",
                      "bashful_position", "pokey_position"):
@@ -327,12 +305,12 @@ class Entities:
             elif 4 > pos_y + 35:
                 setattr(self, attr, tuple(a + b for a, b in zip((pos_x, pos_y), (0, self.screen_height))))
 
-    def get_direction_value(self, direction) -> tuple[int, int]:
-        if direction == self.Direction.UP:
+    def get_direction_value(self, direction: Character.FacingDirection) -> tuple[int, int]:
+        if direction == self.FacingDirection.UP:
             return (0, -50)
-        elif direction == self.Direction.DOWN:
+        elif direction == self.FacingDirection.DOWN:
             return (0, 50)
-        elif direction == self.Direction.LEFT:
+        elif direction == self.FacingDirection.LEFT:
             return (-50, 0)
         return (50, 0)
 
@@ -368,21 +346,21 @@ class Entities:
 
             if event.type == pygame.KEYDOWN:
                 if (event.key == pygame.K_LEFT and
-                   self.current_choice not in [Entities.Direction.RIGHT,
-                                               Entities.Direction.LEFT]):
-                    self.current_choice = self.Direction.LEFT
+                   self.current_choice not in [Entities.FacingDirection.RIGHT,
+                                               Entities.FacingDirection.LEFT]):
+                    self.current_choice = self.FacingDirection.LEFT
                 if (event.key == pygame.K_RIGHT and
-                   self.current_choice not in [Entities.Direction.RIGHT,
-                                               Entities.Direction.LEFT]):
-                    self.current_choice = self.Direction.RIGHT
+                   self.current_choice not in [Entities.FacingDirection.RIGHT,
+                                               Entities.FacingDirection.LEFT]):
+                    self.current_choice = self.FacingDirection.RIGHT
                 if (event.key == pygame.K_DOWN and
-                   self.current_choice not in [Entities.Direction.UP,
-                                               Entities.Direction.DOWN]):
-                    self.current_choice = self.Direction.DOWN
+                   self.current_choice not in [Entities.FacingDirection.UP,
+                                               Entities.FacingDirection.DOWN]):
+                    self.current_choice = self.FacingDirection.DOWN
                 if (event.key == pygame.K_UP and
-                   self.current_choice not in [Entities.Direction.UP,
-                                               Entities.Direction.DOWN]):
-                    self.current_choice = self.Direction.UP
+                   self.current_choice not in [Entities.FacingDirection.UP,
+                                               Entities.FacingDirection.DOWN]):
+                    self.current_choice = self.FacingDirection.UP
                 if event.key == pygame.K_ESCAPE:
                     self.active = False
                     break
