@@ -20,8 +20,8 @@ class Level(Screen):
         self.algo = DepthFirstSearch(self.maze)
         super_pacgum_cooldown =\
             self.simulation_manager.game_state.super_pacgum_cooldown
-        self.pacman: Pacman =\
-            Pacman(3, self.maze, super_pacgum_cooldown)
+        self.pacman: Pacman = Pacman(self.simulation_manager.game_state.lives,
+                                     self.maze, super_pacgum_cooldown)
         self.ghosts: list[Ghost] = []
         # TODO need to fix speedy and bashfule chase algo, actually make crash
         self.ghosts.append(Shadow(self.maze, self.pacman,
