@@ -1,79 +1,108 @@
-from . import Entity
 import pygame
 
 
-class Cherry(Entity):
+class Fruit:
+    def __init__(self, file_path: str, x: int, y: int,
+                 width: int, height: int) -> None:
+        self.sprites: pygame.Surface = self.get_sprite(
+            file_path, x, y, width, height)
 
-    def __init__(self, line_pos: int, column_pos: int) -> None:
-        super().__init__()
-        self.line_pos: int = line_pos
-        self.column_pos: int = column_pos
+    def get_sprite(self, file_path: str, x: int, y: int,
+                   width: int, height: int) -> pygame.Surface:
+        source_image = pygame.image.load(file_path).convert_alpha()
 
-        self.sprite: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 601, 4, 35, 35)
+        image = pygame.Surface((width, height), pygame.SRCALPHA)
+        image.blit(source_image, (0, 0), (x, y, width, height))
 
-
-class Strawberry(Entity):
-
-    def __init__(self, line_pos: int, column_pos: int) -> None:
-        super().__init__()
-        self.line_pos: int = line_pos
-        self.column_pos: int = column_pos
-
-        self.sprite: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 601, 54, 35, 35)
+        return image
 
 
-class Apricot(Entity):
+class FruitManager:
+    def __init__(self) -> None:
+        self.fruits: list[Fruit] = [
+            Cherry("png/entities_sprite.png", 601, 4, 35, 35),
+            Strawberry("png/entities_sprite.png", 601, 54, 35, 35),
+            Apricot("png/entities_sprite.png", 601, 104, 35, 35),
+            Apple("png/entities_sprite.png", 601, 154, 35, 35),
+            Berry("png/entities_sprite.png", 601, 204, 35, 35),
+            Banana("png/entities_sprite.png", 601, 254, 35, 35),
+            Peach("png/entities_sprite.png", 601, 304, 35, 35)
+        ]
 
-    def __init__(self, line_pos: int, column_pos: int) -> None:
-        super().__init__()
-        self.line_pos: int = line_pos
-        self.column_pos: int = column_pos
+        self._fruit_position: list[tuple[int, int]]
+        self.current_fruit: int = 0
+        self.current_position: int = 0
 
-        self.sprite: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 601, 104, 35, 35)
+    def display_fruits(self, screen: pygame.Surface) -> None:
+        if not self.fruit_position:
+            self.update_fruit_position
 
+        screen.blit(self.fruits[self.current_fruit].sprites,
+                    self.fruit_position)
 
-class Apple(Entity):
+    def update_current_fruit(self) -> None:
+        if self.current_fruit < len(self.fruits) - 1:
+            self.current_fruit += 1
+        else:
+            self.current_fruit = 0
 
-    def __init__(self, line_pos: int, column_pos: int) -> None:
-        super().__init__()
-        self.line_pos: int = line_pos
-        self.column_pos: int = column_pos
+    def update_current_position(self) -> None:
+        if self.current_position == 0:
+            self.current_position = 1
+        else:
+            self.current_position = 0
 
-        self.sprite: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 601, 154, 35, 35)
+    def ate_fruit(self) -> None:
+        self.update_current_position()
+        self.update_current_fruit()
 
+    @property
+    def fruit_position(self) -> tuple[int, int]:
+        if not self._fruit_position:
+            raise ValueError("Entity error: fruit position isn't known")
+        return self._fruit_position[self.current_position]
 
-class Berry(Entity):
-
-    def __init__(self, line_pos: int, column_pos: int) -> None:
-        super().__init__()
-        self.line_pos: int = line_pos
-        self.column_pos: int = column_pos
-
-        self.sprite: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 601, 204, 35, 35)
-
-
-class Banana(Entity):
-
-    def __init__(self, line_pos: int, column_pos: int) -> None:
-        super().__init__()
-        self.line_pos: int = line_pos
-        self.column_pos: int = column_pos
-
-        self.sprite: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 601, 254, 35, 35)
+    def set_fruit_position(self, positions: list[tuple[int, int]]) -> None:
+        self._fruit_position = positions
 
 
-class Peach(Entity):
+class Cherry(Fruit):
+    def __init__(self, file_path: str, x: int, y: int,
+                 width: int, height: int) -> None:
+        super().__init__(file_path, x, y, width, height)
 
-    def __init__(self, line_pos: int, column_pos: int) -> None:
-        super().__init__()
-        self.line_pos: int = line_pos
-        self.column_pos: int = column_pos
 
-        self.sprite: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 601, 304, 35, 35)
+class Strawberry(Fruit):
+    def __init__(self, file_path: str, x: int, y: int,
+                 width: int, height: int) -> None:
+        super().__init__(file_path, x, y, width, height)
+
+
+class Apricot(Fruit):
+    def __init__(self, file_path: str, x: int, y: int,
+                 width: int, height: int) -> None:
+        super().__init__(file_path, x, y, width, height)
+
+
+class Apple(Fruit):
+    def __init__(self, file_path: str, x: int, y: int,
+                 width: int, height: int) -> None:
+        super().__init__(file_path, x, y, width, height)
+
+
+class Berry(Fruit):
+    def __init__(self, file_path: str, x: int, y: int,
+                 width: int, height: int) -> None:
+        super().__init__(file_path, x, y, width, height)
+
+
+class Banana(Fruit):
+    def __init__(self, file_path: str, x: int, y: int,
+                 width: int, height: int) -> None:
+        super().__init__(file_path, x, y, width, height)
+
+
+class Peach(Fruit):
+    def __init__(self, file_path: str, x: int, y: int,
+                 width: int, height: int) -> None:
+        super().__init__(file_path, x, y, width, height)
