@@ -1,3 +1,9 @@
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..entity import Pacgum
+
+
 class Case():
     def __init__(self, case: int, line_pos: int, column_pos: int) -> None:
         self.wall_north: bool = False
@@ -9,6 +15,7 @@ class Case():
         self.column_pos: int = column_pos
         self.is_enclosed: bool = all([self.wall_west, self.wall_south,
                                       self.wall_east, self.wall_north])
+        self.pacgum: Pacgum | None = None
 
     def create_walls(self, case: int) -> None:
         """Create the walls of one case based on it's binary value"""

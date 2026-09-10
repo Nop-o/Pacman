@@ -63,7 +63,7 @@ class Maze():
         return not self.cases[line_pos][column_pos].is_enclosed
 
     def get_case(self, coord: tuple[int, int]) -> Case:
-        return self.cases[coord[1]][coord[0]]
+        return self.cases[coord[0]][coord[1]]
 
     def get_direction_between_case(self, case1: Case, case2: Case)\
             -> Direction | None:

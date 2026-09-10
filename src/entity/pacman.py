@@ -10,7 +10,10 @@ class Pacman(Character):
         super().__init__(maze, super_pacgum_cooldown)
         self.lives: int = lives
         self._last_move_direction: Direction
+        self.facing_direction: Character.FacingDirection =\
+            self.FacingDirection.UP
         self.reset_last_move_direction()
+        self.state_of_sprite: int = 1
 
         self.invincible: bool = False
 
@@ -79,9 +82,20 @@ class Pacman(Character):
             return
         elif direction == Direction.N:
             self.go_up()
+            self.facing_direction = self.FacingDirection.UP
         elif direction == Direction.E:
             self.go_right()
+            self.facing_direction = self.FacingDirection.RIGHT
         elif direction == Direction.S:
             self.go_down()
+            self.facing_direction = self.FacingDirection.DOWN
         elif direction == Direction.W:
             self.go_left()
+            self.facing_direction = self.FacingDirection.LEFT
+
+    def get_moving_sprite(self):
+        sprite = self.\
+            pacman_moving_sprites[self.facing_direction][self.state_of_sprite]
+        self.state_of_sprite += 1
+        self.state_of_sprite %= 3
+        return sprite

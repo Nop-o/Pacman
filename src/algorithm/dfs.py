@@ -24,7 +24,7 @@ class DepthFirstSearch:
             if current_cell == exit_:
                 return self.get_path_way(parent)
             x, y = current_cell
-            for neighbor in self.get_neighbors_coord(y, x):
+            for neighbor in self.get_neighbors_coord(x, y):
                 if neighbor not in visited:
                     visited.add(neighbor)
                     parent[neighbor] = current_cell
