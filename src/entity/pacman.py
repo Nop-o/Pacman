@@ -7,17 +7,16 @@ class Pacman(Character):
 
     def __init__(self, lives: int, maze: Maze,
                  super_pacgum_cooldown: int) -> None:
-        super().__init__(maze, super_pacgum_cooldown)
+        super().__init__(maze, super_pacgum_cooldown, state_of_sprite=1)
         self.lives: int = lives
         self._last_move_direction: Direction
         self.facing_direction: Character.FacingDirection =\
             self.FacingDirection.UP
         self.reset_last_move_direction()
-        self.state_of_sprite: int = 1
 
         self.invincible: bool = False
 
-        self.pacman_moving_sprites: list[list[pygame.Surface]] = \
+        self.sprites: list[list[pygame.Surface]] = \
             [[self.get_sprite(
               "png/entities_sprite.png", 851, 4 + (i * 50), 35, 35)
               for i in range(0, 3, 1)],

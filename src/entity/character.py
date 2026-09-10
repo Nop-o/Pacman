@@ -16,8 +16,8 @@ class Character(Entity, ABC):
         HUNTING = 0
         RUNNING = 1
 
-    def __init__(self, maze: Maze, super_pacgum_cooldown: int) -> None:
-
+    def __init__(self, maze: Maze, super_pacgum_cooldown: int,
+                 state_of_sprite: int) -> None:
         super().__init__()
         self.maze: Maze = maze
         self.starting_position: tuple[int, int] = self._set_starting_position()
@@ -26,6 +26,7 @@ class Character(Entity, ABC):
         self.super_pacgum_cooldown: int = super_pacgum_cooldown
         self.state: Character.State = self.State.HUNTING
         self.direction: Character.FacingDirection = self.FacingDirection.RIGHT
+        self.state_of_sprite: int = state_of_sprite
 
     def go_left(self) -> None:
         """Go one case left in the maze"""

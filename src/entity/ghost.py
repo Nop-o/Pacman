@@ -11,13 +11,12 @@ class Ghost(Character, ABC):
 
     def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
-        super().__init__(maze, super_pacgum_cooldown)
+        super().__init__(maze, super_pacgum_cooldown, state_of_sprite=0)
         self.pacman: Pacman = pacman
         self.freeze: bool = False
         self.algorithm: DepthFirstSearch = algorithm
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
         self.sprites: list[list[pygame.Surface]]
-        self.sprite_state: int = 0
         self.facing_direction: Character.FacingDirection =\
             self.FacingDirection.UP
 
