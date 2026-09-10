@@ -16,6 +16,10 @@ class Ghost(Character, ABC):
         self.freeze: bool = False
         self.algorithm: DepthFirstSearch = algorithm
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
+        self.sprites: list[list[pygame.Surface]]
+        self.sprite_state: int = 0
+        self.facing_direction: Character.FacingDirection =\
+            self.FacingDirection.UP
 
         self.ghost_running_away_sprites: list[pygame.Surface] = [
             self.get_sprite("png/entities_sprite.png", 1, 554 + (i * 50),
@@ -52,8 +56,8 @@ class Ghost(Character, ABC):
         self.algorithm.set_exit(self.get_goal())
         self.find_shortest_path_to_exit()
         if self.shortest_path_to_goal is None:
-            raise ValueError("shortest_path_to_goal cannot be None in" \
-            "ghost.do_turn")
+            raise ValueError("shortest_path_to_goal cannot be None in"
+                             "ghost.do_turn")
         if len(self.shortest_path_to_goal) < 2:
             return
         direction =\
@@ -91,6 +95,18 @@ class Ghost(Character, ABC):
         """Update exit position to pacman position"""
         return (self.pacman.line_pos, self.pacman.column_pos)
 
+    def get_chasing_sprite(self) -> pygame.Surface:
+        sprite = self.sprites[self.facing_direction][self.sprite_state]
+        self.sprite_state += 1
+        self.sprite_state %= 2
+        return sprite
+
+    def get_fleeing_sprite(self) -> pygame.Surface:
+        sprite = self.ghost_running_away_sprites[self.sprite_state]
+        self.sprite_state += 1
+        self.sprite_state %= 2
+        return sprite
+
 
 class Shadow(Ghost):  # red chase
 
@@ -99,7 +115,7 @@ class Shadow(Ghost):  # red chase
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
-        self.shadow_sprites: list[list[pygame.Surface]] = \
+        self.sprites = \
             [[self.get_sprite(
              "png/entities_sprite.png", 1, 4 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
@@ -131,7 +147,7 @@ class Speedy(Ghost):  # pink flank
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
-        self.speedy_sprites: list[list[pygame.Surface]] = \
+        self.sprites = \
             [[self.get_sprite(
               "png/entities_sprite.png", 51, 4 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
@@ -172,7 +188,7 @@ class Bashful(Ghost):  # cyan random
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
-        self.bashful_sprites: list[list[pygame.Surface]] = \
+        self.sprites = \
             [[self.get_sprite(
               "png/entities_sprite.png", 101, 4 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
@@ -210,7 +226,7 @@ class Pokey(Ghost):  # orange chase + run away
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
-        self.pokey_sprites: list[list[pygame.Surface]] = \
+        self.sprites = \
             [[self.get_sprite(
               "png/entities_sprite.png", 151, 4 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],

@@ -6,7 +6,6 @@ class GameState:
                  ) -> None:
 
         self.pacgum: int = pacgum
-        self.current_pacgum_count: int = pacgum
         self.super_pacgum: int = 4
         self.points_per_pacgum: int = points_per_pacgum
         self.points_per_super_pacgum: int = points_per_super_pacgum
