@@ -6,7 +6,8 @@ class TextRendering:
         self.regular_text: pygame.font.Font = pygame.font.Font(None, 30)
         self.leaderboard_text: pygame.font.Font = pygame.font.Font(None, 50)
         self.small_title: pygame.font.Font = pygame.font.Font(None, 80)
-        self.small_pacman: pygame.font.Font = pygame.font.Font(None, 180)
+        self.medium_title: pygame.font.Font = pygame.font.Font(None, 130)
+        self.big_title: pygame.font.Font = pygame.font.Font(None, 200)
         self.big_pacman: pygame.font.Font = pygame.font.Font(None, 350)
 
     @staticmethod
@@ -26,9 +27,13 @@ class TextRendering:
        self, text: str, color: tuple[int, int, int]) -> pygame.Surface:
         return self.render_text(text, color, self.small_title)
 
-    def render_small_pacman(
+    def render_medium_title(
        self, text: str, color: tuple[int, int, int]) -> pygame.Surface:
-        return self.render_text(text, color, self.small_pacman)
+        return self.render_text(text, color, self.medium_title)
+
+    def render_big_title(
+       self, text: str, color: tuple[int, int, int]) -> pygame.Surface:
+        return self.render_text(text, color, self.big_title)
 
     def render_big_pacman(
        self, text: str, color: tuple[int, int, int]) -> pygame.Surface:
