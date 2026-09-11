@@ -114,7 +114,7 @@ class LaunchGame(Screen):
         self.old_pacman_logo: pygame.Surface = self.get_sprite(
             "png/old_pacman_logo.png", 30, 100, 1250, 500)
         self.old_pacman_logo_pos: tuple[int, int] = (
-            self._get_center_pos(self.old_pacman_logo),
+            self.simulation_manager.get_center_width(self.old_pacman_logo),
             self.simulation_manager.screen_height // 8)
 
         self.welcome_text: pygame.Surface = \
@@ -148,10 +148,6 @@ class LaunchGame(Screen):
         self.speedy_position = self.snap_to_grid((pacman_x - 100, pacman_y))
         self.pokey_position = self.snap_to_grid((pacman_x - 150, pacman_y))
         self.bashful_position = self.snap_to_grid((pacman_x - 200, pacman_y))
-
-    def _get_center_pos(self, surface: pygame.Surface) -> int:
-        return ((self.simulation_manager.screen_width // 2) -
-                (surface.get_width() // 2))
 
     def display_images(self) -> None:
         self.display_entities()

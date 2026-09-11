@@ -20,18 +20,17 @@ class ButtonManager(Sprite):
 
         self.buttons_sprite: list[Button] = [
             self.get_sprite("png/entities_sprite.png", 201, 704, 35, 35),
-            self.get_sprite("png/entities_sprite.png", 201, 754, 35, 35),
             self.get_sprite("png/entities_sprite.png", 201, 796, 35, 35),
-            self.get_sprite("png/entities_sprite.png", 201, 654, 35, 35),
             ]
 
-        self.width: int = screen_width
+        self.screen_width: int = screen_width
         self.height: int = screen_height
 
-        self.joystick_positions: list[tuple[int, int]] = self._get_joystick_position()
+        self.joystick_positions: list[tuple[int, int]] = \
+            self._get_joystick_position()
 
     def _get_joystick_position(self) -> list[tuple[int, int]]:
-        original_x: int = self.width - (self.width // 6)
+        original_x: int = self.screen_width - (self.screen_width // 6)
         original_y: int = self.height - (self.height // 4)
 
         return [
@@ -41,7 +40,33 @@ class ButtonManager(Sprite):
             (original_x + 2, original_y),
         ]
 
+    def get_button_positions(
+       self, texts: list[pygame.Surface], paddings: list[int]
+       ) -> list[tuple[tuple[int, int], tuple[int, int]]]:
+        text_height: int = (texts[1].get_height() // 2 ) - 10
+
+        return [(
+            self.get_left_arrow_pos(texts[i], paddings[i] + text_height),
+            self.get_right_arrow_pos(texts[i], paddings[i] + text_height))
+            for i in range(1, len(texts))]
+
+    def get_left_arrow_pos(
+       self, text: pygame.Surface, height: int) -> tuple[int, int]:
+        return ((self.screen_width // 2) - ((text.get_width() // 2) + 55), height)
+
+    def get_right_arrow_pos(
+       self, text: pygame.Surface, height: int) -> tuple[int, int]:
+        return ((self.screen_width // 2) + ((text.get_width() // 2) + 20), height)
+
     def display_joystick(self, screen: pygame.Surface, direction: int) -> None:
         screen.blit(self.joystick_sprites[direction].sprite,
                     self.joystick_positions[direction])
 
+    def display_buttons(
+       self, screen: pygame.Surface, texts: list[pygame.Surface],
+       paddings: list[int], position: int) -> None:
+        button_positions: list[tuple[tuple[int, int], tuple[int, int]]] = \
+            self.get_button_positions(texts, paddings)
+
+        screen.blit(self.buttons_sprite[0], button_positions[position][0])
+        screen.blit(self.buttons_sprite[1], button_positions[position][1])
