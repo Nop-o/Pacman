@@ -132,7 +132,7 @@ class LaunchGame(Screen):
         self.fruit_manager: FruitManager = FruitManager()
         self._set_fruit_positions()
 
-        self.movement_time: float = 0.03
+        self.movement_time: float = 0.06
         self.movement_time_elapse: float = 0.0
 
     def _init_entity_starting_pos(self) -> None:
@@ -164,7 +164,7 @@ class LaunchGame(Screen):
     def display_screen(self) -> None:
         start_time: float = time.monotonic()
 
-        self.simulation_manager.screen.fill("blue")
+        self.simulation_manager.dipslay_sky()
         self.display_images()
 
         if self.movement_time_elapse > self.movement_time:

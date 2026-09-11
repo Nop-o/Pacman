@@ -13,7 +13,7 @@ class SimulationManager():
         pygame.display.set_caption("Pac-Man")
 
         self.frame_count: int = 0
-        self.frame_time: float = 0.1
+        self.frame_time: float = 0.8
 
         self.fps: int = 60
         self.frame_duration: float = 1.0 / self.fps
@@ -86,6 +86,15 @@ class SimulationManager():
     def mlx_get_screen_size() -> tuple[int, int]:
         info = pygame.display.Info()
         return info.current_w, info.current_h
+
+    def get_sprite(self, file_path: str, x: int, y: int,
+                   width: int, height: int) -> pygame.Surface:
+        source_image = pygame.image.load(file_path).convert_alpha()
+
+        image = pygame.Surface((width, height), pygame.SRCALPHA)
+        image.blit(source_image, (0, 0), (x, y, width, height))
+
+        return image
 
     def _adjust_screen_size(self) -> pygame.Surface:
         """Resize the pygame window so it fits within the physical display."""
