@@ -11,25 +11,51 @@ class PauseMenu(Screen):
         super().__init__(simulation_manager=simulation_manager)
         self.current_choice_position: int = 0
 
-    def display_screen(self) -> None:  # TODO
-        self.simulation_manager.screen.fill((0, 0, 0))
+        self.arcade_pacman: pygame.Surface = \
+            self.simulation_manager.get_sprite(
+                "png/arcade_pacman.png", 50, 10, 380, 800)
 
-        choices = ["game_play_screen", "main_menu_screen", "exit_game"]
+    def display_screen(self) -> None:
+        self.simulation_manager.dipslay_sky()
 
-        test_message = \
-            self.simulation_manager.text_rendering.render_big_pacman(
-                "pause_menu", (255, 255, 255))
+        pause_menu_title = \
+            self.simulation_manager.text_rendering.render_big_title(
+                "Pause Menu", (255, 255, 0))
+        resume_game_text = \
+            self.simulation_manager.text_rendering.render_medium_title(
+                "Resume Game", (255, 255, 0))
+        main_menu_text = \
+            self.simulation_manager.text_rendering.render_medium_title(
+                "Return to the main menu", (255, 255, 0))
+        exit_game_text = \
+            self.simulation_manager.text_rendering.render_medium_title(
+                "Exit Game", (255, 255, 0))
 
-        current_choice = \
-            self.simulation_manager.text_rendering.render_small_title(
-                f"current choice: {choices[self.current_choice_position]}",
-                (255, 255, 255))
+        title_padding: list[int] = self.simulation_manager.get_title_paddings(
+            [pause_menu_title, resume_game_text,
+             main_menu_text, exit_game_text], 10, 5
+        )
 
-        test_message_pos = self.get_text_pos(test_message, height_adjust=-100)
-        current_choice_pos = self.get_text_pos(current_choice)
+        self.simulation_manager.screen.blit(pause_menu_title, (
+            self.simulation_manager.get_center_width(pause_menu_title),
+            title_padding[0]))
+        self.simulation_manager.screen.blit(resume_game_text, (
+            self.simulation_manager.get_center_width(resume_game_text),
+            title_padding[1]))
+        self.simulation_manager.screen.blit(main_menu_text, (
+            self.simulation_manager.get_center_width(main_menu_text),
+            title_padding[2]))
+        self.simulation_manager.screen.blit(exit_game_text, (
+            self.simulation_manager.get_center_width(exit_game_text),
+            title_padding[3]))
+        
+        self.simulation_manager.screen.blit(self.arcade_pacman, (30, 520))
 
-        self.simulation_manager.screen.blit(test_message, test_message_pos)
-        self.simulation_manager.screen.blit(current_choice, current_choice_pos)
+        self.simulation_manager.button_manager.display_buttons(
+            self.simulation_manager.screen, [
+                pause_menu_title, resume_game_text, main_menu_text,
+                exit_game_text], title_padding, self.current_choice_position
+        )
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         actions: list[Callable[[], None]] = [
