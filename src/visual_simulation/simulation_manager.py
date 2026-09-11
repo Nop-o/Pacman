@@ -38,6 +38,26 @@ class SimulationManager():
         self.state_to_call: Callable[[], None] = \
             self.screen_manager.launch_game.display_screen
 
+        self.sky: list[pygame.Surface] = [
+            self.get_sprite("png/bg_flat_1.png", 0, 0, 1280, 720),
+            self.get_sprite("png/bg_flat_2.png", 0, 0, 1280, 720),
+            self.get_sprite("png/bg_flat_3.png", 0, 0, 1280, 720),
+        ]
+
+    def dipslay_sky(self) -> None:
+        width: int = 1280
+        height: int = 720
+        displayed_width: int = 0
+        displayed_height: int = 0
+
+        while displayed_height <= self.screen_height:
+            while displayed_width <= self.screen_width:
+                self.screen.blit(self.sky[self.frame_count % 3],
+                                 (displayed_width, displayed_height))
+                displayed_width += width
+            displayed_height += height
+            displayed_width = 0
+
     def launch(self) -> None:
         frame_time_elapse: float = 0.0
 
