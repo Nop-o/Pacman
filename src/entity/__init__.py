@@ -10,4 +10,4 @@ from .sprite import Sprite
 
 __all__ = ["Entity", "Ghost", "Pacman", "Character", "Shadow", "Pokey",
            "Speedy", "Bashful", "SuperPacgum", "Pacgum", "Fruit",
-           "FruitManager", "Button", "ButtonManager"]
+           "FruitManager", "Button", "ButtonManager", "Sprite"]
