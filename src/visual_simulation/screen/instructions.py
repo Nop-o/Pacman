@@ -11,7 +11,7 @@ class Instructions(Screen):
         super().__init__(simulation_manager=simulation_manager)
 
     def display_screen(self) -> None:  # TODO
-        self.simulation_manager.screen.fill((0, 0, 0))
+        self.simulation_manager.dipslay_sky()
 
         test_message = \
             self.simulation_manager.text_rendering.render_small_title(

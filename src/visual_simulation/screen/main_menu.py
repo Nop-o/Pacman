@@ -15,7 +15,7 @@ class MainMenu(Screen):
         pass
 
     def display_screen(self) -> None:  # TODO
-        self.simulation_manager.screen.fill((0, 0, 0))
+        self.simulation_manager.dipslay_sky()
 
         choices = ["game_play_screen", "leaderboard_screen",
                    "show_instructions", "exit_game"]
@@ -34,7 +34,7 @@ class MainMenu(Screen):
                 "Instructions", (255, 255, 255))
         exit_game_text = \
             self.simulation_manager.text_rendering.render_big_text(
-                "Exit", (255, 255, 255))
+                "Exit Game", (255, 255, 255))
         current_choice_text = \
             self.simulation_manager.text_rendering.render_small_title(
                 f"current choice: {choices[self.current_choice_position]}",

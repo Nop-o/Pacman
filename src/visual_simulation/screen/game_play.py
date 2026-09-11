@@ -3,6 +3,7 @@ from .hud import HUD
 from .level import Level
 from typing import TYPE_CHECKING
 import pygame
+from src.entity.buttons import Button
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
@@ -29,7 +30,7 @@ class GamePlay(Screen):
         elif self.simulation_manager.game_state.is_game_won is True:
             self.victory_screen()
 
-        self.simulation_manager.screen.fill((0, 0, 0))
+        self.simulation_manager.dipslay_sky()
 
         self.level.display_screen()
         self.hud.display_screen()

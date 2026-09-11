@@ -54,7 +54,7 @@ class LeaderBoard(Screen):
         return -1
 
     def display_screen(self) -> None:
-        self.simulation_manager.screen.fill((0, 0, 0))
+        self.simulation_manager.dipslay_sky()
 
         pacman_title = \
             self.simulation_manager.text_rendering.render_big_pacman(
