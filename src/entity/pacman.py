@@ -79,3 +79,13 @@ class Pacman(Character):
     def get_moving_sprite(self):
         sprite = self.sprites[self.direction][self.state_of_sprite]
         return sprite
+
+    def move(self, direction: Direction | None):
+        if self.direction == Character.FacingDirection.UP:
+            self.go_up()
+        elif self.direction == Character.FacingDirection.RIGHT:
+            self.go_right()
+        elif self.direction == Character.FacingDirection.DOWN:
+            self.go_down()
+        elif self.direction == Character.FacingDirection.LEFT:
+            self.go_left()
