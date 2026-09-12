@@ -5,10 +5,8 @@ import pygame
 
 class Pacman(Character):
 
-    def __init__(self, lives: int, maze: Maze,
-                 super_pacgum_cooldown: int) -> None:
+    def __init__(self, maze: Maze, super_pacgum_cooldown: int) -> None:
         super().__init__(maze, super_pacgum_cooldown, state_of_sprite=1)
-        self.lives: int = lives
         self._last_move_direction: Direction
         self.facing_direction: Character.FacingDirection =\
             self.FacingDirection.UP
@@ -93,8 +91,7 @@ class Pacman(Character):
             self.facing_direction = self.FacingDirection.LEFT
 
     def get_moving_sprite(self):
-        sprite = self.\
-            pacman_moving_sprites[self.facing_direction][self.state_of_sprite]
+        sprite = self.sprites[self.facing_direction][self.state_of_sprite]
         self.state_of_sprite += 1
         self.state_of_sprite %= 3
         return sprite

@@ -20,8 +20,7 @@ class Level(Screen):
         self.algo = DepthFirstSearch(self.maze)
         super_pacgum_cooldown =\
             self.simulation_manager.game_state.super_pacgum_cooldown
-        self.pacman: Pacman = Pacman(self.simulation_manager.game_state.lives,
-                                     self.maze, super_pacgum_cooldown)
+        self.pacman: Pacman = Pacman(self.maze, super_pacgum_cooldown)
         self.ghosts: list[Ghost] = []
         # TODO need to fix speedy and bashfule chase algo, actually make crash
         self.ghosts.append(Shadow(self.maze, self.pacman,
@@ -43,8 +42,9 @@ class Level(Screen):
                            self.simulation_manager.screen_height // 2 -
                            self.MAZE_HEIGHT // 2 - 50
                            )
-        self.lives: int = self.simulation_manager.game_state.lives
         self.super_pacgum_cooldown: float = 0
+        self.move_timer: float = 0.5
+        self.time_elapse: float = 0
 
     def move_pacman(self) -> None:
         if self.simulation_manager.up_pressed:
@@ -121,7 +121,7 @@ class Level(Screen):
             )
 
     def load_pacman(self) -> None:
-        sprite = self.pacman.pacman_moving_sprites[0][0]
+        sprite = self.pacman.sprites[0][0]
         pacman_pos = self._position_entity_in_maze(self.pacman, sprite)
         self.simulation_manager.screen.blit(
             source=self.pacman.get_moving_sprite(),
@@ -150,25 +150,29 @@ class Level(Screen):
             if not ghost.get_coord() == self.pacman.get_coord():
                 continue
             if ghost.state == ghost.State.HUNTING:
-                self.lives -= 1
-                # start_coord = self.pacman.starting_position
-                # self.pacman.line_pos = start_coord[0]
-                # self.pacman.column_pos = start_coord[1]
+                self.simulation_manager.game_state.current_lives -= 1
+                start_coord = self.pacman.starting_position
+                self.pacman.line_pos = start_coord[0]
+                self.pacman.column_pos = start_coord[1]
+                for gh in self.ghosts:
+                    gh.reset_starting_position()
             else:
                 start_coord = ghost.starting_position
-                ghost.line_pos = start_coord[0]
-                ghost.column_pos = start_coord[1]
+                ghost.reset_starting_position()
                 self.simulation_manager.game_state.score +=\
                     self.simulation_manager.game_state.points_per_ghost
 
     def display_screen(self) -> None:
-        self.move_pacman()
-        self.move_ghosts()
-        self.do_turn_consequences()
-        self.load_maze()
-        self.load_pacgum()
-        self.load_pacman()
-        self.load_ghosts()
+        start_timer = time.monotonic()
+        if self.check_timer():
+            self.move_pacman()
+            self.move_ghosts()
+            self.do_turn_consequences()
+            self.load_maze()
+            self.load_pacgum()
+            self.load_pacman()
+            self.load_ghosts()
+        self.time_elapse += time.monotonic() - start_timer
 
     def _position_entity_in_maze(self, entity: Entity, sprite: pygame.Surface)\
             -> tuple[int, int]:
@@ -213,3 +217,9 @@ class Level(Screen):
             self.pacman.state = Character.State.RUNNING
             for ghost in self.ghosts:
                 ghost.state = Character.State.HUNTING
+
+    def check_timer(self) -> bool:
+        if self.time_elapse > self.move_timer:
+            self.time_elapse -= self.move_timer
+            return True
+        return False

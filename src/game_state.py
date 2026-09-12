@@ -14,7 +14,8 @@ class GameState:
         self.seed: int = seed
         self.level_max_time: int = level_max_time
         self.score: int = 0
-        self.lives: int = lives
+        self.max_lives: int = lives
+        self.current_lives: int = lives
 
         self.is_game_over: bool = False
         self.is_game_won: bool = False
