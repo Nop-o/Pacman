@@ -45,22 +45,25 @@ class Level(Screen):
         self.super_pacgum_cooldown: float = 0
         self.move_timer: float = 0.5
         self.time_elapse: float = 0
+        self.last_frame_time: float | None = None
 
     def move_pacman(self) -> None:
         if self.simulation_manager.up_pressed:
-            self.pacman.do_move(Direction.N)
+            self.pacman.move(Direction.N)
         elif self.simulation_manager.right_pressed:
-            self.pacman.do_move(Direction.E)
+            self.pacman.move(Direction.E)
         elif self.simulation_manager.down_pressed:
-            self.pacman.do_move(Direction.S)
+            self.pacman.move(Direction.S)
         elif self.simulation_manager.left_pressed:
-            self.pacman.do_move(Direction.W)
+            self.pacman.move(Direction.W)
         else:
-            self.pacman.do_move(None)
+            self.pacman.move(None)
+        self.pacman.update_state_of_sprite()
 
     def move_ghosts(self) -> None:
         for ghost in self.ghosts:
             ghost.do_turn()
+            ghost.update_state_of_sprite()
 
     def load_maze(self) -> None:
         for i, line in enumerate(self.maze.cases):
@@ -116,7 +119,7 @@ class Level(Screen):
             sprite = ghost.sprites[0][0]
             ghost_pos = self._position_entity_in_maze(ghost, sprite)
             self.simulation_manager.screen.blit(
-                source=ghost.get_chasing_sprite(),
+                source=ghost.get_valid_sprite(),
                 dest=ghost_pos
             )
 
@@ -136,6 +139,10 @@ class Level(Screen):
         self.check_cooldown_timer()
         self.eat_pacgum()
         self.ghost_collision()
+        if self.simulation_manager.game_state.current_lives <= 0:
+            self.simulation_manager.game_state.is_game_over = True
+        if len(self.pacgum) == 0:
+            self.simulation_manager.game_state.is_game_won = True
 
     def eat_pacgum(self) -> None:
         case = self.maze.get_case(self.pacman.get_coord())
@@ -163,16 +170,14 @@ class Level(Screen):
                     self.simulation_manager.game_state.points_per_ghost
 
     def display_screen(self) -> None:
-        start_timer = time.monotonic()
         if self.check_timer():
             self.move_pacman()
             self.move_ghosts()
             self.do_turn_consequences()
-            self.load_maze()
-            self.load_pacgum()
-            self.load_pacman()
-            self.load_ghosts()
-        self.time_elapse += time.monotonic() - start_timer
+        self.load_maze()
+        self.load_pacgum()
+        self.load_pacman()
+        self.load_ghosts()
 
     def _position_entity_in_maze(self, entity: Entity, sprite: pygame.Surface)\
             -> tuple[int, int]:
@@ -219,6 +224,11 @@ class Level(Screen):
                 ghost.state = Character.State.HUNTING
 
     def check_timer(self) -> bool:
+        now = time.monotonic()
+        if self.last_frame_time is None:
+            self.last_frame_time = now
+        self.time_elapse += now - self.last_frame_time
+        self.last_frame_time = now
         if self.time_elapse > self.move_timer:
             self.time_elapse -= self.move_timer
             return True

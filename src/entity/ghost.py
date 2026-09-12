@@ -17,8 +17,6 @@ class Ghost(Character, ABC):
         self.algorithm: DepthFirstSearch = algorithm
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
         self.sprites: list[list[pygame.Surface]]
-        self.facing_direction: Character.FacingDirection =\
-            self.FacingDirection.UP
 
         self.ghost_running_away_sprites: list[pygame.Surface] = [
             self.get_sprite("png/entities_sprite.png", 1, 554 + (i * 50),
@@ -95,16 +93,22 @@ class Ghost(Character, ABC):
         return (self.pacman.line_pos, self.pacman.column_pos)
 
     def get_chasing_sprite(self) -> pygame.Surface:
-        sprite = self.sprites[self.facing_direction][self.sprite_state]
-        self.sprite_state += 1
-        self.sprite_state %= 2
+        sprite = self.sprites[self.direction][self.state_of_sprite]
         return sprite
 
+    def update_state_of_sprite(self) -> None:
+        self.state_of_sprite += 1
+        self.state_of_sprite %= 2
+
     def get_fleeing_sprite(self) -> pygame.Surface:
-        sprite = self.ghost_running_away_sprites[self.sprite_state]
-        self.sprite_state += 1
-        self.sprite_state %= 2
+        sprite = self.ghost_running_away_sprites[self.state_of_sprite]
         return sprite
+
+    def get_valid_sprite(self) -> pygame.Surface:
+        if self.state == self.State.HUNTING:
+            return self.get_chasing_sprite()
+        else:
+            return self.get_fleeing_sprite()
 
 
 class Shadow(Ghost):  # red chase
