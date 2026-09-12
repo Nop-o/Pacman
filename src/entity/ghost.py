@@ -5,6 +5,7 @@ import random
 from ..maze import Maze, Direction
 from abc import ABC, abstractmethod
 import pygame
+import time
 
 
 class Ghost(Character, ABC):
@@ -101,8 +102,10 @@ class Ghost(Character, ABC):
         self.state_of_sprite %= 2
 
     def get_fleeing_sprite(self) -> pygame.Surface:
-        sprite = self.ghost_running_away_sprites[self.state_of_sprite]
-        return sprite
+        if self.super_pacgum_cooldown is not None and\
+            self.super_pacgum_cooldown - time.monotonic() < 3:
+            return self.ghost_running_away_sprites[self.state_of_sprite + 2]
+        return self.ghost_running_away_sprites[self.state_of_sprite]
 
     def get_valid_sprite(self) -> pygame.Surface:
         if self.state == self.State.HUNTING:

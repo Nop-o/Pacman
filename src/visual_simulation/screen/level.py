@@ -42,8 +42,9 @@ class Level(Screen):
                            self.simulation_manager.screen_height // 2 -
                            self.MAZE_HEIGHT // 2 - 50
                            )
-        self.super_pacgum_cooldown: float = 0
+        self.super_pacgum_cooldown: float | None = 0
         self.move_timer: float = 0.5
+        self.animation_timer = 0.016
         self.time_elapse: float = 0
         self.last_frame_time: float | None = None
 
@@ -132,6 +133,8 @@ class Level(Screen):
         )
 
     def check_cooldown_timer(self):
+        if self.super_pacgum_cooldown is None:
+            return
         if self.super_pacgum_cooldown < time.monotonic():
             self.change_state(Character.State.RUNNING)
 
@@ -170,7 +173,7 @@ class Level(Screen):
                     self.simulation_manager.game_state.points_per_ghost
 
     def display_screen(self) -> None:
-        if self.check_timer():
+        if self.check_action_timer():
             self.move_pacman()
             self.move_ghosts()
             self.do_turn_consequences()
@@ -218,12 +221,18 @@ class Level(Screen):
             self.pacman.state = Character.State.HUNTING
             for ghost in self.ghosts:
                 ghost.state = Character.State.RUNNING
+                self.super_pacgum_cooldown = time.monotonic() +\
+                    self.simulation_manager.game_state.super_pacgum_cooldown
+                ghost.super_pacgum_cooldown = self.super_pacgum_cooldown
         else:
             self.pacman.state = Character.State.RUNNING
             for ghost in self.ghosts:
                 ghost.state = Character.State.HUNTING
+                ghost.super_pacgum_cooldown = None
+                self.super_pacgum_cooldown = None
 
-    def check_timer(self) -> bool:
+
+    def check_action_timer(self) -> bool:
         now = time.monotonic()
         if self.last_frame_time is None:
             self.last_frame_time = now

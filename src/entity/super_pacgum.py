@@ -19,6 +19,6 @@ class SuperPacgum(Pacgum):
         game_state = simulation_manager.game_state
         level = simulation_manager.screen_manager.game_play.level
         game_state.score += game_state.points_per_super_pacgum
-        level.change_state(Character.State.HUNTING)
         level.super_pacgum_cooldown = time.monotonic() +\
             game_state.super_pacgum_cooldown
+        level.change_state(Character.State.HUNTING)

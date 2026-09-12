@@ -23,7 +23,7 @@ class Character(Entity, ABC):
         self.starting_position: tuple[int, int] = self._set_starting_position()
         self.line_pos: int = self.starting_position[0]
         self.column_pos: int = self.starting_position[1]
-        self.super_pacgum_cooldown: int = super_pacgum_cooldown
+        self.super_pacgum_cooldown: float | None = super_pacgum_cooldown
         self.state: Character.State = self.State.HUNTING
         self.direction: Character.FacingDirection = self.FacingDirection.RIGHT
         self.state_of_sprite: int = state_of_sprite
