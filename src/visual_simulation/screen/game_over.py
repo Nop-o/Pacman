@@ -36,7 +36,7 @@ class GameOver(Screen):
 
             button_pos = self.get_text_pos(button_text, height_adjust=175)
             self.make_button(
-                button_pos, button_text, self.leaderboard_screen, 50, 20)
+                button_pos, button_text, self.button_action, 50, 20)
 
         else:
             text_prompt = \

@@ -28,7 +28,6 @@ class LeaderBoard(Screen):
         position: int = self._get_score_position(score)
         if position < 0:
             return
-
         old_scores = {i: self.scores[i] for i in range(position, 11)}
         old_names = {i: self.names[i] for i in range(position, 11)}
 
