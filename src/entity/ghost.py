@@ -115,6 +115,7 @@ class Ghost(Character, ABC):
         else:
             return self.get_fleeing_sprite()
 
+
 class Shadow(Ghost):  # red chase
 
     def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,

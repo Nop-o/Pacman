@@ -43,7 +43,7 @@ class ButtonManager(Sprite):
     def get_button_positions(
        self, texts: list[pygame.Surface], paddings: list[int]
        ) -> list[tuple[tuple[int, int], tuple[int, int]]]:
-        text_height: int = (texts[1].get_height() // 2 ) - 10
+        text_height: int = (texts[1].get_height() // 2) - 10
 
         return [(
             self.get_left_arrow_pos(texts[i], paddings[i] + text_height),
@@ -52,11 +52,13 @@ class ButtonManager(Sprite):
 
     def get_left_arrow_pos(
        self, text: pygame.Surface, height: int) -> tuple[int, int]:
-        return ((self.screen_width // 2) - ((text.get_width() // 2) + 55), height)
+        return (
+            (self.screen_width // 2) - ((text.get_width() // 2) + 55), height)
 
     def get_right_arrow_pos(
        self, text: pygame.Surface, height: int) -> tuple[int, int]:
-        return ((self.screen_width // 2) + ((text.get_width() // 2) + 20), height)
+        return (
+            (self.screen_width // 2) + ((text.get_width() // 2) + 20), height)
 
     def display_joystick(self, screen: pygame.Surface, direction: int) -> None:
         screen.blit(self.joystick_sprites[direction].sprite,

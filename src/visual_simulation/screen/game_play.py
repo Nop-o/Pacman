@@ -3,7 +3,6 @@ from .hud import HUD
 from .level import Level
 from typing import TYPE_CHECKING
 import pygame
-from src.entity.buttons import Button
 from ...entity import Character
 
 if TYPE_CHECKING:
@@ -19,10 +18,6 @@ class GamePlay(Screen):
         super().__init__(simulation_manager=simulation_manager)
         self.level: Level = level
         self.hud: HUD = hud
-        # self.buttons: Button = Button(
-        #     self.simulation_manager.screen_width - self.simulation_manager.screen_width // 6,
-        #     self.simulation_manager.screen_height - self.simulation_manager.screen_height // 6,
-        #     )
 
     def display_screen(self) -> None:
         if self.simulation_manager.game_state.is_game_over is True:

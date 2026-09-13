@@ -114,7 +114,7 @@ class LaunchGame(Screen):
         self.old_pacman_logo: pygame.Surface = self.get_sprite(
             "png/old_pacman_logo.png", 30, 100, 1250, 500)
         self.old_pacman_logo_pos: tuple[int, int] = (
-            self.simulation_manager.get_center_width(self.old_pacman_logo),
+            self.get_center_width(self.old_pacman_logo),
             self.simulation_manager.screen_height // 8)
 
         self.welcome_text: pygame.Surface = \
@@ -337,6 +337,7 @@ class LaunchGame(Screen):
                 if event.key == pygame.K_RETURN:
                     self.main_menu_screen()
                     return
+
                 if (event.key == pygame.K_LEFT and
                         self.current_direction_choice not in [
                             Character.FacingDirection.RIGHT,
