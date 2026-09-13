@@ -33,10 +33,6 @@ class Ghost(Character, ABC):
         """Decide if the ghost run away or chase pacman"""
         ...
 
-    def reset_starting_position(self) -> None:
-        """Reset the position of an entity to his starting position"""
-        self.line_pos, self.column_pos = self.starting_position
-
     def change_exit_position(self, new_goal: tuple[int, int]) -> None:
         """Update exit position"""
         self.algorithm.set_exit(new_goal)
@@ -50,6 +46,10 @@ class Ghost(Character, ABC):
         self._shortest_path_to_goal = self.algorithm.solver()
 
     def do_turn(self) -> None:
+        if self.pacman.get_coord() == self.get_coord():
+            self.prev_line_pos = self.line_pos
+            self.prev_column_pos = self.column_pos
+            return
         self.algorithm.set_entry(self.get_coord())
         self.algorithm.set_exit(self.get_goal())
         self.find_shortest_path_to_exit()
@@ -57,6 +57,8 @@ class Ghost(Character, ABC):
             raise ValueError("shortest_path_to_goal cannot be None in"
                              "ghost.do_turn")
         if len(self.shortest_path_to_goal) < 2:
+            self.prev_line_pos = self.line_pos
+            self.prev_column_pos = self.column_pos
             return
         direction =\
             self.maze.get_direction_between_case(
@@ -112,7 +114,7 @@ class Ghost(Character, ABC):
             return self.get_chasing_sprite()
         else:
             return self.get_fleeing_sprite()
-
+        
 
 class Shadow(Ghost):  # red chase
 

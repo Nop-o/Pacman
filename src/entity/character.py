@@ -23,10 +23,13 @@ class Character(Entity, ABC):
         self.starting_position: tuple[int, int] = self._set_starting_position()
         self.line_pos: int = self.starting_position[0]
         self.column_pos: int = self.starting_position[1]
+        self.prev_line_pos: int = self.line_pos
+        self.prev_column_pos: int = self.column_pos
         self.super_pacgum_cooldown: float | None = super_pacgum_cooldown
         self.state: Character.State = self.State.HUNTING
         self.direction: Character.FacingDirection = self.FacingDirection.RIGHT
         self.state_of_sprite: int = state_of_sprite
+        self.prev_direction: Character.FacingDirection = self.direction
 
     def go_left(self) -> None:
         """Go one case left in the maze"""
@@ -53,6 +56,8 @@ class Character(Entity, ABC):
             self.line_pos += 1
 
     def move(self, direction: Direction | None) -> None:
+        self.prev_line_pos = self.line_pos
+        self.prev_column_pos = self.column_pos
         if direction == Direction.N:
             self.go_up()
             self.direction = self.FacingDirection.UP
@@ -65,6 +70,7 @@ class Character(Entity, ABC):
         elif direction == Direction.W:
             self.go_left()
             self.direction = self.FacingDirection.LEFT
+        self.prev_direction = self.direction
 
     def change_state(self) -> None:
         """Alternate the state between hunting and running for entities"""
@@ -76,6 +82,16 @@ class Character(Entity, ABC):
     def reset_super_pacgum_cooldown(self) -> None:
         """Reset the timer of the super pacgum effect"""
         self.super_pacgum_cooldown = self.super_pacgum_cooldown
+
+    def reset_starting_position(self) -> None:
+        """Reset the position of an entity to his starting position"""
+        self.line_pos, self.column_pos = self.starting_position
+        self.prev_line_pos = self.line_pos
+        self.prev_column_pos = self.column_pos
+
+    @abstractmethod
+    def update_state_of_sprite(self)-> None:
+        ...
 
     @abstractmethod
     def _set_starting_position(self) -> tuple[int, int]: ...

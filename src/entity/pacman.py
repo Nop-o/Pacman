@@ -61,10 +61,6 @@ class Pacman(Character):
             return True
         return False
 
-    def reset_starting_position(self) -> None:
-        """Reset the position of an entity to his starting position"""
-        self.line_pos, self.column_pos = self.starting_position
-
     @property
     def last_move_direction(self) -> Direction:
         return self._last_move_direction
@@ -81,6 +77,8 @@ class Pacman(Character):
         return sprite
 
     def move(self, direction: Direction | None):
+        self.prev_line_pos = self.line_pos
+        self.prev_column_pos = self.column_pos
         if self.direction == Character.FacingDirection.UP:
             self.go_up()
         elif self.direction == Character.FacingDirection.RIGHT:
@@ -89,3 +87,4 @@ class Pacman(Character):
             self.go_down()
         elif self.direction == Character.FacingDirection.LEFT:
             self.go_left()
+        self.prev_direction = self.direction

@@ -33,7 +33,7 @@ class Level(Screen):
                                  super_pacgum_cooldown, self.algo))
         self.pacgum: list[Pacgum] = []
         self.create_pacgums()
-        self.CASE_SIZE = 55
+        self.CASE_SIZE = 60
         self.CASE_LINE_THICKNESS = 3
         self.MAZE_WIDTH = (self.CASE_SIZE) * self.maze.nb_column
         self.MAZE_HEIGHT = (self.CASE_SIZE) * self.maze.nb_line
@@ -44,7 +44,6 @@ class Level(Screen):
                            )
         self.super_pacgum_cooldown: float | None = 0
         self.move_timer: float = 0.5
-        self.animation_timer = 0.016
         self.time_elapse: float = 0
         self.last_frame_time: float | None = None
 
@@ -173,23 +172,59 @@ class Level(Screen):
                     self.simulation_manager.game_state.points_per_ghost
 
     def display_screen(self) -> None:
+        now = time.monotonic()
+        if self.last_frame_time is None:
+            self.last_frame_time = now
+        self.time_elapse += now - self.last_frame_time
+        self.last_frame_time = now
         if self.check_action_timer():
+            self.do_turn_consequences()
             self.move_pacman()
             self.move_ghosts()
-            self.do_turn_consequences()
         self.load_maze()
         self.load_pacgum()
         self.load_pacman()
         self.load_ghosts()
 
+    def _position_character_in_maze(self, entity: Character,
+                                    sprite: pygame.Surface) -> tuple[int, int]:
+        progress = min(self.time_elapse / self.move_timer, 1.0)
+        if (entity.column_pos == entity.prev_column_pos and
+            entity.line_pos == entity.prev_line_pos):
+            progress_modifier = (0, 0)
+        elif entity.prev_direction == Character.FacingDirection.UP:
+            progress_modifier = (0, 0 - self.CASE_SIZE * progress)
+        elif entity.prev_direction == Character.FacingDirection.RIGHT:
+            progress_modifier = (0 + self.CASE_SIZE * progress, 0)
+        elif entity.prev_direction == Character.FacingDirection.DOWN:
+            progress_modifier = (0, 0 + self.CASE_SIZE * progress)
+        else:
+            progress_modifier = (0 - self.CASE_SIZE * progress, 0)
+        return (
+                int(((self.MAZE_START[0] +\
+                    (self.CASE_SIZE * entity.prev_column_pos)) +
+                    (self.CASE_SIZE // 2) - (sprite.get_width() // 2)
+                    + progress_modifier[0])),
+                int(((self.MAZE_START[1] +\
+                    (self.CASE_SIZE * entity.prev_line_pos)) +
+                    (self.CASE_SIZE // 2) - (sprite.get_height() // 2)
+                    + progress_modifier[1]))
+            )
+
     def _position_entity_in_maze(self, entity: Entity, sprite: pygame.Surface)\
             -> tuple[int, int]:
-        return (
-                ((self.MAZE_START[0] + (self.CASE_SIZE * entity.column_pos)) +
-                    (self.CASE_SIZE // 2) - (sprite.get_width() // 2)),
-                ((self.MAZE_START[1] + (self.CASE_SIZE * entity.line_pos)) +
-                    (self.CASE_SIZE // 2) - (sprite.get_height() // 2))
-            )
+            if (not isinstance(entity, Character) or
+                (entity.prev_column_pos == entity.column_pos
+                and entity.line_pos == entity.prev_line_pos)):
+                return (
+                        ((self.MAZE_START[0] +\
+                        (self.CASE_SIZE * entity.column_pos)) +
+                            (self.CASE_SIZE // 2) - (sprite.get_width() // 2)),
+                        ((self.MAZE_START[1] +\
+                        (self.CASE_SIZE * entity.line_pos)) +
+                            (self.CASE_SIZE // 2) - (sprite.get_height() // 2))
+                    )
+            return self._position_character_in_maze(entity, sprite)
 
     def create_pacgums(self) -> None:
         nb_pacgum = self.simulation_manager.game_state.pacgum
@@ -233,11 +268,6 @@ class Level(Screen):
 
 
     def check_action_timer(self) -> bool:
-        now = time.monotonic()
-        if self.last_frame_time is None:
-            self.last_frame_time = now
-        self.time_elapse += now - self.last_frame_time
-        self.last_frame_time = now
         if self.time_elapse > self.move_timer:
             self.time_elapse -= self.move_timer
             return True
