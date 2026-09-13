@@ -48,7 +48,7 @@ class PauseMenu(Screen):
         self.simulation_manager.screen.blit(exit_game_text, (
             self.simulation_manager.get_center_width(exit_game_text),
             title_padding[3]))
-        
+
         self.simulation_manager.screen.blit(self.arcade_pacman, (30, 520))
 
         self.simulation_manager.button_manager.display_buttons(

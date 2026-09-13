@@ -195,7 +195,7 @@ class Level(Screen):
                                     sprite: pygame.Surface) -> tuple[int, int]:
         progress = min(self.time_elapse / self.move_timer, 1.0)
         if (entity.column_pos == entity.prev_column_pos and
-            entity.line_pos == entity.prev_line_pos):
+                entity.line_pos == entity.prev_line_pos):
             progress_modifier = (0, 0)
         elif entity.prev_direction == Character.FacingDirection.UP:
             progress_modifier = (0, 0 - self.CASE_SIZE * progress)
@@ -206,11 +206,11 @@ class Level(Screen):
         else:
             progress_modifier = (0 - self.CASE_SIZE * progress, 0)
         return (
-                int(((self.MAZE_START[0] +\
+                int(((self.MAZE_START[0] +
                     (self.CASE_SIZE * entity.prev_column_pos)) +
                     (self.CASE_SIZE // 2) - (sprite.get_width() // 2)
                     + progress_modifier[0])),
-                int(((self.MAZE_START[1] +\
+                int(((self.MAZE_START[1] +
                     (self.CASE_SIZE * entity.prev_line_pos)) +
                     (self.CASE_SIZE // 2) - (sprite.get_height() // 2)
                     + progress_modifier[1]))
@@ -218,18 +218,18 @@ class Level(Screen):
 
     def _position_entity_in_maze(self, entity: Entity, sprite: pygame.Surface)\
             -> tuple[int, int]:
-            if (not isinstance(entity, Character) or
-                (entity.prev_column_pos == entity.column_pos
+        if (not isinstance(entity, Character) or
+            (entity.prev_column_pos == entity.column_pos
                 and entity.line_pos == entity.prev_line_pos)):
-                return (
-                        ((self.MAZE_START[0] +\
+            return (
+                    ((self.MAZE_START[0] +
                         (self.CASE_SIZE * entity.column_pos)) +
-                            (self.CASE_SIZE // 2) - (sprite.get_width() // 2)),
-                        ((self.MAZE_START[1] +\
+                        (self.CASE_SIZE // 2) - (sprite.get_width() // 2)),
+                    ((self.MAZE_START[1] +
                         (self.CASE_SIZE * entity.line_pos)) +
-                            (self.CASE_SIZE // 2) - (sprite.get_height() // 2))
-                    )
-            return self._position_character_in_maze(entity, sprite)
+                        (self.CASE_SIZE // 2) - (sprite.get_height() // 2))
+                )
+        return self._position_character_in_maze(entity, sprite)
 
     def create_pacgums(self) -> None:
         nb_pacgum = self.simulation_manager.game_state.pacgum
@@ -270,7 +270,6 @@ class Level(Screen):
                 ghost.state = Character.State.HUNTING
                 ghost.super_pacgum_cooldown = None
                 self.super_pacgum_cooldown = None
-
 
     def check_action_timer(self) -> bool:
         if self.time_elapse > self.move_timer:

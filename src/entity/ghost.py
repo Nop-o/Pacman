@@ -105,7 +105,7 @@ class Ghost(Character, ABC):
 
     def get_fleeing_sprite(self) -> pygame.Surface:
         if self.super_pacgum_cooldown is not None and\
-            self.super_pacgum_cooldown - time.monotonic() < 3:
+                self.super_pacgum_cooldown - time.monotonic() < 3:
             return self.ghost_running_away_sprites[self.state_of_sprite + 2]
         return self.ghost_running_away_sprites[self.state_of_sprite]
 
@@ -114,7 +114,6 @@ class Ghost(Character, ABC):
             return self.get_chasing_sprite()
         else:
             return self.get_fleeing_sprite()
-        
 
 class Shadow(Ghost):  # red chase
 

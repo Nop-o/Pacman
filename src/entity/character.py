@@ -90,7 +90,7 @@ class Character(Entity, ABC):
         self.prev_column_pos = self.column_pos
 
     @abstractmethod
-    def update_state_of_sprite(self)-> None:
+    def update_state_of_sprite(self) -> None:
         ...
 
     @abstractmethod
