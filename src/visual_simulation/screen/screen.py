@@ -107,3 +107,28 @@ class Screen(ABC):
                 self.simulation_manager.screen.set_at(
                     ((actual_width + modified_coord[0]),
                      (actual_height + modified_coord[1])), color)
+
+    def display_titles(
+       self, screen: pygame.Surface, titles: list[pygame.Surface],
+       title_padding: list[int]) -> None:
+        for i, title in enumerate(titles, 0):
+            screen.blit(
+                title, (self.get_center_width(title), title_padding[i]))
+
+    def get_title_paddings(
+       self, texts: list[pygame.Surface], main_title_padding: int,
+       title_padding: int) -> list[tuple[int, int]]:
+        main_title_padding: int = \
+            self.simulation_manager.screen_height // main_title_padding
+        title_padding: int = \
+            self.simulation_manager.screen_height // title_padding
+        return_value: list[int] = []
+
+        for i in range(len(texts)):
+            return_value.append(int(main_title_padding + (title_padding * i)))
+
+        return return_value
+
+    def get_center_width(self, surface: pygame.Surface) -> int:
+        return ((self.simulation_manager.screen_width // 2) -
+                (surface.get_width() // 2))
