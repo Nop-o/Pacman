@@ -46,6 +46,8 @@ class Level(Screen):
         self.move_timer: float = 0.5
         self.time_elapse: float = 0
         self.last_frame_time: float | None = None
+        self.sprite_timer: float = 0.20
+        self.sprite_time_elapse = 0
 
     def move_pacman(self) -> None:
         if self.simulation_manager.up_pressed:
@@ -58,12 +60,10 @@ class Level(Screen):
             self.pacman.move(Direction.W)
         else:
             self.pacman.move(None)
-        self.pacman.update_state_of_sprite()
 
     def move_ghosts(self) -> None:
         for ghost in self.ghosts:
             ghost.do_turn()
-            ghost.update_state_of_sprite()
 
     def load_maze(self) -> None:
         for i, line in enumerate(self.maze.cases):
@@ -176,11 +176,16 @@ class Level(Screen):
         if self.last_frame_time is None:
             self.last_frame_time = now
         self.time_elapse += now - self.last_frame_time
+        self.sprite_time_elapse += now - self.last_frame_time
         self.last_frame_time = now
         if self.check_action_timer():
             self.do_turn_consequences()
             self.move_pacman()
             self.move_ghosts()
+        if self.check_sprite_timer():
+            self.pacman.update_state_of_sprite()
+            for ghost in self.ghosts:
+                ghost.update_state_of_sprite()
         self.load_maze()
         self.load_pacgum()
         self.load_pacman()
@@ -270,5 +275,11 @@ class Level(Screen):
     def check_action_timer(self) -> bool:
         if self.time_elapse > self.move_timer:
             self.time_elapse -= self.move_timer
+            return True
+        return False
+
+    def check_sprite_timer(self) -> bool:
+        if self.sprite_time_elapse > self.sprite_timer:
+            self.sprite_time_elapse -= self.sprite_timer
             return True
         return False
