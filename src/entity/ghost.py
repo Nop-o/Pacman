@@ -220,8 +220,8 @@ class Bashful(Ghost):  # cyan random
         new_column = -1
 
         while not self.maze.is_accessible(new_line, new_column):
-            new_line = random.randint(0, self.maze.nb_line)
-            new_column = random.randint(0, self.maze.nb_column)
+            new_line = random.randint(0, self.maze.nb_line - 1)
+            new_column = random.randint(0, self.maze.nb_column - 1)
         return (new_line, new_column)
 
     def _set_starting_position(self) -> tuple[int, int]:
