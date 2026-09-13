@@ -11,47 +11,62 @@ class MainMenu(Screen):
         super().__init__(simulation_manager=simulation_manager)
         self.current_choice_position: int = 0
 
-    def show_instructions(self) -> None:  # TODO
-        pass
+        self.arcade_pacman_sprite: pygame.Surface = \
+            self.simulation_manager.get_sprite(
+                "png/arcade_pacman.png", 50, 10, 380, 475)
 
-    def display_screen(self) -> None:  # TODO
+        self.running_pacman_sprite: pygame.Surface = \
+            self.simulation_manager.get_sprite(
+                "png/running_pacman_small.png", 10, 0, 360, 335)
+
+        self.small_pacman_logo_sprite: pygame.Surface = \
+            self.simulation_manager.get_sprite(
+                "png/small_pacman_logo.png", 10, 120, 295, 75)
+
+    def display_screen(self) -> None:
         self.simulation_manager.dipslay_sky()
 
-        choices = ["game_play_screen", "leaderboard_screen",
-                   "show_instructions", "exit_game"]
+        screen_titles: list[pygame.Surface] = [
+            self.simulation_manager.text_rendering.render_big_title(
+                "Main Menu", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_medium_title(
+                "Start Game", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_medium_title(
+                "View Highscores", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_medium_title(
+                "Instructions", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_medium_title(
+                "Exit Game", (255, 255, 0))
+        ]
 
-        main_menu_title = \
-            self.simulation_manager.text_rendering.render_small_title(
-                "Main Menu", (255, 255, 255))
-        start_game_text = \
-            self.simulation_manager.text_rendering.render_big_text(
-                "Start Game", (255, 255, 255))
-        leaderboard_text = \
-            self.simulation_manager.text_rendering.render_big_text(
-                "View Highscores", (255, 255, 255))
-        instructions_text = \
-            self.simulation_manager.text_rendering.render_big_text(
-                "Instructions", (255, 255, 255))
-        exit_game_text = \
-            self.simulation_manager.text_rendering.render_big_text(
-                "Exit Game", (255, 255, 255))
-        current_choice_text = \
-            self.simulation_manager.text_rendering.render_small_title(
-                f"current choice: {choices[self.current_choice_position]}",
-                (255, 255, 255))
+        title_padding: list[int] = self.get_title_paddings(
+            screen_titles, 10, 6
+        )
 
-        self.draw_text(main_menu_title, width_adjust=0, height_adjust=-300)
-        self.draw_text(start_game_text, width_adjust=0, height_adjust=100)
-        self.draw_text(leaderboard_text, width_adjust=0, height_adjust=-300)
-        self.draw_text(instructions_text, width_adjust=0, height_adjust=100)
-        self.draw_text(exit_game_text, width_adjust=0, height_adjust=100)
-        self.draw_text(current_choice_text, width_adjust=0, height_adjust=100)
+        self.simulation_manager.screen.blit(
+            self.arcade_pacman_sprite,
+            (70, self.simulation_manager.screen_height - 620))
+        self.simulation_manager.screen.blit(
+            self.running_pacman_sprite,
+            (self.simulation_manager.screen_width - 400, 70))
+        self.simulation_manager.screen.blit(
+            self.small_pacman_logo_sprite,
+            (self.simulation_manager.screen_width - 350,
+             self.simulation_manager.screen_height - 200))
+
+        self.display_titles(self.simulation_manager.screen,
+                            screen_titles, title_padding)
+
+        self.simulation_manager.button_manager.display_buttons(
+            self.simulation_manager.screen, screen_titles,
+            title_padding, self.current_choice_position
+        )
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         actions: list[Callable[[], None]] = [
             self.game_play_screen,
             self.leaderboard_screen,
-            self.show_instructions,
+            self.instructions_screen,
             self.exit_game,
         ]
 
