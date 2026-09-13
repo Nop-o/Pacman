@@ -26,6 +26,7 @@ class Screen(ABC):
             self.simulation_manager.screen_manager.game_over.display_screen
 
     def game_play_screen(self) -> None:
+        self.simulation_manager.screen_manager.game_play.level.reset_timer()
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.game_play.display_screen
 

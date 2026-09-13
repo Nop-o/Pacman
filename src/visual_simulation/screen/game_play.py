@@ -45,6 +45,7 @@ class GamePlay(Screen):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.pause_screen()
+                    
                 if event.key == pygame.K_UP:
                     self.level.pacman.direction =\
                         Character.FacingDirection.UP

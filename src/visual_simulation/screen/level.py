@@ -283,3 +283,8 @@ class Level(Screen):
             self.sprite_time_elapse -= self.sprite_timer
             return True
         return False
+
+    def reset_timer(self) -> None:
+        self.time_elapse = 0
+        self.sprite_time_elapse = 0
+        self.last_frame_time = None
