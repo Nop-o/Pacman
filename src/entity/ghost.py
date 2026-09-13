@@ -176,8 +176,10 @@ class Speedy(Ghost):  # pink flank
         for cardinal_point in Direction:
             if self.pacman.last_move_direction == cardinal_point:
                 for i in range(3, 0, -1):
-                    new_line_pos = cardinal_point.value[0] * i
-                    new_column_pos = cardinal_point.value[1] * i
+                    new_line_pos = \
+                        self.pacman.line_pos + cardinal_point.value[0] * i
+                    new_column_pos = \
+                        self.pacman.column_pos + cardinal_point.value[1] * i
 
                     if self.maze.is_accessible(new_line_pos, new_column_pos):
                         return (new_line_pos, new_column_pos)

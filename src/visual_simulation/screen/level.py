@@ -25,8 +25,8 @@ class Level(Screen):
         # TODO need to fix speedy and bashfule chase algo, actually make crash
         self.ghosts.append(Shadow(self.maze, self.pacman,
                                   super_pacgum_cooldown, self.algo))
-        # self.ghosts.append(Speedy(self.maze, self.pacman,
-        #                           super_pacgum_cooldown, self.algo))
+        self.ghosts.append(Speedy(self.maze, self.pacman,
+                                  super_pacgum_cooldown, self.algo))
         # self.ghosts.append(Bashful(self.maze, self.pacman,
         #                            super_pacgum_cooldown, self.algo))
         self.ghosts.append(Pokey(self.maze, self.pacman,

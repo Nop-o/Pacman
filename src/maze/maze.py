@@ -60,6 +60,10 @@ class Maze():
         return neighbors
 
     def is_accessible(self, line_pos: int, column_pos: int) -> bool:
+        if line_pos < 0 or column_pos < 0:
+            return False
+        if line_pos > self.nb_line - 1 or column_pos > self.nb_column - 1:
+            return False
         return not self.cases[line_pos][column_pos].is_enclosed
 
     def get_case(self, coord: tuple[int, int]) -> Case:
