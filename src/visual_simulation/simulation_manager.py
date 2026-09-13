@@ -128,9 +128,6 @@ class SimulationManager():
 
             if event.type == pygame.KEYDOWN:
                 self.key_pressed = event.unicode
-                if event.key == pygame.K_ESCAPE:
-                    self.state_to_call = (
-                        self.screen_manager.pause_menu.display_screen)
 
                 if (event.key == pygame.K_DELETE or
                         event.key == pygame.K_BACKSPACE):
@@ -159,21 +156,6 @@ class SimulationManager():
 
         function_to_call = self._get_matching_screen()
         function_to_call.screen_selector(events)
-
-    def get_center_width(self, surface: pygame.Surface) -> int:
-        return ((self.screen_width // 2) - (surface.get_width() // 2))
-
-    def get_title_paddings(
-       self, texts: list[pygame.Surface], main_title_padding: int,
-       title_padding: int) -> list[tuple[int, int]]:
-        main_title_padding: float = self.screen_height // main_title_padding
-        title_padding: float = self.screen_height // title_padding
-        return_value: list[int] = []
-
-        for i in range(len(texts)):
-            return_value.append(int(main_title_padding + (title_padding * i)))
-
-        return return_value
 
     def _get_matching_screen(self) -> Any:
         screens = (
