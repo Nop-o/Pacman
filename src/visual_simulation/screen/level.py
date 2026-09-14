@@ -251,21 +251,32 @@ class Level(Screen):
 
     def create_pacgums(self) -> None:
         nb_pacgum = self.simulation_manager.game_state.pacgum
-        nb_super_pacgum = self.simulation_manager.game_state.super_pacgum
         nb_cases = self.maze.nb_column * self.maze.nb_line
         order_pacgum = list(range(nb_cases))
         random.shuffle(order_pacgum)
+        nb_column = self.maze.nb_column - 1
+        nb_line = self.maze.nb_line - 1
+
+        super_pacgum_1 = SuperPacgum(0, 0)
+        super_pacgum_2 = SuperPacgum(nb_line, 0)
+        super_pacgum_3 = SuperPacgum(0, nb_column)
+        super_pacgum_4 = SuperPacgum(nb_column, nb_line)
+
+        self.maze.cases[0][0].pacgum = super_pacgum_1
+        self.maze.cases[nb_line][0].pacgum = super_pacgum_2
+        self.maze.cases[0][nb_column].pacgum = super_pacgum_3
+        self.maze.cases[nb_line][nb_column].pacgum = super_pacgum_4
+
+        self.pacgum.append(super_pacgum_1)
+        self.pacgum.append(super_pacgum_2)
+        self.pacgum.append(super_pacgum_3)
+        self.pacgum.append(super_pacgum_4)
+
         for location in order_pacgum:
             line = location // self.maze.nb_column
             column = location % self.maze.nb_column
             case = self.maze.get_case((line, column))
             if case.is_enclosed is True or case.pacgum is not None:
-                continue
-            if nb_super_pacgum > 0:
-                super_pacgum = SuperPacgum(line, column)
-                self.pacgum.append(super_pacgum)
-                case.pacgum = super_pacgum
-                nb_super_pacgum -= 1
                 continue
             if nb_pacgum > 0:
                 pacgum = Pacgum(line, column)
