@@ -11,15 +11,100 @@ class Instructions(Screen):
     def __init__(self, simulation_manager: "SimulationManager") -> None:
         super().__init__(simulation_manager=simulation_manager)
 
-    def display_screen(self) -> None:  # TODO
+        self.current_direction: Character.FacingDirection = \
+            Character.FacingDirection.RIGHT
+
+        self.arcade_pacman_sprite: pygame.Surface = \
+            self.simulation_manager.get_sprite(
+                "png/arcade_pacman.png", 50, 10, 380, 475)
+
+        self.running_pacman_sprite: pygame.Surface = \
+            self.simulation_manager.get_sprite(
+                "png/running_pacman_small.png", 10, 0, 360, 335)
+
+        self.small_pacman_logo_sprite: pygame.Surface = \
+            self.simulation_manager.get_sprite(
+                "png/small_pacman_logo.png", 10, 120, 295, 75)
+
+    def display_instruction_titles(self, screen: pygame.Surface,
+                                   screen_titles: list[pygame.Surface]
+                                   ) -> None:
+        main_title_padding: int = self.simulation_manager.screen_height // 10
+        text_y_padding: int = \
+            main_title_padding + screen_titles[0].get_height() + 30
+        text_x_padding: int = int(self.simulation_manager.screen_width // 3.2)
+
+        screen.blit(screen_titles[0], (
+            self.get_center_width(screen_titles[0]), main_title_padding))
+
+        for i in range(1, len(screen_titles), 1):
+            screen.blit(screen_titles[i], (
+                text_x_padding,
+                text_y_padding + ((
+                    self.simulation_manager.screen_height // 15) * i)))
+
+        pacman_x: int = text_x_padding + screen_titles[1].get_width() + 50
+        pacman_y: int = \
+            text_y_padding + self.simulation_manager.screen_height // 15
+        ghost_x: int = self.simulation_manager.screen_width // 2 - 100
+        ghost_y: int = text_y_padding + ((
+            self.simulation_manager.screen_height // 15) * (i + 1))
+
+        self.display_entities((pacman_x, pacman_y), ghost_x, ghost_y)
+
+    def display_entities(self, pacman_position: tuple[int, int],
+                         x_padding: int, y_padding: int) -> None:
+        level: Level = self.simulation_manager.screen_manager.game_play.level
+
+        for i, ghost in enumerate(level.ghosts, 0):
+            sprites = getattr(ghost, "sprites")
+
+            self.simulation_manager.screen.blit(
+                sprites[self.current_direction][
+                    self.simulation_manager.frame_count % 2],
+                (x_padding + (50 * i), y_padding))
+
+        self.simulation_manager.screen.blit(level.pacman.sprites[
+            self.current_direction][self.simulation_manager.frame_count % 3],
+            pacman_position)
+
+    def display_screen(self) -> None:
         self.simulation_manager.dipslay_sky()
 
-        test_message = \
-            self.simulation_manager.text_rendering.render_small_title(
-                "Instructions", (255, 255, 255))
+        screen_titles: list[pygame.Surface] = [
+            self.simulation_manager.text_rendering.render_big_title(
+                "Instructions", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_regular_text(
+                "You are a Pacman.", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_regular_text(
+                "Your mission is to eat all of the pacgum.", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_regular_text(
+                "But be careful !!", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_regular_text(
+                "Shadow, Speedy, Bashful and Pokey will let not you do it "
+                "easily.", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_regular_text(
+                "To help you, there will be some superpacgum.", (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_regular_text(
+                "They will make you invincible and them edible.",
+                (255, 255, 0)),
+            self.simulation_manager.text_rendering.render_regular_text(
+                "Good luck and have fun !", (255, 255, 0)),
+        ]
 
-        test_message_pos = self.get_text_pos(test_message, height_adjust=-200)
-        self.simulation_manager.screen.blit(test_message, test_message_pos)
+        self.simulation_manager.screen.blit(
+            self.arcade_pacman_sprite,
+            (70, self.simulation_manager.screen_height - 620))
+        self.simulation_manager.screen.blit(
+            self.running_pacman_sprite,
+            (self.simulation_manager.screen_width - 400, 70))
+        self.simulation_manager.screen.blit(
+            self.small_pacman_logo_sprite,
+            (self.simulation_manager.screen_width - 350,
+             self.simulation_manager.screen_height - 200))
+
+        self.display_instruction_titles(
+            self.simulation_manager.screen, screen_titles)
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in events:
@@ -28,6 +113,19 @@ class Instructions(Screen):
                 return
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
+                if event.key in [pygame.K_RETURN, pygame.K_ESCAPE]:
                     self.main_menu_screen()
                     return
+
+                if event.key == pygame.K_LEFT:
+                    self.current_direction = \
+                        Character.FacingDirection.LEFT
+                if event.key == pygame.K_RIGHT:
+                    self.current_direction = \
+                        Character.FacingDirection.RIGHT
+                if event.key == pygame.K_DOWN:
+                    self.current_direction = \
+                        Character.FacingDirection.DOWN
+                if event.key == pygame.K_UP:
+                    self.current_direction = \
+                        Character.FacingDirection.UP
