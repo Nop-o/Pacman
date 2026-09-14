@@ -15,7 +15,7 @@ class SuperPacgum(Pacgum):
         self.sprite: pygame.Surface = self.get_sprite(
             "png/entities_sprite.png", 401, 454, 35, 35)
 
-    def eat(self, simulation_manager: "SimulationManager"):
+    def eat(self, simulation_manager: "SimulationManager") -> None:
         game_state = simulation_manager.game_state
         level = simulation_manager.screen_manager.game_play.level
         game_state.score += game_state.points_per_super_pacgum

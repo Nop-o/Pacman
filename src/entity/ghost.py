@@ -18,12 +18,14 @@ class Ghost(Character, ABC):
         self.algorithm: DepthFirstSearch = algorithm
         self._shortest_path_to_goal: list[tuple[int, int]] | None = None
         self.sprites: list[list[pygame.Surface]]
+        self.direction: Character.FacingDirection = \
+            Character.FacingDirection.RIGHT
 
-        self.ghost_running_away_sprites: list[pygame.Surface] = [
+        self.running_away_sprites: list[pygame.Surface] = [
             self.get_sprite("png/entities_sprite.png", 1, 554 + (i * 50),
                             35, 35)
             for i in range(0, 2, 1)]
-        self.ghost_running_away_sprites.extend(
+        self.running_away_sprites.extend(
             [self.get_sprite("png/entities_sprite.png", 51, 554 + (i * 50),
                              35, 35)
              for i in range(0, 2, 1)])
@@ -106,8 +108,8 @@ class Ghost(Character, ABC):
     def get_fleeing_sprite(self) -> pygame.Surface:
         if self.super_pacgum_cooldown is not None and\
                 self.super_pacgum_cooldown - time.monotonic() < 3:
-            return self.ghost_running_away_sprites[self.state_of_sprite + 2]
-        return self.ghost_running_away_sprites[self.state_of_sprite]
+            return self.running_away_sprites[self.state_of_sprite + 2]
+        return self.running_away_sprites[self.state_of_sprite]
 
     def get_valid_sprite(self) -> pygame.Surface:
         if self.state == self.State.HUNTING:

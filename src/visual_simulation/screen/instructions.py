@@ -1,6 +1,7 @@
-from . import Screen
+from . import Screen, Level
 from typing import TYPE_CHECKING
 import pygame
+from ...entity import Character
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager

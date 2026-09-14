@@ -130,7 +130,7 @@ class Level(Screen):
             dest=pacman_pos
         )
 
-    def check_cooldown_timer(self):
+    def check_cooldown_timer(self) -> None:
         if self.super_pacgum_cooldown is None:
             return
         if self.super_pacgum_cooldown < time.monotonic():
@@ -153,7 +153,7 @@ class Level(Screen):
         self.pacgum.remove(case.pacgum)
         case.pacgum = None
 
-    def ghost_collision(self):
+    def ghost_collision(self) -> None:
         for ghost in self.ghosts:
             if not ghost.get_coord() == self.pacman.get_coord():
                 continue

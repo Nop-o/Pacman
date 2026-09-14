@@ -9,6 +9,8 @@ class Pacman(Character):
         super().__init__(maze, super_pacgum_cooldown, state_of_sprite=1)
         self._last_move_direction: Direction
         self.reset_last_move_direction()
+        self.direction: Character.FacingDirection = \
+            Character.FacingDirection.RIGHT
 
         self.invincible: bool = False
 
@@ -72,11 +74,11 @@ class Pacman(Character):
         self.state_of_sprite += 1
         self.state_of_sprite %= 3
 
-    def get_moving_sprite(self):
+    def get_moving_sprite(self) -> pygame.Surface:
         sprite = self.sprites[self.direction][self.state_of_sprite]
         return sprite
 
-    def move(self, direction: Direction | None):
+    def move(self, direction: Direction | None) -> None:
         self.prev_line_pos = self.line_pos
         self.prev_column_pos = self.column_pos
         if self.direction == Character.FacingDirection.UP:

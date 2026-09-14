@@ -19,8 +19,8 @@ class ButtonManager(Sprite):
         ]
 
         self.buttons_sprite: list[Button] = [
-            self.get_sprite("png/entities_sprite.png", 201, 704, 35, 35),
-            self.get_sprite("png/entities_sprite.png", 201, 796, 35, 35),
+            Button("png/entities_sprite.png", 201, 704, 35, 35),
+            Button("png/entities_sprite.png", 201, 796, 35, 35),
             ]
 
         self.screen_width: int = screen_width
@@ -70,5 +70,7 @@ class ButtonManager(Sprite):
         button_positions: list[tuple[tuple[int, int], tuple[int, int]]] = \
             self.get_button_positions(texts, paddings)
 
-        screen.blit(self.buttons_sprite[0], button_positions[position][0])
-        screen.blit(self.buttons_sprite[1], button_positions[position][1])
+        screen.blit(
+            self.buttons_sprite[0].sprite, button_positions[position][0])
+        screen.blit(
+            self.buttons_sprite[1].sprite, button_positions[position][1])
