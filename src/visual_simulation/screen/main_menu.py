@@ -11,18 +11,6 @@ class MainMenu(Screen):
         super().__init__(simulation_manager=simulation_manager)
         self.current_choice_position: int = 0
 
-        self.arcade_pacman_sprite: pygame.Surface = \
-            self.simulation_manager.get_sprite(
-                "png/arcade_pacman.png", 50, 10, 380, 475)
-
-        self.running_pacman_sprite: pygame.Surface = \
-            self.simulation_manager.get_sprite(
-                "png/running_pacman_small.png", 10, 0, 360, 335)
-
-        self.small_pacman_logo_sprite: pygame.Surface = \
-            self.simulation_manager.get_sprite(
-                "png/small_pacman_logo.png", 10, 120, 295, 75)
-
     def display_screen(self) -> None:
         self.simulation_manager.dipslay_sky()
 
@@ -43,16 +31,7 @@ class MainMenu(Screen):
             screen_titles, 10, 6
         )
 
-        self.simulation_manager.screen.blit(
-            self.arcade_pacman_sprite,
-            (70, self.simulation_manager.screen_height - 620))
-        self.simulation_manager.screen.blit(
-            self.running_pacman_sprite,
-            (self.simulation_manager.screen_width - 400, 70))
-        self.simulation_manager.screen.blit(
-            self.small_pacman_logo_sprite,
-            (self.simulation_manager.screen_width - 350,
-             self.simulation_manager.screen_height - 200))
+        self.simulation_manager.display_menu_sprites()
 
         self.display_titles(self.simulation_manager.screen,
                             screen_titles, title_padding)
