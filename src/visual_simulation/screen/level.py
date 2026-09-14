@@ -46,7 +46,7 @@ class Level(Screen):
         self.time_elapse: float = 0
         self.last_frame_time: float | None = None
         self.sprite_timer: float = 0.20
-        self.sprite_time_elapse = 0
+        self.sprite_time_elapse: float = 0
 
     def move_pacman(self) -> None:
         if self.simulation_manager.up_pressed:
@@ -197,13 +197,13 @@ class Level(Screen):
                 entity.line_pos == entity.prev_line_pos):
             progress_modifier = (0, 0)
         elif entity.prev_direction == Character.FacingDirection.UP:
-            progress_modifier = (0, 0 - self.CASE_SIZE * progress)
+            progress_modifier = (0, int(0 - self.CASE_SIZE * progress))
         elif entity.prev_direction == Character.FacingDirection.RIGHT:
-            progress_modifier = (0 + self.CASE_SIZE * progress, 0)
+            progress_modifier = (int(0 + self.CASE_SIZE * progress), 0)
         elif entity.prev_direction == Character.FacingDirection.DOWN:
-            progress_modifier = (0, 0 + self.CASE_SIZE * progress)
+            progress_modifier = (0, int(0 + self.CASE_SIZE * progress))
         else:
-            progress_modifier = (0 - self.CASE_SIZE * progress, 0)
+            progress_modifier = (int(0 - self.CASE_SIZE * progress), 0)
         return (
                 int(((self.MAZE_START[0] +
                     (self.CASE_SIZE * entity.prev_column_pos)) +

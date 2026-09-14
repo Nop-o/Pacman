@@ -4,7 +4,6 @@ from typing import Any, Callable
 from .screen_manager import ScreenManager
 from .text_rendering import TextRendering
 from ..game_state import GameState
-from .screen import Level
 from ..entity import ButtonManager
 
 

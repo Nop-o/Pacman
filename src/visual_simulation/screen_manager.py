@@ -1,5 +1,5 @@
 from .screen import (GameOver, GamePlay, HUD, LeaderBoard, MainMenu,
-                     PauseMenu, Victory, Level, Instructions, LaunchGame)
+                     PauseMenu, Victory, Instructions, LaunchGame)
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:

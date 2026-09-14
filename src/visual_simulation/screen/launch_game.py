@@ -179,14 +179,14 @@ class LaunchGame(Screen):
             self.pacman_position)
 
     def travel_back_to_opposite_screen_side(self) -> None:
-        screen_width : int = self.simulation_manager.screen_width 
-        screen_height : int = self.simulation_manager.screen_height 
+        screen_width: int = self.simulation_manager.screen_width
+        screen_height: int = self.simulation_manager.screen_height
         for attr in ("pacman_position", "shadow_position", "speedy_position",
                      "bashful_position", "pokey_position"):
             pos_x, pos_y = getattr(self, attr)
 
             if screen_width <= pos_x:
-                pos_x -= screen_width 
+                pos_x -= screen_width
             elif 0 >= pos_x:
                 pos_x += screen_width
 

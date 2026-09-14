@@ -62,7 +62,9 @@ class LeaderBoard(Screen):
         self.simulation_manager.display_menu_sprites()
 
         self.simulation_manager.screen.blit(
-            leaderboard_text, (self.get_center_width(leaderboard_text), self.simulation_manager.screen_height // 10))
+            leaderboard_text, (self.get_center_width(leaderboard_text),
+                               self.simulation_manager.screen_height // 10)
+        )
 
         self.display_highscores()
 
@@ -77,21 +79,23 @@ class LeaderBoard(Screen):
             screen.blit((
                 self.simulation_manager.text_rendering.render_small_title(
                     f"{i}.", (255, 255, 0))),
-                (starting_width , starting_height + (padding_height * i))
+                (starting_width, starting_height + (padding_height * i))
                 )
 
         for i in range(1, 11, 1):
             screen.blit((
                 self.simulation_manager.text_rendering.render_small_title(
                     f"{self.names[i]}", (255, 255, 0))),
-                (starting_width + padding_width, starting_height + (padding_height * i))
+                (starting_width + padding_width,
+                 starting_height + (padding_height * i))
                     )
 
         for i in range(1, 11, 1):
             screen.blit((
                 self.simulation_manager.text_rendering.render_small_title(
                     f"{self.scores[i]}", (255, 255, 0))),
-                (starting_width + (padding_width * 2), starting_height + (padding_height * i))
+                (starting_width + (padding_width * 2),
+                 starting_height + (padding_height * i))
                     )
 
     def export_highscore(self) -> None:
