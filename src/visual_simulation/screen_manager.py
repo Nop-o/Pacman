@@ -7,8 +7,7 @@ if TYPE_CHECKING:
 
 
 class ScreenManager:
-    def __init__(self, simulation_manager: "SimulationManager",
-                 level: Level) -> None:
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
         self.leaderboard: LeaderBoard = LeaderBoard(
             simulation_manager=simulation_manager)
         self.game_over: GameOver = GameOver(
@@ -16,7 +15,7 @@ class ScreenManager:
         self.hud: HUD = HUD(
             simulation_manager=simulation_manager)
         self.game_play: GamePlay = GamePlay(
-            level=level, hud=self.hud,
+            hud=self.hud,
             simulation_manager=simulation_manager)
         self.main_menu: MainMenu = MainMenu(
             simulation_manager=simulation_manager)

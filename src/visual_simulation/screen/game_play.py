@@ -10,13 +10,10 @@ if TYPE_CHECKING:
 
 
 class GamePlay(Screen):
-    def __init__(self, simulation_manager: "SimulationManager",
-                 level: Level, hud: HUD,
-                 font: pygame.font.Font | None = None,
-                 big_font: pygame.font.Font | None = None
-                 ) -> None:
+    def __init__(self, simulation_manager: "SimulationManager", hud: HUD)\
+            -> None:
         super().__init__(simulation_manager=simulation_manager)
-        self.level: Level = level
+        self.level: Level = Level(simulation_manager)
         self.hud: HUD = hud
 
     def display_screen(self) -> None:
@@ -24,14 +21,14 @@ class GamePlay(Screen):
             self.game_over_screen()
 
         elif self.simulation_manager.game_state.is_game_won is True:
-            self.victory_screen()
+            self.next_level()
 
         self.simulation_manager.dipslay_sky()
 
         self.level.display_screen()
         self.hud.display_screen()
         self.simulation_manager.button_manager.display_joystick(
-        self.simulation_manager.screen, self.level.pacman.direction)
+            self.simulation_manager.screen, self.level.pacman.direction)
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in events:

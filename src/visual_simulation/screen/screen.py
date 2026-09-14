@@ -45,6 +45,12 @@ class Screen(ABC):
     def exit_game(self) -> None:
         self.simulation_manager.active = False
 
+    def next_level(self) -> None:
+        from . import Level
+        self.simulation_manager.screen_manager.game_play.level =\
+            Level(self.simulation_manager)
+        self.simulation_manager.game_state.is_game_won = False
+
     def make_button(self,
                     pos: tuple[int, int],
                     text: pygame.Surface,
