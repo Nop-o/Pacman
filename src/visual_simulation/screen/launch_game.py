@@ -1,4 +1,4 @@
-from . import Screen
+from . import Screen, Level
 import pygame
 from typing import TYPE_CHECKING
 from ...entity import Character, FruitManager
@@ -15,99 +15,11 @@ class LaunchGame(Screen):
         self.current_direction_choice: Character.FacingDirection = \
             Character.FacingDirection.RIGHT
 
-        self.shadow_sprites: list[list[pygame.Surface]] = \
-            [[self.get_sprite(
-             "png/entities_sprite.png", 1, 4 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 1, 104 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 1, 204 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 1, 304 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)]]
         self.shadow_position: tuple[int, int]
-        self.shadow_direction: Character.FacingDirection = \
-            Character.FacingDirection.RIGHT
-
-        self.speedy_sprites: list[list[pygame.Surface]] = \
-            [[self.get_sprite(
-             "png/entities_sprite.png", 51, 4 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 51, 104 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 51, 204 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 51, 304 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)]]
         self.speedy_position: tuple[int, int]
-        self.speedy_direction: Character.FacingDirection = \
-            Character.FacingDirection.RIGHT
-
-        self.bashful_sprites: list[list[pygame.Surface]] = \
-            [[self.get_sprite(
-             "png/entities_sprite.png", 101, 4 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 101, 104 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 101, 204 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 101, 304 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)]]
         self.bashful_position: tuple[int, int]
-        self.bashful_direction: Character.FacingDirection = \
-            Character.FacingDirection.RIGHT
-
-        self.pokey_sprites: list[list[pygame.Surface]] = \
-            [[self.get_sprite(
-             "png/entities_sprite.png", 151, 4 + (i * 50), 35, 35)
-             for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 151, 104 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 151, 204 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 151, 304 + (i * 50), 35, 35)
-              for i in range(0, 2, 1)]]
         self.pokey_position: tuple[int, int]
-        self.pokey_direction: Character.FacingDirection = \
-            Character.FacingDirection.RIGHT
-
-        self.pacman_moving_sprites: list[list[pygame.Surface]] = \
-            [[self.get_sprite(
-             "png/entities_sprite.png", 851, 4 + (i * 50), 35, 35)
-             for i in range(0, 3, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 851, 154 + (i * 50), 35, 35)
-              for i in range(0, 3, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 851, 304 + (i * 50), 35, 35)
-              for i in range(0, 3, 1)],
-             [self.get_sprite(
-              "png/entities_sprite.png", 851, 454 + (i * 50), 35, 35)
-              for i in range(0, 3, 1)]]
         self.pacman_position: tuple[int, int]
-        self.pacman_direction: Character.FacingDirection = \
-            Character.FacingDirection.RIGHT
-
-        self.ghost_running_away_sprites: list[pygame.Surface] = [
-            self.get_sprite("png/entities_sprite.png", 1, 554 + (i * 50),
-                            35, 35)
-            for i in range(0, 2, 1)]
-        self.ghost_running_away_sprites.extend(
-            [self.get_sprite("png/entities_sprite.png", 51, 554 + (i * 50),
-                             35, 35)
-             for i in range(0, 2, 1)])
 
         self._init_entity_starting_pos()
 
@@ -221,65 +133,69 @@ class LaunchGame(Screen):
 
     def display_default_entities(self) -> None:
         ghost_list: list[str] = ["shadow", "speedy", "bashful", "pokey"]
+        level: Level = self.simulation_manager.screen_manager.game_play.level
 
-        for ghost in ghost_list:
-            sprites = getattr(self, ghost + "_sprites")
-            direction = getattr(self, ghost + "_direction")
-            position = getattr(self, ghost + "_position")
+        for ghost, ghost_name in zip(level.ghosts, ghost_list):
+            sprites = getattr(ghost, "sprites")
+            direction = getattr(ghost, "direction")
+            position = getattr(self, ghost_name + "_position")
 
             self.simulation_manager.screen.blit(sprites[direction][
                 self.simulation_manager.frame_count % 2], position)
 
-        self.simulation_manager.screen.blit(self.pacman_moving_sprites[
-            self.pacman_direction][
-                self.simulation_manager.frame_count % 3], self.pacman_position)
+        self.simulation_manager.screen.blit(level.pacman.sprites[
+            level.pacman.direction][self.simulation_manager.frame_count % 3],
+            self.pacman_position)
 
         self.fruit_manager.display_fruits(self.simulation_manager.screen)
 
     def display_pacman_hunting_entities(self) -> None:
+        level: Level = self.simulation_manager.screen_manager.game_play.level
+
         if self.current_super_pacgum_cooldown < self.blinking_ghost_time:
             image_count = 2
         else:
             image_count = 4
 
-        self.simulation_manager.screen.blit(self.ghost_running_away_sprites[
-            self.simulation_manager.frame_count % image_count],
+        self.simulation_manager.screen.blit(
+            level.ghosts[0].running_away_sprites[
+                self.simulation_manager.frame_count % image_count],
             self.shadow_position)
-        self.simulation_manager.screen.blit(self.ghost_running_away_sprites[
-            self.simulation_manager.frame_count % image_count],
+        self.simulation_manager.screen.blit(
+            level.ghosts[1].running_away_sprites[
+                self.simulation_manager.frame_count % image_count],
             self.speedy_position)
-        self.simulation_manager.screen.blit(self.ghost_running_away_sprites[
-            self.simulation_manager.frame_count % image_count],
+        self.simulation_manager.screen.blit(
+            level.ghosts[2].running_away_sprites[
+                self.simulation_manager.frame_count % image_count],
             self.bashful_position)
-        self.simulation_manager.screen.blit(self.ghost_running_away_sprites[
-            self.simulation_manager.frame_count % image_count],
+        self.simulation_manager.screen.blit(
+            level.ghosts[3].running_away_sprites[
+                self.simulation_manager.frame_count % image_count],
             self.pokey_position)
-        self.simulation_manager.screen.blit(self.pacman_moving_sprites[
-            self.pacman_direction][self.simulation_manager.frame_count % 3],
+        self.simulation_manager.screen.blit(
+            level.pacman.sprites[level.pacman.direction][
+                self.simulation_manager.frame_count % 3],
             self.pacman_position)
 
     def travel_back_to_opposite_screen_side(self) -> None:
+        screen_width : int = self.simulation_manager.screen_width 
+        screen_height : int = self.simulation_manager.screen_height 
         for attr in ("pacman_position", "shadow_position", "speedy_position",
                      "bashful_position", "pokey_position"):
             pos_x, pos_y = getattr(self, attr)
 
-            if self.simulation_manager.screen_width <= pos_x + 35:
-                setattr(self, attr, tuple(a - b for a, b in zip(
-                    (pos_x, pos_y), (self.simulation_manager.screen_width, 0)))
-                    )
-            elif 4 >= pos_x - 35:
-                setattr(self, attr, tuple(a + b for a, b in zip(
-                    (pos_x, pos_y), (self.simulation_manager.screen_width, 0))
-                    ))
-            elif self.simulation_manager.screen_height <= pos_y + 35:
-                setattr(self, attr, tuple(a - b for a, b in zip(
-                    (pos_x, pos_y), (0, self.simulation_manager.screen_height))
-                    ))
-            elif 4 > pos_y + 35:
-                setattr(self, attr, tuple(a + b for a, b in zip(
-                    (pos_x, pos_y), (0, self.simulation_manager.screen_height))
-                    ))
-            setattr(self, attr, self.snap_to_grid(getattr(self, attr)))
+            if screen_width <= pos_x:
+                pos_x -= screen_width 
+            elif 0 >= pos_x:
+                pos_x += screen_width
+
+            if screen_height <= pos_y + 60:
+                pos_y -= screen_height
+            elif 0 >= pos_y:
+                pos_y += screen_height
+
+            setattr(self, attr, self.snap_to_grid((pos_x, pos_y)))
 
     def get_sprite(self, file_path: str, x: int, y: int,
                    width: int, height: int) -> pygame.Surface:
@@ -291,23 +207,29 @@ class LaunchGame(Screen):
         return image
 
     def update_entities_pos(self) -> None:
+        level: Level = self.simulation_manager.screen_manager.game_play.level
+
         if self.ghost_chasing:
-            entity_order = ["shadow", "speedy", "bashful", "pokey", "pacman"]
+            entity_order = [level.ghosts[3], level.ghosts[2], level.ghosts[1],
+                            level.ghosts[0], level.pacman]
+            entity_name_order = ["shadow", "speedy", "bashful",
+                                 "pokey", "pacman"]
         else:
-            entity_order = ["pacman", "pokey", "bashful", "speedy", "shadow"]
+            entity_order = [level.pacman, level.ghosts[3], level.ghosts[2],
+                            level.ghosts[1], level.ghosts[0]]
+            entity_name_order = ["pacman", "pokey", "bashful",
+                                 "speedy", "shadow"]
 
         for i in range(0, len(entity_order) - 1, 1):
-            setattr(self, entity_order[i] + "_direction", getattr(
-                self, entity_order[i + 1] + "_direction"))
-            setattr(self, entity_order[i] + "_position", getattr(
-                self, entity_order[i + 1] + "_position"))
+            entity_order[i].direction = entity_order[i + 1].direction
+            setattr(self, entity_name_order[i] + "_position", getattr(
+                self, entity_name_order[i + 1] + "_position"))
 
-        setattr(self, entity_order[-1] + "_direction", getattr(
-            self, "current_direction_choice"))
-        setattr(self, entity_order[-1] + "_position",
-                tuple(a + b for a, b in zip(getattr(
-                    self, entity_order[-1] + "_position"),
-                    self.get_direction_value(self.current_direction_choice))))
+        entity_order[-1].direction = self.current_direction_choice
+        setattr(self, entity_name_order[-1] + "_position",
+                self.add_two_tuple(getattr(
+                    self, entity_name_order[-1] + "_position"),
+                    self.get_direction_value(self.current_direction_choice)))
 
         self.travel_back_to_opposite_screen_side()
 
