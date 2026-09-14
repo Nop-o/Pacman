@@ -33,8 +33,11 @@ class Victory(Screen):
                     "Save Highscore", (255, 255, 255))
 
             self.draw_text(user_name, width_adjust=0, height_adjust=100)
-
-            button_pos = self.get_text_pos(button_text, height_adjust=175)
+            button_pos = (
+                self.simulation_manager.screen_width // 2,
+                self.simulation_manager.screen_height // 2 + 175
+            )
+            
             self.make_button(
                 button_pos, button_text, self.button_action, 50, 20)
 
