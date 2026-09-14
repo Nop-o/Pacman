@@ -50,6 +50,7 @@ class Screen(ABC):
         self.simulation_manager.screen_manager.game_play.level =\
             Level(self.simulation_manager)
         self.simulation_manager.game_state.is_game_won = False
+        self.simulation_manager.game_state.nb_level += 1
 
     def make_button(self,
                     pos: tuple[int, int],

@@ -21,7 +21,10 @@ class GamePlay(Screen):
             self.game_over_screen()
 
         elif self.simulation_manager.game_state.is_game_won is True:
-            self.next_level()
+            if self.simulation_manager.game_state.nb_level < 10:
+                self.next_level()
+            else:
+                self.victory_screen()
 
         self.simulation_manager.dipslay_sky()
 
