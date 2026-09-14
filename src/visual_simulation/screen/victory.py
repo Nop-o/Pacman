@@ -37,7 +37,7 @@ class Victory(Screen):
                 self.simulation_manager.screen_width // 2,
                 self.simulation_manager.screen_height // 2 + 175
             )
-            
+
             self.make_button(
                 button_pos, button_text, self.button_action, 50, 20)
 

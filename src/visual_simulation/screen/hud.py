@@ -51,7 +51,6 @@ class HUD(Screen):
                 source=pacman_sprite,
                 dest=pos
             )
-        
 
     def show_level(self) -> None:
         level = self.simulation_manager.screen_manager.game_play.level
@@ -67,7 +66,6 @@ class HUD(Screen):
             source=level_nb,
             dest=level_pos
         )
-        
 
     def show_timer(self) -> None:
         level = self.simulation_manager.screen_manager.game_play.level
@@ -78,7 +76,7 @@ class HUD(Screen):
         )
         timer_pos = (
             (level.MAZE_END[0] - level.MAZE_WIDTH // 2) -
-                (timer_text.get_width() // 2),
+            (timer_text.get_width() // 2),
             level.MAZE_END[1] + 20 + timer_text.get_height() // 2
         )
         self.simulation_manager.screen.blit(

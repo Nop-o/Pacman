@@ -201,7 +201,7 @@ class Level(Screen):
         self.load_pacman()
         self.load_ghosts()
 
-    def check_ghost_death(self, delta: float):
+    def check_ghost_death(self, delta: float) -> None:
         for ghost in self.ghosts:
             if ghost.death_timer is None:
                 continue
