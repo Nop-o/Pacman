@@ -64,6 +64,8 @@ class Level(Screen):
 
     def move_ghosts(self) -> None:
         for ghost in self.ghosts:
+            if ghost.death_timer is not None:
+                continue
             ghost.do_turn()
 
     def load_maze(self) -> None:
@@ -117,6 +119,8 @@ class Level(Screen):
 
     def load_ghosts(self) -> None:
         for ghost in self.ghosts:
+            if ghost.death_timer is not None:
+                continue
             sprite = ghost.sprites[0][0]
             ghost_pos = self._position_entity_in_maze(ghost, sprite)
             self.simulation_manager.screen.blit(
@@ -157,6 +161,8 @@ class Level(Screen):
 
     def ghost_collision(self) -> None:
         for ghost in self.ghosts:
+            if ghost.death_timer is not None:
+                continue
             if not ghost.get_coord() == self.pacman.get_coord():
                 continue
             if ghost.state == ghost.State.HUNTING:
@@ -167,8 +173,7 @@ class Level(Screen):
                 for gh in self.ghosts:
                     gh.reset_starting_position()
             else:
-                start_coord = ghost.starting_position
-                ghost.reset_starting_position()
+                ghost.die()
                 self.simulation_manager.game_state.score +=\
                     self.simulation_manager.game_state.points_per_ghost
 
@@ -176,9 +181,11 @@ class Level(Screen):
         now = time.monotonic()
         if self.last_frame_time is None:
             self.last_frame_time = now
-        self.time_elapse += now - self.last_frame_time
-        self.sprite_time_elapse += now - self.last_frame_time
+        delta = now - self.last_frame_time
+        self.time_elapse += delta
+        self.sprite_time_elapse += delta
         self.last_frame_time = now
+        self.check_ghost_death(delta)
         if self.check_action_timer():
             self.do_turn_consequences()
             self.move_pacman()
@@ -191,6 +198,14 @@ class Level(Screen):
         self.load_pacgum()
         self.load_pacman()
         self.load_ghosts()
+
+    def check_ghost_death(self, delta: float):
+        for ghost in self.ghosts:
+            if ghost.death_timer is None:
+                continue
+            ghost.death_timer -= delta
+            if ghost.death_timer <= 0:
+                ghost.death_timer = None
 
     def _position_character_in_maze(self, entity: Character,
                                     sprite: pygame.Surface) -> tuple[int, int]:

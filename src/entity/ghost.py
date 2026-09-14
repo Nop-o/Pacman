@@ -20,6 +20,7 @@ class Ghost(Character, ABC):
         self.sprites: list[list[pygame.Surface]]
         self.direction: Character.FacingDirection = \
             Character.FacingDirection.RIGHT
+        self.death_timer: float | None = None
 
         self.running_away_sprites: list[pygame.Surface] = [
             self.get_sprite("png/entities_sprite.png", 1, 554 + (i * 50),
@@ -116,6 +117,10 @@ class Ghost(Character, ABC):
             return self.get_chasing_sprite()
         else:
             return self.get_fleeing_sprite()
+
+    def die(self) -> None:
+        self.death_timer = 5
+        self.reset_starting_position()
 
 
 class Shadow(Ghost):  # red chase
