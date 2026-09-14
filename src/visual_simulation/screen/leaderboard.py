@@ -55,26 +55,44 @@ class LeaderBoard(Screen):
     def display_screen(self) -> None:
         self.simulation_manager.dipslay_sky()
 
-        pacman_title = \
-            self.simulation_manager.text_rendering.render_big_pacman(
-                "PAC-MAN", (255, 255, 0))
         leaderboard_text = \
-            self.simulation_manager.text_rendering.render_small_title(
-                "Leaderboard:", (255, 255, 255))
+            self.simulation_manager.text_rendering.render_big_title(
+                "LeaderBoard", (255, 255, 0))
 
-        self.draw_text(pacman_title, width_adjust=0, height_adjust=-275)
-        self.draw_text(leaderboard_text, width_adjust=0, height_adjust=-100)
+        self.simulation_manager.display_menu_sprites()
 
-        font = self.simulation_manager.text_rendering.regular_text
-        y = - 50 + (font.get_height() * 2)
+        self.simulation_manager.screen.blit(
+            leaderboard_text, (self.get_center_width(leaderboard_text), self.simulation_manager.screen_height // 10))
+
+        self.display_highscores()
+
+    def display_highscores(self) -> None:
+        screen: pygame.Surface = self.simulation_manager.screen
+        starting_width: int = self.simulation_manager.screen_width // 3
+        padding_width: int = self.simulation_manager.screen_width // 7
+        starting_height: int = self.simulation_manager.screen_height // 4
+        padding_height: int = self.simulation_manager.screen_height // 18
+
         for i in range(1, 11, 1):
-            leaderboard_line_text =  \
-                self.simulation_manager.text_rendering.render_big_text(
-                    f"{i:<15}. {self.names[i]:^15} {self.scores[i]:>15}",
-                    (255, 255, 255))
-            self.draw_text(
-                leaderboard_line_text, width_adjust=0, height_adjust=y)
-            y += font.get_height() * 2
+            screen.blit((
+                self.simulation_manager.text_rendering.render_small_title(
+                    f"{i}.", (255, 255, 0))),
+                (starting_width , starting_height + (padding_height * i))
+                )
+
+        for i in range(1, 11, 1):
+            screen.blit((
+                self.simulation_manager.text_rendering.render_small_title(
+                    f"{self.names[i]}", (255, 255, 0))),
+                (starting_width + padding_width, starting_height + (padding_height * i))
+                    )
+
+        for i in range(1, 11, 1):
+            screen.blit((
+                self.simulation_manager.text_rendering.render_small_title(
+                    f"{self.scores[i]}", (255, 255, 0))),
+                (starting_width + (padding_width * 2), starting_height + (padding_height * i))
+                    )
 
     def export_highscore(self) -> None:
         with open("scores/highscore.json", "w") as file:
@@ -98,10 +116,9 @@ class LeaderBoard(Screen):
             if event.type == pygame.QUIT:
                 self.exit_game()
                 return
+
             if event.type == pygame.KEYDOWN:
-                if event.type == pygame.K_SPACE:
-                    self.simulation_manager.game_state.reset_game_state()
-                    self.game_play_screen()
-                if event.type == pygame.K_RETURN:
+                if event.key in [pygame.K_RETURN, pygame.K_ESCAPE]:
                     self.simulation_manager.game_state.reset_game_state()
                     self.main_menu_screen()
+                    return
