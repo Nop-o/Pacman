@@ -41,6 +41,8 @@ class Level(Screen):
                            self.simulation_manager.screen_height // 2 -
                            self.MAZE_HEIGHT // 2 - 50
                            )
+        self.MAZE_END = (self.MAZE_START[0] + self.MAZE_WIDTH,
+                         self.MAZE_START[1] + self.MAZE_HEIGHT)
         self.super_pacgum_cooldown: float | None = 0
         self.move_timer: float = 0.5
         self.time_elapse: float = 0

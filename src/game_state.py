@@ -16,6 +16,7 @@ class GameState:
         self.score: int = 0
         self.max_lives: int = lives
         self.current_lives: int = lives
+        self.nb_level: int = 1
 
         self.is_game_over: bool = False
         self.is_game_won: bool = False
