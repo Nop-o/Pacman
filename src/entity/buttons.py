@@ -18,7 +18,7 @@ class ButtonManager(Sprite):
             Button("png/joystick.png", 240, 30, 110, 110),
         ]
         self.joystick_base_sprite: Button = Button(
-            "png/joystick_base.png", 40, 15, 250, 150)
+            "png/joystick_base.png", 102, 36, 172, 88)
 
         self.buttons_sprite: list[Button] = [
             Button("png/entities_sprite.png", 201, 704, 35, 35),
@@ -63,8 +63,8 @@ class ButtonManager(Sprite):
             (self.screen_width // 2) + ((text.get_width() // 2) + 20), height)
 
     def display_joystick(self, screen: pygame.Surface, direction: int) -> None:
-        x: int = self.screen_width - (self.screen_width // 6) - 95
-        y: int = self.height - (self.height // 4) + 30
+        x: int = self.screen_width - (self.screen_width // 6) - 34
+        y: int = self.height - (self.height // 4) + 50
 
         screen.blit(self.joystick_base_sprite.sprite, (x, y))
         screen.blit(self.joystick_sprites[direction].sprite,
