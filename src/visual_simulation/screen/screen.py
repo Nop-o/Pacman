@@ -116,12 +116,12 @@ class Screen(ABC):
                 title, (self.get_center_width(title), title_padding[i]))
 
     def get_title_paddings(
-       self, texts: list[pygame.Surface], main_title_padding: int,
-       title_padding: int) -> list[tuple[int, int]]:
+       self, texts: list[pygame.Surface], main_title_padding_size: int,
+       title_padding_size: int) -> list[int]:
         main_title_padding: int = \
-            self.simulation_manager.screen_height // main_title_padding
+            self.simulation_manager.screen_height // main_title_padding_size
         title_padding: int = \
-            self.simulation_manager.screen_height // title_padding
+            self.simulation_manager.screen_height // title_padding_size
         return_value: list[int] = []
 
         for i in range(len(texts)):
@@ -132,3 +132,7 @@ class Screen(ABC):
     def get_center_width(self, surface: pygame.Surface) -> int:
         return ((self.simulation_manager.screen_width // 2) -
                 (surface.get_width() // 2))
+
+    def add_two_tuple(self, tuple_1: tuple[int, int],
+                      tuple_2: tuple[int, int]) -> tuple[int, int]:
+        return tuple(a + b for a, b in zip(tuple_1, tuple_2))
