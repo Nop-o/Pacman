@@ -19,7 +19,7 @@ class HUD(Screen):
             title_score.get_width() // 2,
             50
         )
-        score_text = self.text_rendering.render_big_text(
+        score_text = self.text_rendering.render_small_title(
             f"{self.simulation_manager.game_state.score}",
             (255, 255, 255))
         score_text_pos = (

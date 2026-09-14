@@ -30,6 +30,8 @@ class GamePlay(Screen):
 
         self.level.display_screen()
         self.hud.display_screen()
+        self.simulation_manager.button_manager.display_joystick(
+        self.simulation_manager.screen, self.level.pacman.direction)
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         for event in events:
