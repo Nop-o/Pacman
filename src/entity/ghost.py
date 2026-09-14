@@ -84,14 +84,14 @@ class Ghost(Character, ABC):
         """Update exit position to the furthest corner of the maze"""
         if self.pacman.line_pos <= len(self.maze.cases) // 2:
             if self.pacman.column_pos <= len(self.maze.cases[0]) // 2:
-                return (0, 0)
+                return (self.maze.nb_line - 1, self.maze.nb_column - 1)
             else:
-                return (0, self.maze.nb_column - 1)
+                return (self.maze.nb_line - 1, 0)
         else:
             if self.pacman.column_pos <= len(self.maze.cases[0]) // 2:
-                return (self.maze.nb_line - 1, 0)
+                return (0, self.maze.nb_column - 1)
             else:
-                return (self.maze.nb_line - 1, self.maze.nb_column - 1)
+                return (0, 0)
 
     def chase_pacman(self) -> tuple[int, int]:
         """Update exit position to pacman position"""
