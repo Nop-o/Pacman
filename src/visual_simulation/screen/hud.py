@@ -42,7 +42,7 @@ class HUD(Screen):
         level = self.simulation_manager.screen_manager.game_play.level
         lives_position = (
             level.MAZE_START[0] + 20,
-            level.MAZE_END[1] + 20
+            level.MAZE_END[1] + 20 + pacman_sprite.get_height() // 2
         )
         offset = pacman_sprite.get_width() + 10
         for i in range(self.simulation_manager.game_state.current_lives):
@@ -53,24 +53,38 @@ class HUD(Screen):
             )
         
 
-    def show_level(self) -> None:  # TODO
+    def show_level(self) -> None:
         level = self.simulation_manager.screen_manager.game_play.level
         level_nb = self.text_rendering.render_regular_text(
             f"Level {self.simulation_manager.game_state.nb_level}",
             (255, 255, 255)
-            )
+        )
         level_pos = (
             level.MAZE_END[0] - 20 - level_nb.get_width(),
-            level.MAZE_END[1] + 20
-            )
+            level.MAZE_END[1] + 20 + level_nb.get_height() // 2
+        )
         self.simulation_manager.screen.blit(
             source=level_nb,
             dest=level_pos
         )
         
 
-    def show_timer(self) -> None:  # TODO
-        pass
+    def show_timer(self) -> None:
+        level = self.simulation_manager.screen_manager.game_play.level
+        game_state = self.simulation_manager.game_state
+        timer_text = self.text_rendering.render_regular_text(
+            f"{round(game_state.level_max_time - level.level_timer)}",
+            (255, 255, 255)
+        )
+        timer_pos = (
+            (level.MAZE_END[0] - level.MAZE_WIDTH // 2) -
+                (timer_text.get_width() // 2),
+            level.MAZE_END[1] + 20 + timer_text.get_height() // 2
+        )
+        self.simulation_manager.screen.blit(
+            source=timer_text,
+            dest=timer_pos
+        )
 
     def display_screen(self) -> None:
         self.show_score()

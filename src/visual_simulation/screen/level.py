@@ -49,6 +49,7 @@ class Level(Screen):
         self.last_frame_time: float | None = None
         self.sprite_timer: float = 0.20
         self.sprite_time_elapse: float = 0
+        self.level_timer: float = 0
 
     def move_pacman(self) -> None:
         if self.simulation_manager.up_pressed:
@@ -185,6 +186,7 @@ class Level(Screen):
         self.time_elapse += delta
         self.sprite_time_elapse += delta
         self.last_frame_time = now
+        self.check_level_timer(delta)
         self.check_ghost_death(delta)
         if self.check_action_timer():
             self.do_turn_consequences()
@@ -303,3 +305,9 @@ class Level(Screen):
         self.time_elapse = 0
         self.sprite_time_elapse = 0
         self.last_frame_time = None
+
+    def check_level_timer(self, delta: float) -> None:
+        self.level_timer += delta
+        game_state = self.simulation_manager.game_state
+        if self.level_timer >= game_state.level_max_time:
+            game_state.is_game_over = True
