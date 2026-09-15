@@ -1,7 +1,7 @@
 from .screen import Screen
 from typing import TYPE_CHECKING
 from ...maze import Direction, Maze
-from ...entity.ghost import Ghost, Pacman, Shadow, Speedy, Bashful, Pokey
+from ...entity import Ghost, Pacman, Shadow, Speedy, Bashful, Pokey
 from ...algorithm import DepthFirstSearch
 from ...entity import Entity, Pacgum, SuperPacgum, Character
 import pygame

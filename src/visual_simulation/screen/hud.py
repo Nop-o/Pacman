@@ -2,7 +2,7 @@ from . import Screen
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from ..simulation_manager import SimulationManager, TextRendering
+    from .. import SimulationManager, TextRendering
 
 
 class HUD(Screen):
