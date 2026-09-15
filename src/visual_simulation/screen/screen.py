@@ -45,6 +45,9 @@ class Screen(ABC):
     def exit_game(self) -> None:
         self.simulation_manager.active = False
 
+    def new_game(self) -> None:
+        pass
+
     def next_level(self) -> None:
         from . import Level
         self.simulation_manager.screen_manager.game_play.level =\

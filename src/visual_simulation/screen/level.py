@@ -32,7 +32,7 @@ class Level(Screen):
                                  super_pacgum_cooldown, self.algo))
         self.pacgum: list[Pacgum] = []
         self.create_pacgums()
-        self.CASE_SIZE = 60
+        self.CASE_SIZE = 50
         self.CASE_LINE_THICKNESS = 3
         self.MAZE_WIDTH = (self.CASE_SIZE) * self.maze.nb_column
         self.MAZE_HEIGHT = (self.CASE_SIZE) * self.maze.nb_line
@@ -44,7 +44,7 @@ class Level(Screen):
         self.MAZE_END = (self.MAZE_START[0] + self.MAZE_WIDTH,
                          self.MAZE_START[1] + self.MAZE_HEIGHT)
         self.super_pacgum_cooldown: float | None = 0
-        self.move_timer: float = 0.5
+        self.move_timer: float = 0.4
         self.time_elapse: float = 0
         self.last_frame_time: float | None = None
         self.sprite_timer: float = 0.20
