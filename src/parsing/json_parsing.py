@@ -1,6 +1,5 @@
 from pydantic import Field, BaseModel
 import json5
-import os
 from typing import Any
 
 
@@ -17,13 +16,15 @@ class JsonParsing:
         with open(file_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
 
-        filtered: list[str] = [line for line in lines if not line.lstrip().startswith('#')]
-        hashtag_less_content: list[str] = [line.split('#', 1)[0] for line in filtered]
+        filtered: list[str] = [
+            line for line in lines if not line.lstrip().startswith('#')]
+        hashtag_less_content: list[str] = [
+            line.split('#', 1)[0] for line in filtered]
 
         self._verify_duplicate_keys(hashtag_less_content)
-        
+
         file_content: str = "".join(hashtag_less_content)
-        
+
         return json5.loads(file_content)
 
     @staticmethod
@@ -38,6 +39,7 @@ class JsonParsing:
                     raise ValueError("Key error: duplicate keys entered")
 
                 registered_keys.add(key)
+
 
 class JsonData(BaseModel):
     lives: int = Field(ge=0, le=200)

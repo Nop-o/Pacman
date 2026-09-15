@@ -2,7 +2,6 @@ import sys
 from pydantic import ValidationError
 from .parsing import JsonParsing, JsonData
 from .visual_simulation import SimulationManager
-import json5
 
 
 class Main:

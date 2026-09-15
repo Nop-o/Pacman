@@ -145,4 +145,7 @@ class Screen(ABC):
 
     def add_two_tuple(self, tuple_1: tuple[int, int],
                       tuple_2: tuple[int, int]) -> tuple[int, int]:
-        return tuple(a + b for a, b in zip(tuple_1, tuple_2))
+        x_1, y_1, = tuple_1
+        x_2, y_2, = tuple_2
+
+        return (x_1 + x_2, y_1 + y_2)
