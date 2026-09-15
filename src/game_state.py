@@ -1,21 +1,20 @@
+from .parsing import JsonData
+
+
 class GameState:
 
-    def __init__(self, lives: int, pacgum: int, points_per_pacgum: int,
-                 points_per_super_pacgum: int, super_pacgum_cooldown: int,
-                 points_per_ghost: int, seed: int, level_max_time: int
-                 ) -> None:
-
-        self.pacgum: int = pacgum
+    def __init__(self, json_data: JsonData) -> None:
         self.super_pacgum: int = 4
-        self.points_per_pacgum: int = points_per_pacgum
-        self.points_per_super_pacgum: int = points_per_super_pacgum
-        self.super_pacgum_cooldown: int = super_pacgum_cooldown
-        self.points_per_ghost: int = points_per_ghost
-        self.seed: int = seed
-        self.level_max_time: int = level_max_time
         self.score: int = 0
-        self.max_lives: int = lives
-        self.current_lives: int = lives
+        self.pacgum: int = json_data.pacgum
+        self.points_per_pacgum: int = json_data.points_per_pacgum
+        self.points_per_super_pacgum: int = json_data.points_per_super_pacgum
+        self.super_pacgum_cooldown: int = json_data.super_pacgum_cooldown
+        self.points_per_ghost: int = json_data.points_per_ghost
+        self.seed: int = json_data.seed
+        self.level_max_time: int = json_data.level_max_time
+        self.max_lives: int = json_data.lives
+        self.current_lives: int = json_data.lives
         self.nb_level: int = 1
 
         self.is_game_over: bool = False

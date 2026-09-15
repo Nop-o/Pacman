@@ -5,10 +5,11 @@ from .screen_manager import ScreenManager
 from .text_rendering import TextRendering
 from ..game_state import GameState
 from ..entity import ButtonManager
+from ..parsing import JsonData
 
 
 class SimulationManager():
-    def __init__(self, json_data: dict[str, Any]) -> None:
+    def __init__(self, json_data: JsonData) -> None:
         pygame.init()
         pygame.display.set_caption("Pac-Man")
 
@@ -30,7 +31,7 @@ class SimulationManager():
         self.key_pressed: str | None = None
         self.mouse_click: tuple[int, int] | None = None
 
-        self.game_state: GameState = GameState(**json_data)
+        self.game_state: GameState = GameState(json_data)
         self.text_rendering: TextRendering = TextRendering()
         self.screen_manager: ScreenManager = ScreenManager(self)
         self.state_to_call: Callable[[], None] = \

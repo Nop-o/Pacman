@@ -1,8 +1,8 @@
 import sys
 from pydantic import ValidationError
-from .parsing import JsonParsing
+from .parsing import JsonParsing, JsonData
 from .visual_simulation import SimulationManager
-import json
+import json5
 
 
 class Main:
@@ -16,7 +16,8 @@ class Main:
 
         try:
             json_parsing = JsonParsing(sys.argv[1])
-            simulation_manager = SimulationManager(json_parsing.file_content)
+            pacman_data = JsonData(**json_parsing.file_content)
+            simulation_manager = SimulationManager(pacman_data)
             simulation_manager.launch()
             simulation_manager.screen_manager.leaderboard.export_highscore()
 
@@ -28,9 +29,6 @@ class Main:
             return
         except KeyboardInterrupt:
             print("\nCommand error: pacman has been interrupted")
-            return
-        except json.decoder.JSONDecodeError as e:
-            print(f'Json format error:\n{e}')
             return
 
 
