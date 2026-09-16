@@ -48,7 +48,7 @@ class Screen(ABC):
     def new_game(self) -> None:
         from . import Level
         self.simulation_manager.screen_manager.game_play.level =\
-                    Level(self.simulation_manager)
+            Level(self.simulation_manager)
         self.simulation_manager.game_state.reset_game_state()
         self.game_play_screen()
 
