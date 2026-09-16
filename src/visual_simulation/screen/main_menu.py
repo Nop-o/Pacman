@@ -43,7 +43,7 @@ class MainMenu(Screen):
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
         actions: list[Callable[[], None]] = [
-            self.game_play_screen,
+            self.new_game,
             self.leaderboard_screen,
             self.instructions_screen,
             self.exit_game,

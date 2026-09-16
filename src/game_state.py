@@ -26,3 +26,5 @@ class GameState:
         self.is_game_over = False
         self.is_game_won = False
         self.current_pacgum_count = self.pacgum
+        self.current_lives = self.max_lives
+        self.nb_level = 1
