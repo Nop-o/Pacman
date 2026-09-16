@@ -11,6 +11,7 @@ class GameState:
         self.points_per_super_pacgum: int = json_data.points_per_super_pacgum
         self.super_pacgum_cooldown: int = json_data.super_pacgum_cooldown
         self.points_per_ghost: int = json_data.points_per_ghost
+        self.starting_seed: int = json_data.seed
         self.seed: int = json_data.seed
         self.level_max_time: int = json_data.level_max_time
         self.max_lives: int = json_data.lives
@@ -28,3 +29,4 @@ class GameState:
         self.current_pacgum_count = self.pacgum
         self.current_lives = self.max_lives
         self.nb_level = 1
+        self.seed = self.starting_seed
