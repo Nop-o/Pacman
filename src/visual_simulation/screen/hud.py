@@ -12,20 +12,22 @@ class HUD(Screen):
             self.simulation_manager.text_rendering
 
     def show_score(self) -> None:
-        title_score = self.text_rendering.render_small_title(
-            "Score", (255, 255, 255))
-        title_score_pos = (
-            self.simulation_manager.screen_width // 2 -
-            title_score.get_width() // 2,
-            50
-        )
-        score_text = self.text_rendering.render_small_title(
+        MAZE_START =\
+            self.simulation_manager.screen_manager.game_play.level.MAZE_START
+        score_text = self.text_rendering.render_regular_text(
             f"{self.simulation_manager.game_state.score}",
             (255, 255, 255))
         score_text_pos = (
             self.simulation_manager.screen_width // 2 -
             score_text.get_width() // 2,
-            50 + title_score.get_height() + 10
+            max(MAZE_START[1] - 10 - score_text.get_height(), 15)
+        )
+        title_score = self.text_rendering.render_small_title(
+            "Score", (255, 255, 255))
+        title_score_pos = (
+            self.simulation_manager.screen_width // 2 -
+            title_score.get_width() // 2,
+            max(score_text_pos[1] - 5 - title_score.get_height(), 2)
         )
         self.simulation_manager.screen.blit(
             title_score,
