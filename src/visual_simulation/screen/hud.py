@@ -49,6 +49,18 @@ class HUD(Screen):
         offset = pacman_sprite.get_width() + 10
         for i in range(self.simulation_manager.game_state.current_lives):
             pos = (lives_position[0] + (offset * i), lives_position[1])
+            if i == 6:
+                dot = self.text_rendering.render_regular_text(
+                    "...", (255, 255, 255))
+                pos = (
+                    pos[0],
+                    level.MAZE_END[1] + 20 + pacman_sprite.get_height() - 5
+                )
+                self.simulation_manager.screen.blit(
+                source=dot,
+                dest=pos
+                )
+                return
             self.simulation_manager.screen.blit(
                 source=pacman_sprite,
                 dest=pos
