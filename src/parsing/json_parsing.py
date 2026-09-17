@@ -1,6 +1,7 @@
 from pydantic import Field, BaseModel
 import json5
 from typing import Any
+import random
 
 
 class JsonParsing:
@@ -48,6 +49,7 @@ class JsonData(BaseModel):
     points_per_super_pacgum: int = Field(ge=-100000, le=100000)
     super_pacgum_cooldown: int = Field(ge=1, le=1000)
     points_per_ghost: int = Field(ge=-100000, le=100000)
-    seed: int = Field(default=42, ge=-1000000000, le=1000000000)
     level_max_time: int = Field(ge=20, le=1000000000)
+    seed: int = Field(default=random.randint(-1000000000, 1000000000),
+                      ge=-1000000000, le=1000000000)
     is_cheat_active: bool = Field(default=False)
