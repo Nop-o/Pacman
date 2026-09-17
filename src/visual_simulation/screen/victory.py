@@ -82,10 +82,10 @@ class Victory(Screen):
                     self.main_menu_screen()
                     return
 
-    def draw_sprites(self):
+    def draw_sprites(self) -> None:
         pos = (
             self.simulation_manager.screen_width // 2 -
-                self.pacman_logo.get_width() // 2,
+            self.pacman_logo.get_width() // 2,
             50
         )
         self.simulation_manager.screen.blit(
