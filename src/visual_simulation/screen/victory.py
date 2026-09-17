@@ -10,7 +10,7 @@ class Victory(Screen):
     def __init__(self, simulation_manager: "SimulationManager") -> None:
         super().__init__(simulation_manager=simulation_manager)
         self.pacman_logo: pygame.Surface = self.get_sprite(
-            "png/pacman_logo_small.png", 0, 0, 700, 600)
+            "png/pacman_logo_small.png", 10, 0, 640, 380)
         self.user_name = ""
 
     def display_screen(self) -> None:

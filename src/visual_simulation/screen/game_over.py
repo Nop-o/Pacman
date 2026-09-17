@@ -11,7 +11,7 @@ class GameOver(Screen):
         super().__init__(simulation_manager=simulation_manager)
         self.user_name = ""
         self.pacman_logo: pygame.Surface = self.get_sprite(
-            "png/pacman_logo_small.png", 0, 0, 700, 600)
+            "png/pacman_logo_small.png", 10, 0, 640, 380)
 
     def display_screen(self) -> None:
         self.simulation_manager.dipslay_sky()
