@@ -10,6 +10,8 @@ class GameOver(Screen):
     def __init__(self, simulation_manager: "SimulationManager") -> None:
         super().__init__(simulation_manager=simulation_manager)
         self.user_name = ""
+        self.pacman_logo: pygame.Surface = self.get_sprite(
+            "png/pacman_logo_small.png", 0, 0, 700, 600)
 
     def display_screen(self) -> None:
         self.simulation_manager.dipslay_sky()
@@ -49,6 +51,7 @@ class GameOver(Screen):
 
         self.draw_text(game_over_text, width_adjust=0, height_adjust=-100)
         self.draw_text(text_prompt, width_adjust=0, height_adjust=50)
+        self.draw_sprites()
 
     def button_action(self) -> None:
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
@@ -78,3 +81,14 @@ class GameOver(Screen):
                 if event.key == pygame.K_RETURN:
                     self.main_menu_screen()
                     return
+
+    def draw_sprites(self):
+        pos = (
+            self.simulation_manager.screen_width // 2 -
+                self.pacman_logo.get_width() // 2,
+            50
+        )
+        self.simulation_manager.screen.blit(
+            self.pacman_logo,
+            pos
+        )

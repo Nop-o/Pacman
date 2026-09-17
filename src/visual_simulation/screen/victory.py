@@ -9,6 +9,8 @@ if TYPE_CHECKING:
 class Victory(Screen):
     def __init__(self, simulation_manager: "SimulationManager") -> None:
         super().__init__(simulation_manager=simulation_manager)
+        self.pacman_logo: pygame.Surface = self.get_sprite(
+            "png/pacman_logo_small.png", 0, 0, 700, 600)
         self.user_name = ""
 
     def display_screen(self) -> None:
@@ -49,6 +51,7 @@ class Victory(Screen):
 
         self.draw_text(game_over_text, width_adjust=0, height_adjust=-100)
         self.draw_text(text_prompt, width_adjust=0, height_adjust=50)
+        self.draw_sprites()
 
     def is_score_in_leaderboard(self) -> bool:
         return (
@@ -78,3 +81,14 @@ class Victory(Screen):
                 if event.key == pygame.K_RETURN:
                     self.main_menu_screen()
                     return
+
+    def draw_sprites(self):
+        pos = (
+            self.simulation_manager.screen_width // 2 -
+                self.pacman_logo.get_width() // 2,
+            50
+        )
+        self.simulation_manager.screen.blit(
+            self.pacman_logo,
+            pos
+        )

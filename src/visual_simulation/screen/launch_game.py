@@ -197,15 +197,6 @@ class LaunchGame(Screen):
 
             setattr(self, attr, self.snap_to_grid((pos_x, pos_y)))
 
-    def get_sprite(self, file_path: str, x: int, y: int,
-                   width: int, height: int) -> pygame.Surface:
-        source_image = pygame.image.load(file_path).convert_alpha()
-
-        image = pygame.Surface((width, height), pygame.SRCALPHA)
-        image.blit(source_image, (0, 0), (x, y, width, height))
-
-        return image
-
     def update_entities_pos(self) -> None:
         level: Level = self.simulation_manager.screen_manager.game_play.level
 
