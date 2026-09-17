@@ -59,9 +59,6 @@ class SimulationManager():
         self.running_pacman_sprite: pygame.Surface = \
             self.get_sprite("png/running_pacman_small.png", 10, 0, 360, 335)
 
-        self.small_pacman_logo_sprite: pygame.Surface = \
-            self.get_sprite("png/small_pacman_logo.png", 10, 120, 295, 75)
-
     def dipslay_sky(self) -> None:
         """Tile the animated sky background across the entire screen."""
         width: int = 1280
@@ -231,5 +228,3 @@ class SimulationManager():
             self.arcade_pacman_sprite, (70, self.screen_height - 620))
         self.screen.blit(
             self.running_pacman_sprite, (self.screen_width - 400, 70))
-        self.screen.blit(self.small_pacman_logo_sprite, (
-            self.screen_width - 350, self.screen_height - 200))

@@ -21,18 +21,6 @@ class Instructions(Screen):
         self.current_direction: Character.FacingDirection = \
             Character.FacingDirection.RIGHT
 
-        self.arcade_pacman_sprite: pygame.Surface = \
-            self.simulation_manager.get_sprite(
-                "png/arcade_pacman.png", 50, 10, 380, 475)
-
-        self.running_pacman_sprite: pygame.Surface = \
-            self.simulation_manager.get_sprite(
-                "png/running_pacman_small.png", 10, 0, 360, 335)
-
-        self.small_pacman_logo_sprite: pygame.Surface = \
-            self.simulation_manager.get_sprite(
-                "png/small_pacman_logo.png", 10, 120, 295, 75)
-
     def display_instruction_titles(self, screen: pygame.Surface,
                                    screen_titles: list[pygame.Surface]
                                    ) -> None:
@@ -114,16 +102,7 @@ class Instructions(Screen):
                 "Good luck and have fun !", (255, 255, 0)),
         ]
 
-        self.simulation_manager.screen.blit(
-            self.arcade_pacman_sprite,
-            (70, self.simulation_manager.screen_height - 620))
-        self.simulation_manager.screen.blit(
-            self.running_pacman_sprite,
-            (self.simulation_manager.screen_width - 400, 70))
-        self.simulation_manager.screen.blit(
-            self.small_pacman_logo_sprite,
-            (self.simulation_manager.screen_width - 350,
-             self.simulation_manager.screen_height - 200))
+        self.simulation_manager.display_menu_sprites()
 
         self.display_instruction_titles(
             self.simulation_manager.screen, screen_titles)
