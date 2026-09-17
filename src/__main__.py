@@ -5,7 +5,15 @@ from .visual_simulation import SimulationManager
 
 
 class Main:
+    """Entry point launching the Pac-Man application from the command line."""
+
     def main(self) -> None:
+        """Parse the JSON config file argument and run the game.
+
+        Reads the configuration file path from the command line, validates
+        it, and runs the simulation. Errors are caught and printed as
+        user-friendly messages rather than propagated.
+        """
         if len(sys.argv) < 2:
             print("Argument error: missing json file")
             return

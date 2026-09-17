@@ -14,8 +14,14 @@ if TYPE_CHECKING:
 
 
 class Level(Screen):
-    def __init__(self, simulation_manager: "SimulationManager") -> None:
+    """Core gameplay screen managing the maze, entities, and game logic."""
 
+    def __init__(self, simulation_manager: "SimulationManager") -> None:
+        """Initialize the maze, entities, pacgums, and level state.
+
+        Args:
+            simulation_manager: The simulation manager driving the game.
+        """
         self.simulation_manager: SimulationManager = simulation_manager
         self.maze: Maze = Maze(self.simulation_manager.game_state.seed)
         self.algo = DepthFirstSearch(self.maze)
@@ -54,6 +60,7 @@ class Level(Screen):
         self.level_timer: float = 0
 
     def move_pacman(self) -> None:
+        """Move Pac-Man according to the currently pressed direction key."""
         if self.simulation_manager.up_pressed:
             self.pacman.move(Direction.N)
         elif self.simulation_manager.right_pressed:
@@ -66,6 +73,7 @@ class Level(Screen):
             self.pacman.move(None)
 
     def move_ghosts(self) -> None:
+        """Move each living ghost one turn, unless ghosts are frozen."""
         for ghost in self.ghosts:
             if ghost.death_timer is not None:
                 continue
@@ -74,6 +82,7 @@ class Level(Screen):
             ghost.do_turn()
 
     def load_maze(self) -> None:
+        """Draw the maze walls on screen."""
         for i, line in enumerate(self.maze.cases):
             for j, case in enumerate(line):
                 if case.wall_north is True:
@@ -114,6 +123,7 @@ class Level(Screen):
                                         )
 
     def load_pacgum(self) -> None:
+        """Draw all remaining pacgums in the maze."""
         for pacgum in self.pacgum:
             sprite = pacgum.sprite
             pacgum_pos = self._position_entity_in_maze(pacgum, sprite)
@@ -123,6 +133,7 @@ class Level(Screen):
             )
 
     def load_ghosts(self) -> None:
+        """Draw all living ghosts at their current or frozen position."""
         for ghost in self.ghosts:
             if ghost.death_timer is not None:
                 continue
@@ -144,6 +155,7 @@ class Level(Screen):
             )
 
     def load_pacman(self) -> None:
+        """Draw Pac-Man at its current position."""
         sprite = self.pacman.sprites[0][0]
         pacman_pos = self._position_entity_in_maze(self.pacman, sprite)
         self.simulation_manager.screen.blit(
@@ -152,12 +164,14 @@ class Level(Screen):
         )
 
     def check_cooldown_timer(self) -> None:
+        """End the super pacgum effect if its cooldown has expired."""
         if self.super_pacgum_cooldown is None:
             return
         if self.super_pacgum_cooldown < time.monotonic():
             self.change_state(Character.State.RUNNING)
 
     def do_turn_consequences(self) -> None:
+        """Apply the effects of a game turn: eating, collisions, and win/loss checks."""
         self.check_cooldown_timer()
         self.eat_pacgum()
         self.ghost_collision()
@@ -167,6 +181,7 @@ class Level(Screen):
             self.simulation_manager.game_state.is_game_won = True
 
     def eat_pacgum(self) -> None:
+        """Consume the pacgum at Pac-Man's current position, if any."""
         case = self.maze.get_case(self.pacman.get_coord())
         if case.pacgum is None:
             return
@@ -175,6 +190,7 @@ class Level(Screen):
         case.pacgum = None
 
     def ghost_collision(self) -> None:
+        """Handle collisions between Pac-Man and ghosts, applying the outcome."""
         for ghost in self.ghosts:
             if ghost.death_timer is not None:
                 continue
@@ -195,6 +211,7 @@ class Level(Screen):
                     self.simulation_manager.game_state.points_per_ghost
 
     def display_screen(self) -> None:
+        """Advance the level's timers and logic, then draw the current frame."""
         now = time.monotonic()
         if self.last_frame_time is None:
             self.last_frame_time = now
@@ -219,6 +236,11 @@ class Level(Screen):
         self.load_cheat_panel()
 
     def check_ghost_death(self, delta: float) -> None:
+        """Advance each dead ghost's respawn timer and revive it when expired.
+
+        Args:
+            delta: Time elapsed since the last frame, in seconds.
+        """
         for ghost in self.ghosts:
             if ghost.death_timer is None:
                 continue
@@ -228,6 +250,15 @@ class Level(Screen):
 
     def _position_character_in_maze(self, entity: Character,
                                     sprite: pygame.Surface) -> tuple[int, int]:
+        """Compute a character's interpolated on-screen position while moving.
+
+        Args:
+            entity: The character to position.
+            sprite: The sprite being displayed, used for centering.
+
+        Returns:
+            The (x, y) pixel position to draw the sprite at.
+        """
         progress = min(self.time_elapse / self.move_timer, 1.0)
         if (entity.column_pos == entity.prev_column_pos and
                 entity.line_pos == entity.prev_line_pos):
@@ -253,6 +284,15 @@ class Level(Screen):
 
     def _position_in_maze(self, entity: Entity, sprite: pygame.Surface)\
             -> tuple[int, int]:
+        """Compute an entity's static on-screen position in the maze.
+
+        Args:
+            entity: The entity to position.
+            sprite: The sprite being displayed, used for centering.
+
+        Returns:
+            The (x, y) pixel position to draw the sprite at.
+        """
         return (
                     ((self.MAZE_START[0] +
                         (self.CASE_SIZE * entity.column_pos)) +
@@ -264,6 +304,15 @@ class Level(Screen):
 
     def _position_entity_in_maze(self, entity: Entity, sprite: pygame.Surface)\
             -> tuple[int, int]:
+        """Compute an entity's on-screen position, interpolating if it moved.
+
+        Args:
+            entity: The entity to position.
+            sprite: The sprite being displayed, used for centering.
+
+        Returns:
+            The (x, y) pixel position to draw the sprite at.
+        """
         if (not isinstance(entity, Character) or
             (entity.prev_column_pos == entity.column_pos
                 and entity.line_pos == entity.prev_line_pos)):
@@ -271,6 +320,7 @@ class Level(Screen):
         return self._position_character_in_maze(entity, sprite)
 
     def create_pacgums(self) -> None:
+        """Place super pacgums in the maze corners and regular pacgums randomly."""
         nb_pacgum = self.simulation_manager.game_state.pacgum
         nb_cases = self.maze.nb_column * self.maze.nb_line
         order_pacgum = list(range(nb_cases))
@@ -307,6 +357,12 @@ class Level(Screen):
                 continue
 
     def change_state(self, state: Character.State) -> None:
+        """Switch Pac-Man and the ghosts between hunting and running states.
+
+        Args:
+            state: The new state to set for Pac-Man; ghosts are set to the
+                opposite state.
+        """
         if state == Character.State.HUNTING:
             self.pacman.state = Character.State.HUNTING
             for ghost in self.ghosts:
@@ -322,23 +378,39 @@ class Level(Screen):
                 self.super_pacgum_cooldown = None
 
     def check_action_timer(self) -> bool:
+        """Check whether enough time has elapsed to process a new game turn.
+
+        Returns:
+            True if a turn should be processed, False otherwise.
+        """
         if self.time_elapse > self.move_timer:
             self.time_elapse -= self.move_timer
             return True
         return False
 
     def check_sprite_timer(self) -> bool:
+        """Check whether enough time has elapsed to advance sprite animations.
+
+        Returns:
+            True if animations should advance, False otherwise.
+        """
         if self.sprite_time_elapse > self.sprite_timer:
             self.sprite_time_elapse -= self.sprite_timer
             return True
         return False
 
     def reset_timer(self) -> None:
+        """Reset the level's action and sprite timers."""
         self.time_elapse = 0
         self.sprite_time_elapse = 0
         self.last_frame_time = None
 
     def check_level_timer(self, delta: float) -> None:
+        """Advance the level timer and end the game if the time limit is reached.
+
+        Args:
+            delta: Time elapsed since the last frame, in seconds.
+        """
         if self.cheat.is_timer_freeze is True:
             return
         self.level_timer += delta
@@ -347,6 +419,7 @@ class Level(Screen):
             game_state.is_game_over = True
 
     def load_cheat_panel(self) -> None:
+        """Draw the list of available cheat codes, if the cheat panel is active."""
         if self.simulation_manager.game_state.is_cheat_active is False:
             return
         CHEAT_LIST = [

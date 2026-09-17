@@ -8,7 +8,14 @@ if TYPE_CHECKING:
 
 
 class Instructions(Screen):
+    """Instructions screen explaining the game's rules and controls."""
+
     def __init__(self, simulation_manager: "SimulationManager") -> None:
+        """Initialize the instructions screen's direction state and sprites.
+
+        Args:
+            simulation_manager: The simulation manager driving the game.
+        """
         super().__init__(simulation_manager=simulation_manager)
 
         self.current_direction: Character.FacingDirection = \
@@ -29,6 +36,13 @@ class Instructions(Screen):
     def display_instruction_titles(self, screen: pygame.Surface,
                                    screen_titles: list[pygame.Surface]
                                    ) -> None:
+        """Draw the instruction titles and the demo entities below them.
+
+        Args:
+            screen: Surface to draw on.
+            screen_titles: Rendered text surfaces, the main title followed
+                by each instruction line.
+        """
         main_title_padding: int = self.simulation_manager.screen_height // 10
         text_y_padding: int = \
             main_title_padding + screen_titles[0].get_height() + 30
@@ -54,6 +68,13 @@ class Instructions(Screen):
 
     def display_entities(self, pacman_position: tuple[int, int],
                          x_padding: int, y_padding: int) -> None:
+        """Draw demo sprites of the ghosts and Pac-Man on the instructions screen.
+
+        Args:
+            pacman_position: Position to draw the Pac-Man sprite at.
+            x_padding: Starting horizontal position for the ghost sprites.
+            y_padding: Vertical position for the ghost sprites.
+        """
         level: Level = self.simulation_manager.screen_manager.game_play.level
 
         for i, ghost in enumerate(level.ghosts, 0):
@@ -69,6 +90,7 @@ class Instructions(Screen):
             pacman_position)
 
     def display_screen(self) -> None:
+        """Render the instructions screen, its titles, and decorative sprites."""
         self.simulation_manager.dipslay_sky()
 
         screen_titles: list[pygame.Surface] = [
@@ -107,6 +129,11 @@ class Instructions(Screen):
             self.simulation_manager.screen, screen_titles)
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
+        """Handle input events for navigation and changing the demo direction.
+
+        Args:
+            events: List of pygame events to process.
+        """
         for event in events:
             if event.type == pygame.QUIT:
                 self.exit_game()

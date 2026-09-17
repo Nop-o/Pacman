@@ -9,9 +9,18 @@ import time
 
 
 class Ghost(Character, ABC):
+    """Abstract base class for ghost enemies chasing or fleeing Pac-Man."""
 
     def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
+        """Initialize a ghost's pathfinding, state, and sprites.
+
+        Args:
+            maze: The maze the ghost moves within.
+            pacman: The Pac-Man instance the ghost interacts with.
+            super_pacgum_cooldown: Duration of the super pacgum effect.
+            algorithm: Pathfinding algorithm used to reach the ghost's goal.
+        """
         super().__init__(maze, super_pacgum_cooldown, state_of_sprite=0)
         self.pacman: Pacman = pacman
         self.freeze: bool = False
@@ -33,22 +42,31 @@ class Ghost(Character, ABC):
 
     @abstractmethod
     def get_goal(self) -> tuple[int, int]:
-        """Decide if the ghost run away or chase pacman"""
+        """Decide the ghost's goal position, whether chasing or fleeing.
+
+        Returns:
+            The (line, column) position the ghost should path toward.
+        """
         ...
 
     def change_exit_position(self, new_goal: tuple[int, int]) -> None:
-        """Update exit position"""
+        """Update the pathfinding algorithm's exit position.
+
+        Args:
+            new_goal: The new (line, column) exit position.
+        """
         self.algorithm.set_exit(new_goal)
 
     def change_entry_position(self) -> None:
-        """Update entry position"""
+        """Update the pathfinding algorithm's entry position to the ghost's current position."""
         self.algorithm.set_entry((self.line_pos, self.column_pos))
 
     def find_shortest_path_to_exit(self) -> None:
-        """Update solver"""
+        """Compute and store the shortest path to the current goal."""
         self._shortest_path_to_goal = self.algorithm.solver()
 
     def do_turn(self) -> None:
+        """Compute the ghost's path to its goal and move one step along it."""
         if self.pacman.get_coord() == self.get_coord():
             self.prev_line_pos = self.line_pos
             self.prev_column_pos = self.column_pos
@@ -74,7 +92,14 @@ class Ghost(Character, ABC):
 
     @property
     def shortest_path_to_goal(self) -> list[tuple[int, int]] | None:
-        """Get _shortest_path_to_goal"""
+        """Return the cached shortest path to the ghost's goal.
+
+        Returns:
+            The list of (line, column) positions forming the path.
+
+        Raises:
+            ValueError: If no path has been computed yet.
+        """
         if self._shortest_path_to_goal is None:
             raise ValueError(
                 f"{type(self).__name__} doesn't have a path to its goal")
@@ -82,7 +107,11 @@ class Ghost(Character, ABC):
         return self._shortest_path_to_goal
 
     def run_away(self) -> tuple[int, int]:
-        """Update exit position to the furthest corner of the maze"""
+        """Get the maze corner furthest from Pac-Man's current position.
+
+        Returns:
+            The (line, column) position of the furthest corner.
+        """
         if self.pacman.line_pos <= len(self.maze.cases) // 2:
             if self.pacman.column_pos <= len(self.maze.cases[0]) // 2:
                 return (self.maze.nb_line - 1, self.maze.nb_column - 1)
@@ -95,38 +124,68 @@ class Ghost(Character, ABC):
                 return (0, 0)
 
     def chase_pacman(self) -> tuple[int, int]:
-        """Update exit position to pacman position"""
+        """Get Pac-Man's current position as a chase target.
+
+        Returns:
+            Pac-Man's (line, column) position.
+        """
         return (self.pacman.line_pos, self.pacman.column_pos)
 
     def get_chasing_sprite(self) -> pygame.Surface:
+        """Return the ghost's sprite for its current direction and animation frame.
+
+        Returns:
+            The sprite surface to display while hunting.
+        """
         sprite = self.sprites[self.direction][self.state_of_sprite]
         return sprite
 
     def update_state_of_sprite(self) -> None:
+        """Advance the ghost's animation frame, cycling between two frames."""
         self.state_of_sprite += 1
         self.state_of_sprite %= 2
 
     def get_fleeing_sprite(self) -> pygame.Surface:
+        """Return the ghost's sprite while fleeing, flashing near cooldown end.
+
+        Returns:
+            The sprite surface to display while running away.
+        """
         if self.super_pacgum_cooldown is not None and\
                 self.super_pacgum_cooldown - time.monotonic() < 3:
             return self.running_away_sprites[self.state_of_sprite + 2]
         return self.running_away_sprites[self.state_of_sprite]
 
     def get_valid_sprite(self) -> pygame.Surface:
+        """Return the appropriate sprite based on the ghost's current state.
+
+        Returns:
+            The sprite surface to display.
+        """
         if self.state == self.State.HUNTING:
             return self.get_chasing_sprite()
         else:
             return self.get_fleeing_sprite()
 
     def die(self) -> None:
+        """Kill the ghost, starting its respawn timer and resetting its position."""
         self.death_timer = 5
         self.reset_starting_position()
 
 
 class Shadow(Ghost):  # red chase
+    """Red ghost that directly chases or flees from Pac-Man."""
 
     def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
+        """Initialize Shadow's starting position and sprites.
+
+        Args:
+            maze: The maze the ghost moves within.
+            pacman: The Pac-Man instance the ghost interacts with.
+            super_pacgum_cooldown: Duration of the super pacgum effect.
+            algorithm: Pathfinding algorithm used to reach the ghost's goal.
+        """
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
@@ -145,20 +204,38 @@ class Shadow(Ghost):  # red chase
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
-        """Overwrite the abstract method of Ghost class"""
+        """Return the corner to flee to when running, or Pac-Man's position when hunting.
+
+        Returns:
+            The (line, column) goal position.
+        """
         if self.state == Character.State.RUNNING:
             return self.run_away()
 
         return self.chase_pacman()
 
     def _set_starting_position(self) -> tuple[int, int]:
+        """Return Shadow's starting (line, column) position in the maze.
+
+        Returns:
+            The top-left corner of the maze.
+        """
         return (0, 0)
 
 
 class Speedy(Ghost):  # pink flank
+    """Pink ghost that ambushes Pac-Man ahead of its movement direction."""
 
     def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
+        """Initialize Speedy's starting position and sprites.
+
+        Args:
+            maze: The maze the ghost moves within.
+            pacman: The Pac-Man instance the ghost interacts with.
+            super_pacgum_cooldown: Duration of the super pacgum effect.
+            algorithm: Pathfinding algorithm used to reach the ghost's goal.
+        """
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
@@ -177,7 +254,11 @@ class Speedy(Ghost):  # pink flank
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
-        """Overwrite the abstract method of Ghost class"""
+        """Return a position ahead of Pac-Man to ambush it, or a flee corner.
+
+        Returns:
+            The (line, column) goal position.
+        """
         if self.state == Character.State.RUNNING:
             return self.run_away()
 
@@ -195,13 +276,27 @@ class Speedy(Ghost):  # pink flank
         return self.chase_pacman()
 
     def _set_starting_position(self) -> tuple[int, int]:
+        """Return Speedy's starting (line, column) position in the maze.
+
+        Returns:
+            The top-right corner of the maze.
+        """
         return (0, self.maze.nb_column - 1)
 
 
 class Bashful(Ghost):  # cyan random
+    """Cyan ghost that wanders to random accessible positions."""
 
     def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
+        """Initialize Bashful's starting position and sprites.
+
+        Args:
+            maze: The maze the ghost moves within.
+            pacman: The Pac-Man instance the ghost interacts with.
+            super_pacgum_cooldown: Duration of the super pacgum effect.
+            algorithm: Pathfinding algorithm used to reach the ghost's goal.
+        """
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
@@ -220,7 +315,11 @@ class Bashful(Ghost):  # cyan random
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
-        """Overwrite the abstract method of Ghost class"""
+        """Return a random accessible position, or a flee corner when running.
+
+        Returns:
+            The (line, column) goal position.
+        """
         if self.state == Character.State.RUNNING:
             return self.run_away()
 
@@ -233,13 +332,27 @@ class Bashful(Ghost):  # cyan random
         return (new_line, new_column)
 
     def _set_starting_position(self) -> tuple[int, int]:
+        """Return Bashful's starting (line, column) position in the maze.
+
+        Returns:
+            The bottom-left corner of the maze.
+        """
         return (self.maze.nb_line - 1, 0)
 
 
 class Pokey(Ghost):  # orange chase + run away
+    """Orange ghost that chases Pac-Man but flees when too close."""
 
     def __init__(self, maze: Maze, pacman: Pacman, super_pacgum_cooldown: int,
                  algorithm: DepthFirstSearch) -> None:
+        """Initialize Pokey's starting position and sprites.
+
+        Args:
+            maze: The maze the ghost moves within.
+            pacman: The Pac-Man instance the ghost interacts with.
+            super_pacgum_cooldown: Duration of the super pacgum effect.
+            algorithm: Pathfinding algorithm used to reach the ghost's goal.
+        """
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
@@ -258,13 +371,22 @@ class Pokey(Ghost):  # orange chase + run away
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
-        """Overwrite the abstract method of Ghost class"""
+        """Return a flee corner when running or too close, otherwise chase Pac-Man.
+
+        Returns:
+            The (line, column) goal position.
+        """
         if self.state == Character.State.RUNNING or self.is_pacman_too_close():
             return self.run_away()
         else:
             return self.chase_pacman()
 
     def is_pacman_too_close(self) -> bool:
+        """Check whether Pac-Man is within a 3-case range of this ghost.
+
+        Returns:
+            True if Pac-Man is too close, False otherwise.
+        """
         if (self.line_pos - self.pacman.line_pos < 3 and
            self.line_pos - self.pacman.line_pos > -3):
             if (self.column_pos - self.pacman.column_pos < 3 and
@@ -273,4 +395,9 @@ class Pokey(Ghost):  # orange chase + run away
         return False
 
     def _set_starting_position(self) -> tuple[int, int]:
+        """Return Pokey's starting (line, column) position in the maze.
+
+        Returns:
+            The bottom-right corner of the maze.
+        """
         return (self.maze.nb_line - 1, self.maze.nb_column - 1)

@@ -5,7 +5,16 @@ if TYPE_CHECKING:
 
 
 class Case():
+    """A single cell of the maze, with walls and an optional pacgum."""
+
     def __init__(self, case: int, line_pos: int, column_pos: int) -> None:
+        """Initialize a maze cell's walls and position.
+
+        Args:
+            case: Binary-encoded value describing which walls are present.
+            line_pos: Line position of the cell in the maze.
+            column_pos: Column position of the cell in the maze.
+        """
         self.wall_north: bool = False
         self.wall_east: bool = False
         self.wall_south: bool = False
@@ -18,7 +27,11 @@ class Case():
         self.pacgum: Pacgum | None = None
 
     def create_walls(self, case: int) -> None:
-        """Create the walls of one case based on it's binary value"""
+        """Set the cell's walls based on its binary-encoded value.
+
+        Args:
+            case: Binary-encoded value describing which walls are present.
+        """
         binary = bin(case)[2:]
         while len(binary) < 4:
             binary = "0" + binary
@@ -32,4 +45,9 @@ class Case():
             self.wall_north = True
 
     def get_coordinate(self) -> tuple[int, int]:
+        """Return the cell's position in the maze.
+
+        Returns:
+            The (line, column) position of the cell.
+        """
         return (self.line_pos, self.column_pos)

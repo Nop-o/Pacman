@@ -7,13 +7,21 @@ if TYPE_CHECKING:
 
 
 class GameOver(Screen):
+    """Game over screen, offering highscore entry or a return to the menu."""
+
     def __init__(self, simulation_manager: "SimulationManager") -> None:
+        """Initialize the game over screen's user input and logo sprite.
+
+        Args:
+            simulation_manager: The simulation manager driving the game.
+        """
         super().__init__(simulation_manager=simulation_manager)
         self.user_name = ""
         self.pacman_logo: pygame.Surface = self.get_sprite(
             "png/pacman_logo_small.png", 10, 0, 640, 380)
 
     def display_screen(self) -> None:
+        """Render the game over screen, prompting for a name if applicable."""
         self.simulation_manager.dipslay_sky()
 
         game_over_text = \
@@ -54,16 +62,23 @@ class GameOver(Screen):
         self.draw_sprites()
 
     def button_action(self) -> None:
+        """Save the current score to the leaderboard and go to the leaderboard screen."""
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
             self.simulation_manager.game_state.score, self.user_name)
         self.leaderboard_screen()
 
     def is_score_in_leaderboard(self) -> bool:
+        """Check whether the current score qualifies for the leaderboard.
+
+        Returns:
+            True if the score beats the lowest leaderboard entry, False otherwise.
+        """
         return (
             self.simulation_manager.game_state.score >
             self.simulation_manager.screen_manager.leaderboard.scores[9])
 
     def handle_user_writing(self) -> None:
+        """Update the entered user name from the current key press or deletion."""
         if self.simulation_manager.key_pressed is not None:
             if self.simulation_manager.key_pressed.isprintable():
                 if len(self.user_name) < 10:
@@ -72,6 +87,11 @@ class GameOver(Screen):
                 self.user_name = self.user_name[0:-1]
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
+        """Handle input events, exiting the game or returning to the main menu.
+
+        Args:
+            events: List of pygame events to process.
+        """
         for event in events:
             if event.type == pygame.QUIT:
                 self.exit_game()
@@ -83,6 +103,7 @@ class GameOver(Screen):
                     return
 
     def draw_sprites(self) -> None:
+        """Draw the Pac-Man logo centered near the top of the screen."""
         pos = (
             self.simulation_manager.screen_width // 2 -
             self.pacman_logo.get_width() // 2,

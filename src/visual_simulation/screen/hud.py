@@ -6,12 +6,20 @@ if TYPE_CHECKING:
 
 
 class HUD(Screen):
+    """Heads-up display showing score, lives, level, and timer."""
+
     def __init__(self, simulation_manager: "SimulationManager") -> None:
+        """Initialize the HUD's text rendering reference.
+
+        Args:
+            simulation_manager: The simulation manager driving the game.
+        """
         super().__init__(simulation_manager=simulation_manager)
         self.text_rendering: TextRendering =\
             self.simulation_manager.text_rendering
 
     def show_score(self) -> None:
+        """Draw the current score and its title above the maze."""
         MAZE_START =\
             self.simulation_manager.screen_manager.game_play.level.MAZE_START
         score_text = self.text_rendering.render_regular_text(
@@ -39,6 +47,7 @@ class HUD(Screen):
         )
 
     def show_lives(self) -> None:
+        """Draw one Pac-Man sprite per remaining life, capped with an ellipsis."""
         game_play = self.simulation_manager.screen_manager.game_play
         pacman_sprite = game_play.level.pacman.sprites[0][1]
         level = self.simulation_manager.screen_manager.game_play.level
@@ -67,6 +76,7 @@ class HUD(Screen):
             )
 
     def show_level(self) -> None:
+        """Draw the current level number below the maze."""
         level = self.simulation_manager.screen_manager.game_play.level
         level_nb = self.text_rendering.render_regular_text(
             f"Level {self.simulation_manager.game_state.nb_level}",
@@ -82,6 +92,7 @@ class HUD(Screen):
         )
 
     def show_timer(self) -> None:
+        """Draw the remaining time for the current level below the maze."""
         level = self.simulation_manager.screen_manager.game_play.level
         game_state = self.simulation_manager.game_state
         timer_text = self.text_rendering.render_regular_text(
@@ -99,6 +110,7 @@ class HUD(Screen):
         )
 
     def display_screen(self) -> None:
+        """Render all HUD elements: score, lives, level, and timer."""
         self.show_score()
         self.show_lives()
         self.show_level()
