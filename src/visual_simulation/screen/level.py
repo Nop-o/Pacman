@@ -4,6 +4,7 @@ from ...maze import Direction, Maze
 from ...entity import Ghost, Pacman, Shadow, Speedy, Bashful, Pokey
 from ...algorithm import DepthFirstSearch
 from ...entity import Entity, Pacgum, SuperPacgum, Character
+from ... import Cheat
 import pygame
 import random
 import time
@@ -18,6 +19,7 @@ class Level(Screen):
         self.simulation_manager: SimulationManager = simulation_manager
         self.maze: Maze = Maze(self.simulation_manager.game_state.seed)
         self.algo = DepthFirstSearch(self.maze)
+        self.cheat: Cheat = Cheat(self.simulation_manager)
         super_pacgum_cooldown =\
             self.simulation_manager.game_state.super_pacgum_cooldown
         self.pacman: Pacman = Pacman(self.maze, super_pacgum_cooldown)
@@ -67,6 +69,8 @@ class Level(Screen):
         for ghost in self.ghosts:
             if ghost.death_timer is not None:
                 continue
+            if self.cheat.is_ghost_freeze is True:
+                return
             ghost.do_turn()
 
     def load_maze(self) -> None:
@@ -123,7 +127,17 @@ class Level(Screen):
             if ghost.death_timer is not None:
                 continue
             sprite = ghost.sprites[0][0]
-            ghost_pos = self._position_entity_in_maze(ghost, sprite)
+            if self.cheat.is_ghost_freeze is True:
+                ghost_pos = (
+                    ((self.MAZE_START[0] +
+                        (self.CASE_SIZE * ghost.prev_column_pos)) +
+                        (self.CASE_SIZE // 2) - (sprite.get_width() // 2)),
+                    ((self.MAZE_START[1] +
+                        (self.CASE_SIZE * ghost.prev_line_pos)) +
+                        (self.CASE_SIZE // 2) - (sprite.get_height() // 2))
+                )
+            else:
+                ghost_pos = self._position_entity_in_maze(ghost, sprite)
             self.simulation_manager.screen.blit(
                 source=ghost.get_valid_sprite(),
                 dest=ghost_pos
@@ -167,6 +181,8 @@ class Level(Screen):
             if not ghost.get_coord() == self.pacman.get_coord():
                 continue
             if ghost.state == ghost.State.HUNTING:
+                if self.cheat.is_invicible == True:
+                    continue
                 self.simulation_manager.game_state.current_lives -= 1
                 start_coord = self.pacman.starting_position
                 self.pacman.line_pos = start_coord[0]
@@ -233,13 +249,9 @@ class Level(Screen):
                     (self.CASE_SIZE // 2) - (sprite.get_height() // 2)
                     + progress_modifier[1]))
             )
-
-    def _position_entity_in_maze(self, entity: Entity, sprite: pygame.Surface)\
+    def _position_in_maze(self, entity: Entity, sprite: pygame.Surface)\
             -> tuple[int, int]:
-        if (not isinstance(entity, Character) or
-            (entity.prev_column_pos == entity.column_pos
-                and entity.line_pos == entity.prev_line_pos)):
-            return (
+        return (
                     ((self.MAZE_START[0] +
                         (self.CASE_SIZE * entity.column_pos)) +
                         (self.CASE_SIZE // 2) - (sprite.get_width() // 2)),
@@ -247,6 +259,13 @@ class Level(Screen):
                         (self.CASE_SIZE * entity.line_pos)) +
                         (self.CASE_SIZE // 2) - (sprite.get_height() // 2))
                 )
+
+    def _position_entity_in_maze(self, entity: Entity, sprite: pygame.Surface)\
+            -> tuple[int, int]:
+        if (not isinstance(entity, Character) or
+            (entity.prev_column_pos == entity.column_pos
+                and entity.line_pos == entity.prev_line_pos)):
+            return self._position_in_maze(entity, sprite)
         return self._position_character_in_maze(entity, sprite)
 
     def create_pacgums(self) -> None:
@@ -318,6 +337,8 @@ class Level(Screen):
         self.last_frame_time = None
 
     def check_level_timer(self, delta: float) -> None:
+        if self.cheat.is_timer_freeze == True:
+            return
         self.level_timer += delta
         game_state = self.simulation_manager.game_state
         if self.level_timer >= game_state.level_max_time:

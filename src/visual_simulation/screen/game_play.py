@@ -38,7 +38,6 @@ class GamePlay(Screen):
             if event.type == pygame.QUIT:
                 self.exit_game()
                 return
-
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.pause_screen()
@@ -55,3 +54,13 @@ class GamePlay(Screen):
                 if event.key == pygame.K_LEFT:
                     self.level.pacman.direction =\
                         Character.FacingDirection.LEFT
+                if event.key == pygame.K_s:
+                    self.level.cheat.skip_level()
+                if event.key == pygame.K_l:
+                    self.level.cheat.give_extra_lives()
+                if event.key == pygame.K_i:
+                    self.level.cheat.change_invincibility()
+                if event.key == pygame.K_f:
+                    self.level.cheat.freeze_ghost()
+                if event.key == pygame.K_t:
+                    self.level.cheat.freeze_timer()

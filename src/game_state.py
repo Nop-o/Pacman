@@ -17,6 +17,7 @@ class GameState:
         self.max_lives: int = json_data.lives
         self.current_lives: int = json_data.lives
         self.nb_level: int = 1
+        self.is_cheat_active: bool = json_data.is_cheat_active
 
         self.is_game_over: bool = False
         self.is_game_won: bool = False

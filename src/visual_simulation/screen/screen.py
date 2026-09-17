@@ -54,6 +54,9 @@ class Screen(ABC):
 
     def next_level(self) -> None:
         from . import Level
+        if self.simulation_manager.game_state.nb_level + 1 >= 11:
+            self.victory_screen()
+            return
         self.simulation_manager.game_state.seed += 1
         self.simulation_manager.game_state.nb_level += 1
         self.simulation_manager.game_state.is_game_won = False
