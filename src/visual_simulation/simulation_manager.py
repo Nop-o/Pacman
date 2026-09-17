@@ -157,7 +157,8 @@ class SimulationManager():
         pygame.display.flip()
 
     def event_manager(self) -> None:
-        """Process pygame events, updating input state and the active screen."""
+        """Process pygame events, updating input state and the active screen.
+        """
         events = pygame.event.get()
 
         for event in events:

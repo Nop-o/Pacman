@@ -25,7 +25,8 @@ class GamePlay(Screen):
         self.hud: HUD = hud
 
     def display_screen(self) -> None:
-        """Render the current level and HUD, or transition on game over or win."""
+        """Render the current level and HUD, or transition on game over or win.
+        """
         if self.simulation_manager.game_state.is_game_over is True:
             self.game_over_screen()
 

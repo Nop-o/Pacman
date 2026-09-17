@@ -58,7 +58,8 @@ class Ghost(Character, ABC):
         self.algorithm.set_exit(new_goal)
 
     def change_entry_position(self) -> None:
-        """Update the pathfinding algorithm's entry position to the ghost's current position."""
+        """Update the pathfinding algorithm's entry position to the ghost's
+        current position."""
         self.algorithm.set_entry((self.line_pos, self.column_pos))
 
     def find_shortest_path_to_exit(self) -> None:
@@ -132,7 +133,8 @@ class Ghost(Character, ABC):
         return (self.pacman.line_pos, self.pacman.column_pos)
 
     def get_chasing_sprite(self) -> pygame.Surface:
-        """Return the ghost's sprite for its current direction and animation frame.
+        """Return the ghost's sprite for its current direction
+        and animation frame.
 
         Returns:
             The sprite surface to display while hunting.
@@ -168,7 +170,8 @@ class Ghost(Character, ABC):
             return self.get_fleeing_sprite()
 
     def die(self) -> None:
-        """Kill the ghost, starting its respawn timer and resetting its position."""
+        """Kill the ghost, starting its respawn timer and resetting
+        its position."""
         self.death_timer = 5
         self.reset_starting_position()
 
@@ -204,7 +207,8 @@ class Shadow(Ghost):  # red chase
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
-        """Return the corner to flee to when running, or Pac-Man's position when hunting.
+        """Return the corner to flee to when running, or Pac-Man's position
+        when hunting.
 
         Returns:
             The (line, column) goal position.
@@ -371,7 +375,8 @@ class Pokey(Ghost):  # orange chase + run away
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
-        """Return a flee corner when running or too close, otherwise chase Pac-Man.
+        """Return a flee corner when running or too close, otherwise
+        chase Pac-Man.
 
         Returns:
             The (line, column) goal position.

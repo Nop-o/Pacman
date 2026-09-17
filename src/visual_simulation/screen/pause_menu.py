@@ -7,7 +7,8 @@ if TYPE_CHECKING:
 
 
 class PauseMenu(Screen):
-    """Pause menu screen for resuming, returning to the main menu, or exiting."""
+    """Pause menu screen for resuming, returning to the main menu, or exiting.
+    """
 
     def __init__(self, simulation_manager: "SimulationManager") -> None:
         """Initialize the pause menu's current selection.

@@ -56,7 +56,8 @@ class Instructions(Screen):
 
     def display_entities(self, pacman_position: tuple[int, int],
                          x_padding: int, y_padding: int) -> None:
-        """Draw demo sprites of the ghosts and Pac-Man on the instructions screen.
+        """Draw demo sprites of the ghosts and Pac-Man on the instructions
+        screen.
 
         Args:
             pacman_position: Position to draw the Pac-Man sprite at.
@@ -78,7 +79,8 @@ class Instructions(Screen):
             pacman_position)
 
     def display_screen(self) -> None:
-        """Render the instructions screen, its titles, and decorative sprites."""
+        """Render the instructions screen, its titles, and decorative sprites.
+        """
         self.simulation_manager.dipslay_sky()
 
         screen_titles: list[pygame.Surface] = [
