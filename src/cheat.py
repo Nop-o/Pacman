@@ -44,4 +44,3 @@ class Cheat:
             self.is_timer_freeze = False
         else:
             self.is_timer_freeze = True
-

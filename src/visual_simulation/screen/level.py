@@ -181,7 +181,7 @@ class Level(Screen):
             if not ghost.get_coord() == self.pacman.get_coord():
                 continue
             if ghost.state == ghost.State.HUNTING:
-                if self.cheat.is_invicible == True:
+                if self.cheat.is_invicible is True:
                     continue
                 self.simulation_manager.game_state.current_lives -= 1
                 start_coord = self.pacman.starting_position
@@ -250,6 +250,7 @@ class Level(Screen):
                     (self.CASE_SIZE // 2) - (sprite.get_height() // 2)
                     + progress_modifier[1]))
             )
+
     def _position_in_maze(self, entity: Entity, sprite: pygame.Surface)\
             -> tuple[int, int]:
         return (
@@ -338,7 +339,7 @@ class Level(Screen):
         self.last_frame_time = None
 
     def check_level_timer(self, delta: float) -> None:
-        if self.cheat.is_timer_freeze == True:
+        if self.cheat.is_timer_freeze is True:
             return
         self.level_timer += delta
         game_state = self.simulation_manager.game_state
