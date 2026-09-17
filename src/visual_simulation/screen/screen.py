@@ -28,19 +28,22 @@ class Screen(ABC):
             self.simulation_manager.screen_manager.main_menu.display_screen
 
     def victory_screen(self) -> None:
-        """Switch the active screen to the victory screen, resetting its input."""
+        """Switch the active screen to the victory screen, resetting its input.
+        """
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.victory.display_screen
         self.simulation_manager.screen_manager.victory.user_name = ""
 
     def game_over_screen(self) -> None:
-        """Switch the active screen to the game over screen, resetting its input."""
+        """Switch the active screen to the game over screen, resetting its
+        input."""
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.game_over.display_screen
         self.simulation_manager.screen_manager.game_over.user_name = ""
 
     def game_play_screen(self) -> None:
-        """Switch the active screen to gameplay, resetting the level's timers."""
+        """Switch the active screen to gameplay, resetting the level's timers.
+        """
         self.simulation_manager.screen_manager.game_play.level.reset_timer()
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.game_play.display_screen
@@ -73,7 +76,8 @@ class Screen(ABC):
         self.game_play_screen()
 
     def next_level(self) -> None:
-        """Advance to the next level, or go to the victory screen if finished."""
+        """Advance to the next level, or go to the victory screen if finished.
+        """
         from . import Level
         if self.simulation_manager.game_state.nb_level + 1 >= 11:
             self.victory_screen()
@@ -168,7 +172,7 @@ class Screen(ABC):
             width: Width of the rectangle in pixels.
             height: Height of the rectangle in pixels.
             color: RGB color of the rectangle.
-            center_width: Whether to center the rectangle horizontally on coord.
+            center_width: Whether to center the rectangle horizontally on coord
             center_height: Whether to center the rectangle vertically on coord.
         """
         modified_coord = [coord[0], coord[1]]
@@ -199,7 +203,8 @@ class Screen(ABC):
     def get_title_paddings(
        self, texts: list[pygame.Surface], main_title_padding_size: int,
        title_padding_size: int) -> list[int]:
-        """Compute the vertical position for a main title and subsequent titles.
+        """Compute the vertical position for a main title and subsequent
+        titles.
 
         Args:
             texts: The list of title surfaces to position.

@@ -200,7 +200,8 @@ class LaunchGame(Screen):
             self.pacman_position)
 
     def travel_back_to_opposite_screen_side(self) -> None:
-        """Wrap entity positions to the opposite screen edge when off-screen."""
+        """Wrap entity positions to the opposite screen edge when off-screen.
+        """
         screen_width: int = self.simulation_manager.screen_width
         screen_height: int = self.simulation_manager.screen_height
         for attr in ("pacman_position", "shadow_position", "speedy_position",

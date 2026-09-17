@@ -47,7 +47,8 @@ class HUD(Screen):
         )
 
     def show_lives(self) -> None:
-        """Draw one Pac-Man sprite per remaining life, capped with an ellipsis."""
+        """Draw one Pac-Man sprite per remaining life, capped with an ellipsis.
+        """
         game_play = self.simulation_manager.screen_manager.game_play
         pacman_sprite = game_play.level.pacman.sprites[0][1]
         level = self.simulation_manager.screen_manager.game_play.level

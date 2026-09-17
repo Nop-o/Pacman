@@ -113,5 +113,6 @@ class Character(Entity, ABC):
 
     @abstractmethod
     def _set_starting_position(self) -> tuple[int, int]:
-        """Return the character's starting (line, column) position in the maze."""
+        """Return the character's starting (line, column)
+        position in the maze."""
         ...

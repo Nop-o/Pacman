@@ -102,7 +102,8 @@ class Pacman(Character):
         self.state_of_sprite %= 3
 
     def get_moving_sprite(self) -> pygame.Surface:
-        """Return Pac-Man's sprite for its current direction and animation frame.
+        """Return Pac-Man's sprite for its current direction and animation
+        frame.
 
         Returns:
             The sprite surface to display.

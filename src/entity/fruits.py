@@ -79,7 +79,8 @@ class FruitManager:
             self.current_fruit = 0
 
     def update_current_position(self) -> None:
-        """Toggle the current fruit position between the two available slots."""
+        """Toggle the current fruit position between the two
+        available slots."""
         if self.current_position == 0:
             self.current_position = 1
         else:

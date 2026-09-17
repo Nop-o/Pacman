@@ -179,7 +179,8 @@ class Level(Screen):
             self.change_state(Character.State.RUNNING)
 
     def do_turn_consequences(self) -> None:
-        """Apply the effects of a game turn: eating, collisions, and win/loss checks."""
+        """Apply the effects of a game turn: eating, collisions, and win/loss
+        checks."""
         self.check_cooldown_timer()
         self.eat_pacgum()
         self.ghost_collision()
@@ -202,7 +203,8 @@ class Level(Screen):
         case.pacgum = None
 
     def ghost_collision(self) -> None:
-        """Handle collisions between Pac-Man and ghosts, applying the outcome."""
+        """Handle collisions between Pac-Man and ghosts, applying the outcome.
+        """
         for ghost in self.ghosts:
             if ghost.death_timer is not None:
                 continue
@@ -223,7 +225,8 @@ class Level(Screen):
                     self.simulation_manager.game_state.points_per_ghost
 
     def display_screen(self) -> None:
-        """Advance the level's timers and logic, then draw the current frame."""
+        """Advance the level's timers and logic, then draw the current frame.
+        """
         now = time.monotonic()
         if self.last_frame_time is None:
             self.last_frame_time = now
@@ -332,7 +335,8 @@ class Level(Screen):
         return self._position_character_in_maze(entity, sprite)
 
     def create_pacgums(self) -> None:
-        """Place super pacgums in the maze corners and regular pacgums randomly."""
+        """Place super pacgums in the maze corners and regular pacgums
+        randomly."""
         nb_pacgum = self.simulation_manager.game_state.pacgum
         nb_cases = self.maze.nb_column * self.maze.nb_line
         order_pacgum = list(range(nb_cases))
@@ -418,7 +422,8 @@ class Level(Screen):
         self.last_frame_time = None
 
     def check_level_timer(self, delta: float) -> None:
-        """Advance the level timer and end the game if the time limit is reached.
+        """Advance the level timer and end the game if the time limit is
+        reached.
 
         Args:
             delta: Time elapsed since the last frame, in seconds.
@@ -431,7 +436,8 @@ class Level(Screen):
             game_state.is_game_over = True
 
     def load_cheat_panel(self) -> None:
-        """Draw the list of available cheat codes, if the cheat panel is active."""
+        """Draw the list of available cheat codes, if the cheat panel is
+        active."""
         if self.simulation_manager.game_state.is_cheat_active is False:
             return
         CHEAT_LIST = [

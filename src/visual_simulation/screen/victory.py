@@ -65,20 +65,23 @@ class Victory(Screen):
         """Check whether the current score qualifies for the leaderboard.
 
         Returns:
-            True if the score beats the lowest leaderboard entry, False otherwise.
+            True if the score beats the lowest leaderboard entry, False
+            otherwise.
         """
         return (
             self.simulation_manager.game_state.score >
             self.simulation_manager.screen_manager.leaderboard.scores[9])
 
     def button_action(self) -> None:
-        """Save the current score to the leaderboard and go to the leaderboard screen."""
+        """Save the current score to the leaderboard and go to the leaderboard
+        screen."""
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
             self.simulation_manager.game_state.score, self.user_name)
         self.leaderboard_screen()
 
     def handle_user_writing(self) -> None:
-        """Update the entered user name from the current key press or deletion."""
+        """Update the entered user name from the current key press or deletion.
+        """
         if self.simulation_manager.key_pressed is not None:
             if self.simulation_manager.key_pressed.isprintable():
                 if len(self.user_name) < 10:
