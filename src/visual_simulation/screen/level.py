@@ -39,6 +39,7 @@ class Level(Screen):
         self.ghosts.append(Pokey(self.maze, self.pacman,
                                  super_pacgum_cooldown, self.algo))
         self.pacgum: list[Pacgum] = []
+        self.super_pacgum: list[SuperPacgum] = []
         self.create_pacgums()
         self.CASE_SIZE = 50
         self.CASE_LINE_THICKNESS = 3
@@ -131,6 +132,13 @@ class Level(Screen):
                 source=sprite,
                 dest=pacgum_pos
             )
+        for pacgum in self.super_pacgum:
+            sprite = pacgum.sprite
+            pacgum_pos = self._position_entity_in_maze(pacgum, sprite)
+            self.simulation_manager.screen.blit(
+                source=sprite,
+                dest=pacgum_pos
+            )
 
     def load_ghosts(self) -> None:
         """Draw all living ghosts at their current or frozen position."""
@@ -185,8 +193,12 @@ class Level(Screen):
         case = self.maze.get_case(self.pacman.get_coord())
         if case.pacgum is None:
             return
-        case.pacgum.eat(self.simulation_manager)
-        self.pacgum.remove(case.pacgum)
+        if type(case.pacgum) is Pacgum:
+            case.pacgum.eat(self.simulation_manager)
+            self.pacgum.remove(case.pacgum)
+        elif type(case.pacgum) is SuperPacgum:
+            case.pacgum.eat(self.simulation_manager)
+            self.super_pacgum.remove(case.pacgum)
         case.pacgum = None
 
     def ghost_collision(self) -> None:
@@ -338,10 +350,10 @@ class Level(Screen):
         self.maze.cases[0][nb_column].pacgum = super_pacgum_3
         self.maze.cases[nb_line][nb_column].pacgum = super_pacgum_4
 
-        self.pacgum.append(super_pacgum_1)
-        self.pacgum.append(super_pacgum_2)
-        self.pacgum.append(super_pacgum_3)
-        self.pacgum.append(super_pacgum_4)
+        self.super_pacgum.append(super_pacgum_1)
+        self.super_pacgum.append(super_pacgum_2)
+        self.super_pacgum.append(super_pacgum_3)
+        self.super_pacgum.append(super_pacgum_4)
 
         for location in order_pacgum:
             line = location // self.maze.nb_column
