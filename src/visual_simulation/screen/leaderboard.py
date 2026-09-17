@@ -112,6 +112,20 @@ class LeaderBoard(Screen):
         starting_height: int = self.simulation_manager.screen_height // 4
         padding_height: int = self.simulation_manager.screen_height // 18
 
+        position_text: pygame.Surface = \
+            self.simulation_manager.text_rendering.render_small_title(
+                "position".center(15), (255, 255, 0))
+        name_text: pygame.Surface = \
+            self.simulation_manager.text_rendering.render_small_title(
+                "name".center(15), (255, 255, 0))
+        score_text: pygame.Surface = \
+            self.simulation_manager.text_rendering.render_small_title(
+                "score".center(15), (255, 255, 0))
+
+        screen.blit(
+            position_text, (starting_width +
+                            (padding_width - position_text.get_width()),
+                            starting_height - 30))
         for i in range(1, 11, 1):
             try:
                 screen.blit((
@@ -124,6 +138,10 @@ class LeaderBoard(Screen):
                     print(f"Missing key: missing leaderboard key {e}")
                     self.leaderboard_error = True
 
+        screen.blit(
+            name_text, (starting_width +
+                        ((padding_width * 2) - name_text.get_width()),
+                        starting_height - 30))
         for i in range(1, 11, 1):
             try:
                 screen.blit((
@@ -137,6 +155,10 @@ class LeaderBoard(Screen):
                     print(f"Missing key: missing leaderboard key {e}")
                     self.leaderboard_error = True
 
+        screen.blit(
+            score_text, (starting_width +
+                         ((padding_width * 3) - score_text.get_width()),
+                         starting_height - 30))
         for i in range(1, 11, 1):
             try:
                 screen.blit((

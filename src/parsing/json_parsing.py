@@ -122,10 +122,10 @@ class JsonData(BaseModel):
 
     @field_validator("is_cheat_active", mode="before")
     @classmethod
-    def validate_is_cheat_active(cls, v: Any) -> bool:
+    def validate_is_cheat_active(cls, v: Any) -> Any:
         if v not in [
             True, 1, '1', 'true', 't', 'on', 'yes', 'y',
-            False, 0, '0', 'false', 'f', 'off', 'no', 'n']:
+           False, 0, '0', 'false', 'f', 'off', 'no', 'n']:
             print(f"Config file error: {v} is not a valid cheat activation")
             return False
         return v
