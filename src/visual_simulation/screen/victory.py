@@ -26,21 +26,21 @@ class Victory(Screen):
 
         game_over_text = \
             self.simulation_manager.text_rendering.render_small_title(
-                "VICTORY", (255, 255, 255))
+                "VICTORY", (255, 255, 0))
 
         if self.is_score_in_leaderboard() is True:
             self.handle_user_writing()
 
             text_prompt = \
                 self.simulation_manager.text_rendering.render_regular_text(
-                    "Enter your name to save your score", (255, 255, 255))
+                    "Enter your name to save your score", (255, 255, 0))
 
             user_name = \
                 self.simulation_manager.text_rendering.render_regular_text(
-                    self.user_name, (255, 255, 255))
+                    self.user_name, (255, 255, 0))
             button_text = \
                 self.simulation_manager.text_rendering.render_regular_text(
-                    "Save Highscore", (255, 255, 255))
+                    "Save Highscore", (255, 255, 0))
 
             self.draw_text(user_name, width_adjust=0, height_adjust=100)
             button_pos = (
@@ -54,7 +54,7 @@ class Victory(Screen):
         else:
             text_prompt = \
                 self.simulation_manager.text_rendering.render_regular_text(
-                    "Press RETURN to go back to main menu ...", (255, 255, 255)
+                    "Press RETURN to go back to main menu ...", (255, 255, 0)
                     )
 
         self.draw_text(game_over_text, width_adjust=0, height_adjust=-100)
