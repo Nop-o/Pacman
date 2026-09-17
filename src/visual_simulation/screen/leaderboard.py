@@ -21,6 +21,8 @@ class LeaderBoard(Screen):
         self.names: dict[int, str] = {}
         self._import_highscore()
 
+        self.leaderboard_error: bool = False
+
     def _init_score(self) -> None:
         """Initialize the leaderboard with empty scores and names."""
         for i in range(1, 11, 1):
@@ -111,33 +113,48 @@ class LeaderBoard(Screen):
         padding_height: int = self.simulation_manager.screen_height // 18
 
         for i in range(1, 11, 1):
-            screen.blit((
-                self.simulation_manager.text_rendering.render_small_title(
-                    f"{i}.", (255, 255, 0))),
-                (starting_width, starting_height + (padding_height * i))
-                )
+            try:
+                screen.blit((
+                    self.simulation_manager.text_rendering.render_small_title(
+                        f"{i}.", (255, 255, 0))),
+                    (starting_width, starting_height + (padding_height * i))
+                    )
+            except KeyError as e:
+                if not self.leaderboard_error:
+                    print(f"Missing key: missing leaderboard key {e}")
+                    self.leaderboard_error = True
 
         for i in range(1, 11, 1):
-            screen.blit((
-                self.simulation_manager.text_rendering.render_small_title(
-                    f"{self.names[i]}", (255, 255, 0))),
-                (starting_width + padding_width,
-                 starting_height + (padding_height * i))
-                    )
+            try:
+                screen.blit((
+                    self.simulation_manager.text_rendering.render_small_title(
+                        f"{self.names[i]}", (255, 255, 0))),
+                    (starting_width + padding_width,
+                     starting_height + (padding_height * i))
+                        )
+            except KeyError as e:
+                if not self.leaderboard_error:
+                    print(f"Missing key: missing leaderboard key {e}")
+                    self.leaderboard_error = True
 
         for i in range(1, 11, 1):
-            screen.blit((
-                self.simulation_manager.text_rendering.render_small_title(
-                    f"{self.scores[i]}", (255, 255, 0))),
-                (starting_width + (padding_width * 2.5),
-                 starting_height + (padding_height * i))
-                    )
+            try:
+                screen.blit((
+                    self.simulation_manager.text_rendering.render_small_title(
+                        f"{self.scores[i]}", (255, 255, 0))),
+                    (starting_width + (padding_width * 2.5),
+                     starting_height + (padding_height * i))
+                        )
+            except KeyError as e:
+                if not self.leaderboard_error:
+                    print(f"Missing key: missing leaderboard key {e}")
+                    self.leaderboard_error = True
 
     def export_highscore(self) -> None:
         """Save the current scores and names to their JSON files."""
-        with open("scores/highscore.json", "w") as file:
+        with open("highscore.json", "w") as file:
             file.write(json.dumps(self.scores))
-        with open("scores/highscore_name.json", "w") as file:
+        with open("highscore_name.json", "w") as file:
             file.write(json.dumps(self.names))
 
     def _import_highscore(self) -> None:

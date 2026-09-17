@@ -24,16 +24,18 @@ class Main:
         try:
             json_parsing = JsonParsing(sys.argv[1])
             pacman_data = JsonData(**json_parsing.file_content)
+
+        except ValidationError as e:
+            error = e.errors()[0]
+            print(f"{error['msg']}: missing {error["loc"][0]} key")
+        except (FileNotFoundError, ImportError, OSError, ValueError) as e:
+            print(f"File error: {e}")
+            return
+
+        try:
             simulation_manager = SimulationManager(pacman_data)
             simulation_manager.launch()
             simulation_manager.screen_manager.leaderboard.export_highscore()
-
-        except ValidationError as e:
-            print(e.errors()[0]["msg"].replace("Value error, ", ""))
-            return
-        except (FileNotFoundError, ImportError, OSError) as e:
-            print(f"File error: {e}")
-            return
         except KeyboardInterrupt:
             print("\nCommand error: pacman has been interrupted")
             return
