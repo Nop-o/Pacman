@@ -216,6 +216,7 @@ class Level(Screen):
         self.load_pacgum()
         self.load_pacman()
         self.load_ghosts()
+        self.load_cheat_panel()
 
     def check_ghost_death(self, delta: float) -> None:
         for ghost in self.ghosts:
@@ -343,3 +344,23 @@ class Level(Screen):
         game_state = self.simulation_manager.game_state
         if self.level_timer >= game_state.level_max_time:
             game_state.is_game_over = True
+
+    def load_cheat_panel(self) -> None:
+        if self.simulation_manager.game_state.is_cheat_active is False:
+            return
+        CHEAT_LIST = [
+            "S - Skip level",
+            "L - Extra life",
+            "I - Invincibility",
+            "F - Freeze ghosts",
+            "T - Freeze timer",
+        ]
+        panel_x = self.MAZE_END[0] + 30
+        panel_y = self.MAZE_START[1]
+        for i, cheat_label in enumerate(CHEAT_LIST):
+            text_surface = \
+                self.simulation_manager.text_rendering.render_regular_text(
+                    cheat_label, (255, 255, 0))
+            self.simulation_manager.screen.blit(
+                text_surface, (panel_x, panel_y + i * 60)
+            )
