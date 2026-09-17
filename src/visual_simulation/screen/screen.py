@@ -20,10 +20,12 @@ class Screen(ABC):
     def victory_screen(self) -> None:
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.victory.display_screen
+        self.simulation_manager.screen_manager.victory.user_name = ""
 
     def game_over_screen(self) -> None:
         self.simulation_manager.state_to_call = \
             self.simulation_manager.screen_manager.game_over.display_screen
+        self.simulation_manager.screen_manager.game_over.user_name = ""
 
     def game_play_screen(self) -> None:
         self.simulation_manager.screen_manager.game_play.level.reset_timer()
