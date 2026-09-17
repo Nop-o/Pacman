@@ -63,7 +63,8 @@ class Victory(Screen):
     def handle_user_writing(self) -> None:
         if self.simulation_manager.key_pressed is not None:
             if self.simulation_manager.key_pressed.isprintable():
-                self.user_name += self.simulation_manager.key_pressed
+                if len(self.user_name) < 10:
+                    self.user_name += self.simulation_manager.key_pressed
             if self.simulation_manager.delete_pressed is True:
                 self.user_name = self.user_name[0:-1]
 
