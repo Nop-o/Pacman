@@ -23,8 +23,6 @@ class SimulationManager():
         self.frame_count: int = 0
         self.frame_time: float = 0.8
 
-        self.fps: int = 60
-        self.frame_duration: float = 1.0 / self.fps
         self.screen_height: int
         self.screen_width: int
         self.screen: pygame.Surface = self._adjust_screen_size()
@@ -143,7 +141,7 @@ class SimulationManager():
 
         return pygame.display.set_mode((screen_width, screen_height))
 
-    def clear_last_frame(self, color: str = "black") -> None:  # useless ?
+    def clear_last_frame(self, color: str = "black") -> None:
         """Clear the last frame by filling the screen with a solid color.
 
         Args:
@@ -172,24 +170,6 @@ class SimulationManager():
                 if (event.key == pygame.K_DELETE or
                         event.key == pygame.K_BACKSPACE):
                     self.delete_pressed = True
-                if event.key == pygame.K_LEFT:
-                    self.left_pressed = True
-                if event.key == pygame.K_RIGHT:
-                    self.right_pressed = True
-                if event.key == pygame.K_DOWN:
-                    self.down_pressed = True
-                if event.key == pygame.K_UP:
-                    self.up_pressed = True
-
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    self.left_pressed = False
-                if event.key == pygame.K_RIGHT:
-                    self.right_pressed = False
-                if event.key == pygame.K_DOWN:
-                    self.down_pressed = False
-                if event.key == pygame.K_UP:
-                    self.up_pressed = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.mouse_click = event.pos
