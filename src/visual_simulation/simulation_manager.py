@@ -9,7 +9,14 @@ from ..parsing import JsonData
 
 
 class SimulationManager():
+    """Top-level driver managing the game loop, input, and screen state."""
+
     def __init__(self, json_data: JsonData) -> None:
+        """Initialize pygame, the display, game state, and shared sprites.
+
+        Args:
+            json_data: Parsed configuration data for the game.
+        """
         pygame.init()
         pygame.display.set_caption("Pac-Man")
 
@@ -56,6 +63,7 @@ class SimulationManager():
             self.get_sprite("png/small_pacman_logo.png", 10, 120, 295, 75)
 
     def dipslay_sky(self) -> None:
+        """Tile the animated sky background across the entire screen."""
         width: int = 1280
         height: int = 720
         displayed_width: int = 0
@@ -70,6 +78,7 @@ class SimulationManager():
             displayed_width = 0
 
     def launch(self) -> None:
+        """Run the main game loop until the simulation is no longer active."""
         frame_time_elapse: float = 0.0
 
         while self.active:
@@ -95,11 +104,28 @@ class SimulationManager():
 
     @staticmethod
     def mlx_get_screen_size() -> tuple[int, int]:
+        """Get the physical display's current resolution.
+
+        Returns:
+            The (width, height) of the display in pixels.
+        """
         info = pygame.display.Info()
         return info.current_w, info.current_h
 
     def get_sprite(self, file_path: str, x: int, y: int,
                    width: int, height: int) -> pygame.Surface:
+        """Extract a sprite region from a sprite sheet image.
+
+        Args:
+            file_path: Path to the sprite sheet image.
+            x: X coordinate of the sprite region within the sheet.
+            y: Y coordinate of the sprite region within the sheet.
+            width: Width of the sprite region.
+            height: Height of the sprite region.
+
+        Returns:
+            A surface containing the extracted sprite, with alpha channel.
+        """
         source_image = pygame.image.load(file_path).convert_alpha()
 
         image = pygame.Surface((width, height), pygame.SRCALPHA)
@@ -108,7 +134,11 @@ class SimulationManager():
         return image
 
     def _adjust_screen_size(self) -> pygame.Surface:
-        """Resize the pygame window so it fits within the physical display."""
+        """Resize the pygame window so it fits within the physical display.
+
+        Returns:
+            The created display surface.
+        """
         screen_width, screen_height = self.mlx_get_screen_size()
 
         self.screen_height = screen_height
@@ -117,15 +147,20 @@ class SimulationManager():
         return pygame.display.set_mode((screen_width, screen_height))
 
     def clear_last_frame(self, color: str = "black") -> None:  # useless ?
-        """Clear the last frame, recover it with a screen with a color"""
+        """Clear the last frame by filling the screen with a solid color.
+
+        Args:
+            color: The color to fill the screen with.
+        """
         self.screen.fill(pygame.Color(color))
 
     @staticmethod
     def display_on_screen() -> None:
-        """Display everything that you prepared to the screen"""
+        """Flip the display buffer to show everything drawn this frame."""
         pygame.display.flip()
 
     def event_manager(self) -> None:
+        """Process pygame events, updating input state and the active screen."""
         events = pygame.event.get()
 
         for event in events:
@@ -165,6 +200,11 @@ class SimulationManager():
         function_to_call.screen_selector(events)
 
     def _get_matching_screen(self) -> Any:
+        """Find the screen instance whose display method is currently active.
+
+        Returns:
+            The currently active screen instance.
+        """
         screens = (
             self.screen_manager.game_play,
             self.screen_manager.main_menu,
@@ -180,11 +220,13 @@ class SimulationManager():
              if self.state_to_call == screen.display_screen))
 
     def reset_event(self) -> None:
+        """Clear per-frame input state after it has been processed."""
         self.key_pressed = None
         self.mouse_click = None
         self.delete_pressed = False
 
     def display_menu_sprites(self) -> None:
+        """Draw the decorative Pac-Man sprites shared across menu screens."""
         self.screen.blit(
             self.arcade_pacman_sprite, (70, self.screen_height - 620))
         self.screen.blit(

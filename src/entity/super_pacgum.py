@@ -9,13 +9,27 @@ if TYPE_CHECKING:
 
 
 class SuperPacgum(Pacgum):
+    """A collectible super pacgum that lets Pac-Man hunt ghosts temporarily."""
+
     def __init__(self, line_pos: int, column_pos: int) -> None:
+        """Initialize the super pacgum's position and sprite.
+
+        Args:
+            line_pos: Line position of the super pacgum in the maze.
+            column_pos: Column position of the super pacgum in the maze.
+        """
         super().__init__(line_pos, column_pos)
 
         self.sprite: pygame.Surface = self.get_sprite(
             "png/entities_sprite.png", 401, 454, 35, 35)
 
     def eat(self, simulation_manager: "SimulationManager") -> None:
+        """Award points, start the effect cooldown, and set ghosts to hunting.
+
+        Args:
+            simulation_manager: The simulation manager holding the game state
+                and level.
+        """
         game_state = simulation_manager.game_state
         level = simulation_manager.screen_manager.game_play.level
         game_state.score += game_state.points_per_super_pacgum

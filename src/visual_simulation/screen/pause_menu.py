@@ -7,11 +7,19 @@ if TYPE_CHECKING:
 
 
 class PauseMenu(Screen):
+    """Pause menu screen for resuming, returning to the main menu, or exiting."""
+
     def __init__(self, simulation_manager: "SimulationManager") -> None:
+        """Initialize the pause menu's current selection.
+
+        Args:
+            simulation_manager: The simulation manager driving the game.
+        """
         super().__init__(simulation_manager=simulation_manager)
         self.current_choice_position: int = 0
 
     def display_screen(self) -> None:
+        """Render the pause menu, its titles, and the selection buttons."""
         self.simulation_manager.dipslay_sky()
 
         screen_titles: list[pygame.Surface] = [
@@ -39,6 +47,11 @@ class PauseMenu(Screen):
         )
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
+        """Handle input events for navigating and selecting a menu entry.
+
+        Args:
+            events: List of pygame events to process.
+        """
         actions: list[Callable[[], None]] = [
             self.game_play_screen,
             self.main_menu_screen,

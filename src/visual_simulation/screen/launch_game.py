@@ -9,7 +9,14 @@ if TYPE_CHECKING:
 
 
 class LaunchGame(Screen):
+    """Animated title screen showing Pac-Man and ghosts chasing each other."""
+
     def __init__(self, simulation_manager: "SimulationManager") -> None:
+        """Initialize the title screen's entities, logo, and animation state.
+
+        Args:
+            simulation_manager: The simulation manager driving the game.
+        """
         super().__init__(simulation_manager=simulation_manager)
 
         self.current_direction_choice: Character.FacingDirection = \
@@ -48,6 +55,7 @@ class LaunchGame(Screen):
         self.movement_time_elapse: float = 0.0
 
     def _init_entity_starting_pos(self) -> None:
+        """Set the initial on-screen positions of Pac-Man and the ghosts."""
         x_middle = self.simulation_manager.screen_width // 2
         y_middle = self.simulation_manager.screen_height // 2
 
@@ -62,6 +70,7 @@ class LaunchGame(Screen):
         self.bashful_position = self.snap_to_grid((pacman_x - 200, pacman_y))
 
     def display_images(self) -> None:
+        """Draw the entities, logo, and welcome text."""
         self.display_entities()
 
         self.simulation_manager.screen.blit(
@@ -70,6 +79,7 @@ class LaunchGame(Screen):
                        self.welcome_text_pos[1])
 
     def display_screen(self) -> None:
+        """Render the title screen and advance the entity animation."""
         start_time: float = time.monotonic()
 
         self.simulation_manager.dipslay_sky()
@@ -91,12 +101,14 @@ class LaunchGame(Screen):
         self.movement_time_elapse += time.monotonic() - start_time
 
     def update_ghost_chasing(self) -> None:
+        """Toggle whether the ghosts are chasing Pac-Man or fleeing it."""
         if self.ghost_chasing:
             self.ghost_chasing = False
         else:
             self.ghost_chasing = True
 
     def reverse_current_direction_choice(self) -> None:
+        """Reverse the current movement direction of the entity chain."""
         if self.current_direction_choice == Character.FacingDirection.UP:
             self.current_direction_choice = Character.FacingDirection.DOWN
         elif self.current_direction_choice == Character.FacingDirection.DOWN:
@@ -107,6 +119,7 @@ class LaunchGame(Screen):
             self.current_direction_choice = Character.FacingDirection.RIGHT
 
     def _set_fruit_positions(self) -> None:
+        """Set the on-screen positions the demo fruit can appear at."""
         x_middle = self.simulation_manager.screen_width // 2
         y_middle = self.simulation_manager.screen_height // 2
 
@@ -118,6 +131,11 @@ class LaunchGame(Screen):
         ])
 
     def update_super_pacgum_cooldown(self, start_time: float) -> None:
+        """Advance the super pacgum cooldown and reset the chase when it ends.
+
+        Args:
+            start_time: Timestamp marking the start of the current frame.
+        """
         self.current_super_pacgum_cooldown += time.monotonic() - start_time
 
         if self.current_super_pacgum_cooldown > self.max_super_pacgum_cooldown:
@@ -126,12 +144,14 @@ class LaunchGame(Screen):
             self.reverse_current_direction_choice()
 
     def display_entities(self) -> None:
+        """Draw the entities in their current chasing or fleeing state."""
         if self.ghost_chasing:
             self.display_default_entities()
         else:
             self.display_pacman_hunting_entities()
 
     def display_default_entities(self) -> None:
+        """Draw the ghosts chasing Pac-Man, along with the demo fruit."""
         ghost_list: list[str] = ["shadow", "speedy", "bashful", "pokey"]
         level: Level = self.simulation_manager.screen_manager.game_play.level
 
@@ -150,6 +170,7 @@ class LaunchGame(Screen):
         self.fruit_manager.display_fruits(self.simulation_manager.screen)
 
     def display_pacman_hunting_entities(self) -> None:
+        """Draw the ghosts fleeing from Pac-Man after eating a super pacgum."""
         level: Level = self.simulation_manager.screen_manager.game_play.level
 
         if self.current_super_pacgum_cooldown < self.blinking_ghost_time:
@@ -179,6 +200,7 @@ class LaunchGame(Screen):
             self.pacman_position)
 
     def travel_back_to_opposite_screen_side(self) -> None:
+        """Wrap entity positions to the opposite screen edge when off-screen."""
         screen_width: int = self.simulation_manager.screen_width
         screen_height: int = self.simulation_manager.screen_height
         for attr in ("pacman_position", "shadow_position", "speedy_position",
@@ -198,6 +220,7 @@ class LaunchGame(Screen):
             setattr(self, attr, self.snap_to_grid((pos_x, pos_y)))
 
     def update_entities_pos(self) -> None:
+        """Shift each entity's position and direction along the chain."""
         level: Level = self.simulation_manager.screen_manager.game_play.level
 
         if self.ghost_chasing:
@@ -226,6 +249,14 @@ class LaunchGame(Screen):
 
     def get_direction_value(
        self, direction: Character.FacingDirection) -> tuple[int, int]:
+        """Get the (x, y) pixel offset corresponding to a facing direction.
+
+        Args:
+            direction: The facing direction to convert.
+
+        Returns:
+            The pixel offset to move by in that direction.
+        """
         if direction == Character.FacingDirection.UP:
             return (0, -50)
         elif direction == Character.FacingDirection.DOWN:
@@ -236,11 +267,25 @@ class LaunchGame(Screen):
 
     def snap_to_grid(self, position: tuple[int, int],
                      case_size: int = 50) -> tuple[int, int]:
+        """Round a position to the nearest grid cell.
+
+        Args:
+            position: The (x, y) position to snap.
+            case_size: The size of a grid cell in pixels.
+
+        Returns:
+            The snapped (x, y) position.
+        """
         x, y = position
         return (round(x / case_size) * case_size,
                 round(y / case_size) * case_size)
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
+        """Handle input events for navigation and changing the demo direction.
+
+        Args:
+            events: List of pygame events to process.
+        """
         for event in events:
             if event.type == pygame.QUIT:
                 self.exit_game()

@@ -7,11 +7,19 @@ if TYPE_CHECKING:
 
 
 class MainMenu(Screen):
+    """Main menu screen for navigating to the game's other screens."""
+
     def __init__(self, simulation_manager: "SimulationManager") -> None:
+        """Initialize the main menu's current selection.
+
+        Args:
+            simulation_manager: The simulation manager driving the game.
+        """
         super().__init__(simulation_manager=simulation_manager)
         self.current_choice_position: int = 0
 
     def display_screen(self) -> None:
+        """Render the main menu, its titles, and the selection buttons."""
         self.simulation_manager.dipslay_sky()
 
         screen_titles: list[pygame.Surface] = [
@@ -42,6 +50,11 @@ class MainMenu(Screen):
         )
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
+        """Handle input events for navigating and selecting a menu entry.
+
+        Args:
+            events: List of pygame events to process.
+        """
         actions: list[Callable[[], None]] = [
             self.new_game,
             self.leaderboard_screen,

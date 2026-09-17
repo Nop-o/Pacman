@@ -2,8 +2,14 @@ from .parsing import JsonData
 
 
 class GameState:
+    """Mutable game state derived from configuration, tracking progress."""
 
     def __init__(self, json_data: JsonData) -> None:
+        """Initialize the game state from parsed configuration data.
+
+        Args:
+            json_data: Parsed configuration data for the game.
+        """
         self.super_pacgum: int = 4
         self.score: int = 0
         self.pacgum: int = json_data.pacgum
@@ -23,6 +29,7 @@ class GameState:
         self.is_game_won: bool = False
 
     def reset_game_state(self) -> None:
+        """Reset the game state to its initial values for a new game."""
         self.score = 0
         self.super_pacgum = 4
         self.is_game_over = False

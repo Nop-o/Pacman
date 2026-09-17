@@ -7,7 +7,14 @@ if TYPE_CHECKING:
 
 
 class ScreenManager:
+    """Container instantiating and holding all of the game's screens."""
+
     def __init__(self, simulation_manager: "SimulationManager") -> None:
+        """Instantiate every game screen with a shared simulation manager.
+
+        Args:
+            simulation_manager: The simulation manager driving the game.
+        """
         self.leaderboard: LeaderBoard = LeaderBoard(
             simulation_manager=simulation_manager)
         self.game_over: GameOver = GameOver(

@@ -10,13 +10,22 @@ if TYPE_CHECKING:
 
 
 class GamePlay(Screen):
+    """Main gameplay screen, driving the level, HUD, and player input."""
+
     def __init__(self, simulation_manager: "SimulationManager", hud: HUD)\
             -> None:
+        """Initialize the gameplay screen's level and HUD.
+
+        Args:
+            simulation_manager: The simulation manager driving the game.
+            hud: The heads-up display to render alongside the level.
+        """
         super().__init__(simulation_manager=simulation_manager)
         self.level: Level = Level(simulation_manager)
         self.hud: HUD = hud
 
     def display_screen(self) -> None:
+        """Render the current level and HUD, or transition on game over or win."""
         if self.simulation_manager.game_state.is_game_over is True:
             self.game_over_screen()
 
@@ -34,6 +43,11 @@ class GamePlay(Screen):
             self.simulation_manager.screen, self.level.pacman.direction)
 
     def screen_selector(self, events: list[pygame.event.Event]) -> None:
+        """Handle input events for movement, pausing, and cheat codes.
+
+        Args:
+            events: List of pygame events to process.
+        """
         for event in events:
             if event.type == pygame.QUIT:
                 self.exit_game()
