@@ -57,8 +57,8 @@ class HUD(Screen):
                     level.MAZE_END[1] + 20 + pacman_sprite.get_height() - 5
                 )
                 self.simulation_manager.screen.blit(
-                source=dot,
-                dest=pos
+                    source=dot,
+                    dest=pos
                 )
                 return
             self.simulation_manager.screen.blit(
