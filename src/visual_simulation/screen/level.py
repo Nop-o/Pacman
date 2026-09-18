@@ -147,14 +147,7 @@ class Level(Screen):
                 continue
             sprite = ghost.sprites[0][0]
             if self.cheat.is_ghost_freeze is True:
-                ghost_pos = (
-                    ((self.MAZE_START[0] +
-                        (self.CASE_SIZE * ghost.prev_column_pos)) +
-                        (self.CASE_SIZE // 2) - (sprite.get_width() // 2)),
-                    ((self.MAZE_START[1] +
-                        (self.CASE_SIZE * ghost.prev_line_pos)) +
-                        (self.CASE_SIZE // 2) - (sprite.get_height() // 2))
-                )
+                ghost_pos = self._position_in_maze(ghost, sprite)
             else:
                 ghost_pos = self._position_entity_in_maze(ghost, sprite)
             self.simulation_manager.screen.blit(
