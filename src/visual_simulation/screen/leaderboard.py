@@ -109,7 +109,7 @@ class LeaderBoard(Screen):
         screen: pygame.Surface = self.simulation_manager.screen
         starting_width: int = self.simulation_manager.screen_width // 3
         padding_width: int = self.simulation_manager.screen_width // 7
-        starting_height: int = self.simulation_manager.screen_height // 3.5
+        starting_height: int = int(self.simulation_manager.screen_height // 3.5)
         padding_height: int = self.simulation_manager.screen_height // 18
 
         position_text: pygame.Surface = \
