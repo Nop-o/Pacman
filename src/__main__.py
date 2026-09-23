@@ -16,13 +16,17 @@ class Main:
         """
         if len(sys.argv) < 2:
             print("Argument error: missing json file")
-            return
+
         if len(sys.argv) > 2:
             print("Argument error: too many arguments entered")
             return
 
         try:
-            json_parsing = JsonParsing(sys.argv[1])
+            if len(sys.argv) < 2:
+                json_parsing = JsonParsing("config.json")
+            else:
+                json_parsing = JsonParsing(sys.argv[1])
+
             pacman_data = JsonData(**json_parsing.file_content)
 
         except ValidationError as e:
