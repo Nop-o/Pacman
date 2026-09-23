@@ -135,7 +135,98 @@ dictionary is validated against a `pydantic` `BaseModel` (`JsonData`) that
 enforces types, bounds, and defaults.
 
 ## General Software Architecture
- 
+```mermaid
+%%{init: {'themeVariables': {'fontSize': '25px'}}}%%
+
+flowchart TD
+
+subgraph group_entry["Launch and configuration"]
+  node_entrypoint["CLI entry<br/>[__main__.py]"]
+  node_config_parser["Config parsing<br/>[json_parsing.py]"]
+end
+
+subgraph group_presentation["Screens and presentation"]
+  node_simulation["Simulation loop"]
+  node_screen_manager["Screen manager<br/>[screen_manager.py]"]
+  node_screens["Game screens"]
+end
+
+subgraph group_gameplay["Level gameplay"]
+  node_gameplay_screen["Gameplay screen<br/>[game_play.py]"]
+  node_level["Level logic<br/>[level.py]"]
+  node_cheat["Cheat controls<br/>[cheat.py]"]
+end
+
+subgraph group_world["Maze and actors"]
+  node_maze["Maze adapter<br/>[maze.py]"]
+  node_pathfinding["Ghost pathfinding<br/>[dfs.py]"]
+  node_characters["Player and ghosts"]
+  node_collectibles["Maze collectibles<br/>[pacgum.py]"]
+end
+
+subgraph group_state["Game state and persistence"]
+  node_game_state["Persistent game state<br/>[game_state.py]"]
+  node_leaderboard["Leaderboard screen<br/>[leaderboard.py]"]
+end
+
+node_user(("Player"))
+node_config_file["JSON config"]
+node_pygame(("Pygame"))
+node_maze_package(("A-Maze-ing package"))
+node_highscores[("Highscore JSON files")]
+
+node_user -->|"launches"| node_entrypoint
+node_config_file -->|"provides settings"| node_config_parser
+node_entrypoint -->|"parses config"| node_config_parser
+node_entrypoint -->|"starts game"| node_simulation
+node_config_parser -->|"validated settings"| node_simulation
+node_simulation -->|"initializes state"| node_game_state
+node_simulation -->|"creates screens"| node_screen_manager
+node_simulation -->|"dispatches active screen"| node_screens
+node_user -->|"sends input"| node_simulation
+node_simulation -->|"reads events, renders"| node_pygame
+node_screen_manager -->|"instantiates screens"| node_screens
+node_gameplay_screen -->|"manages level"| node_level
+node_level -->|"creates and queries"| node_maze
+node_maze -.->|"generates layout"| node_maze_package
+node_level -->|"moves and checks"| node_characters
+node_level -->|"places and consumes"| node_collectibles
+node_characters -->|"requests paths"| node_pathfinding
+node_pathfinding -->|"queries neighbors"| node_maze
+node_level -->|"updates score and outcomes"| node_game_state
+node_level -->|"uses cheat controls"| node_cheat
+node_cheat -->|"changes game state"| node_game_state
+node_leaderboard -->|"loads and saves scores"| node_highscores
+node_entrypoint -->|"exports highscores"| node_leaderboard
+
+click node_entrypoint "https://github.com/nop-o/pacman/blob/main/src/__main__.py"
+click node_config_parser "https://github.com/nop-o/pacman/blob/main/src/parsing/json_parsing.py"
+click node_simulation "https://github.com/nop-o/pacman/blob/main/src/visual_simulation/simulation_manager.py"
+click node_screen_manager "https://github.com/nop-o/pacman/blob/main/src/visual_simulation/screen_manager.py"
+click node_screens "https://github.com/nop-o/pacman/tree/main/src/visual_simulation/screen"
+click node_gameplay_screen "https://github.com/nop-o/pacman/blob/main/src/visual_simulation/screen/game_play.py"
+click node_level "https://github.com/nop-o/pacman/blob/main/src/visual_simulation/screen/level.py"
+click node_cheat "https://github.com/nop-o/pacman/blob/main/src/cheat.py"
+click node_game_state "https://github.com/nop-o/pacman/blob/main/src/game_state.py"
+click node_leaderboard "https://github.com/nop-o/pacman/blob/main/src/visual_simulation/screen/leaderboard.py"
+click node_maze "https://github.com/nop-o/pacman/blob/main/src/maze/maze.py"
+click node_pathfinding "https://github.com/nop-o/pacman/blob/main/src/algorithm/dfs.py"
+click node_characters "https://github.com/nop-o/pacman/tree/main/src/entity"
+click node_collectibles "https://github.com/nop-o/pacman/blob/main/src/entity/pacgum.py"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_entrypoint,node_config_parser toneBlue
+class node_simulation,node_screen_manager,node_screens,node_highscores toneAmber
+class node_gameplay_screen,node_level,node_cheat toneMint
+class node_maze,node_pathfinding,node_characters,node_collectibles toneRose
+class node_game_state,node_leaderboard,node_user,node_config_file,node_pygame,node_maze_package toneIndigo
+```
 The codebase is organized into a few cooperating packages:
  
 - **`entity`** — the game's actors.
