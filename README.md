@@ -14,6 +14,14 @@ the player eats a super-pacgum), a persistent highscore system, a JSON
 configuration file with comment support, and a cheat mode dedicated to peer
 review.
 
+## Download
+ 
+A ready-to-play, packaged build (Linux) is available on itch.io:
+
+URL: https://ekvod.itch.io/pacman
+password: password
+
+
 ## Instructions
 
 The project uses [`uv`](https://docs.astral.sh/uv/) for dependency management
