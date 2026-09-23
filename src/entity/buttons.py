@@ -1,6 +1,8 @@
 from src.entity.sprite import Sprite
 import pygame
-import sys, os
+import sys
+import os
+
 
 class Button(Sprite):
     """A single clickable/visual button backed by a sprite."""

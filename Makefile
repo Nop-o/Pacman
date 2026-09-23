@@ -30,6 +30,9 @@ debug: install
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type d -name .mypy_cache -exec rm -rf {} +
+	rm pacman.spec
+	rm -rf dist
+	rm -rf build
 
 lint:
 	uv run flake8 $(SRC_DIR)
@@ -44,7 +47,7 @@ lint-strict:
 	uv run flake8 $(SRC_DIR)
 	uv run mypy	--strict $(SRC_DIR)
 
-package:
-	uv run pyinstaller --onedir --add-data "png:png" $(SRC_DIR)/__main__.py
+package: install
+	uv run pyinstaller --onefile --name pacman --add-data "png:png" run.py
 
 .PHONY: install run debug clean lint lint-strict help package

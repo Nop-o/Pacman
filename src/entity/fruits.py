@@ -1,6 +1,8 @@
 import pygame
 from .sprite import Sprite
-import sys, os
+import sys
+import os
+
 
 class Fruit(Sprite):
     """A collectible fruit backed by a sprite."""
@@ -98,7 +100,6 @@ class FruitManager:
     def resource_path(relative_path: str) -> str:
         base_path = getattr(sys, "_MEIPASS", os.path.abspath("."))
         return os.path.join(base_path, relative_path)
-
 
 
 class Cherry(Fruit):

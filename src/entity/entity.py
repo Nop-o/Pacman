@@ -1,5 +1,6 @@
 from abc import ABC
-import sys, os
+import sys
+import os
 import pygame
 
 
