@@ -109,7 +109,8 @@ class LeaderBoard(Screen):
         screen: pygame.Surface = self.simulation_manager.screen
         starting_width: int = self.simulation_manager.screen_width // 3
         padding_width: int = self.simulation_manager.screen_width // 7
-        starting_height: int = int(self.simulation_manager.screen_height // 3.5)
+        starting_height: int = int(
+            self.simulation_manager.screen_height // 3.5)
         padding_height: int = self.simulation_manager.screen_height // 18
 
         position_text: pygame.Surface = \
@@ -175,9 +176,9 @@ class LeaderBoard(Screen):
     def export_highscore(self) -> None:
         """Save the current scores and names to their JSON files."""
         path_score = self.simulation_manager.persistent_data_path(
-            "scores/highscore.json")
+            "highscore.json")
         path_name = self.simulation_manager.persistent_data_path(
-            "scores/highscore_name.json"
+            "highscore_name.json"
         )
         with open(path_score, "w") as file:
             file.write(json.dumps(self.scores))
@@ -187,9 +188,9 @@ class LeaderBoard(Screen):
     def _import_highscore(self) -> None:
         """Load scores and names from their JSON files, or initialize them."""
         path_score = self.simulation_manager.persistent_data_path(
-            "scores/highscore.json")
+            "highscore.json")
         path_name = self.simulation_manager.persistent_data_path(
-            "scores/highscore_name.json"
+            "highscore_name.json"
         )
         try:
             with open(path_score, "r") as file:

@@ -104,7 +104,7 @@ class Victory(Screen):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    self.main_menu_screen()
+                    self.button_action()
                     return
 
     def draw_sprites(self) -> None:
