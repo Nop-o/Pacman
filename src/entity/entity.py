@@ -1,4 +1,5 @@
 from abc import ABC
+import sys, os
 import pygame
 
 
@@ -38,3 +39,8 @@ class Entity(ABC):
         image.blit(source_image, (0, 0), (x, y, width, height))
 
         return image
+
+    @staticmethod
+    def resource_path(relative_path: str) -> str:
+        base_path = getattr(sys, "_MEIPASS", os.path.abspath("."))
+        return os.path.join(base_path, relative_path)

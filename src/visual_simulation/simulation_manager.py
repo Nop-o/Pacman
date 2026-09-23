@@ -6,6 +6,8 @@ from .text_rendering import TextRendering
 from ..game_state import GameState
 from ..entity import ButtonManager
 from ..parsing import JsonData
+import sys
+import os
 
 
 class SimulationManager():
@@ -43,19 +45,24 @@ class SimulationManager():
             self.screen_manager.launch_game.display_screen
 
         self.sky: list[pygame.Surface] = [
-            self.get_sprite("png/bg_flat_1.png", 0, 0, 1280, 720),
-            self.get_sprite("png/bg_flat_2.png", 0, 0, 1280, 720),
-            self.get_sprite("png/bg_flat_3.png", 0, 0, 1280, 720),
+            self.get_sprite(self.resource_path("png/bg_flat_1.png"),
+                            0, 0, 1280, 720),
+            self.get_sprite(self.resource_path("png/bg_flat_2.png"),
+                            0, 0, 1280, 720),
+            self.get_sprite(self.resource_path("png/bg_flat_3.png"),
+                            0, 0, 1280, 720),
         ]
 
         self.button_manager: ButtonManager = ButtonManager(
             self.screen_width, self.screen_height)
 
         self.arcade_pacman_sprite: pygame.Surface = \
-            self.get_sprite("png/arcade_pacman.png", 50, 10, 380, 475)
+            self.get_sprite(self.resource_path("png/arcade_pacman.png"),
+                            50, 10, 380, 475)
 
         self.running_pacman_sprite: pygame.Surface = \
-            self.get_sprite("png/running_pacman_small.png", 10, 0, 360, 335)
+            self.get_sprite(self.resource_path("png/running_pacman_small.png"),
+                            10, 0, 360, 335)
 
     def dipslay_sky(self) -> None:
         """Tile the animated sky background across the entire screen."""
@@ -209,3 +216,16 @@ class SimulationManager():
             self.arcade_pacman_sprite, (70, self.screen_height - 620))
         self.screen.blit(
             self.running_pacman_sprite, (self.screen_width - 400, 70))
+
+    @staticmethod
+    def resource_path(relative_path: str) -> str:
+        base_path = getattr(sys, "_MEIPASS", os.path.abspath("."))
+        return os.path.join(base_path, relative_path)
+
+    @staticmethod
+    def persistent_data_path(filename: str) -> str:
+        if getattr(sys, "frozen", False):
+            base_path = os.path.dirname(sys.executable)
+        else:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, filename)

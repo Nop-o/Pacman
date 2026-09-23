@@ -44,4 +44,7 @@ lint-strict:
 	uv run flake8 $(SRC_DIR)
 	uv run mypy	--strict $(SRC_DIR)
 
-.PHONY: install run debug clean lint lint-strict help
+package:
+	uv run pyinstaller --onedir --add-data "png:png" $(SRC_DIR)/__main__.py
+
+.PHONY: install run debug clean lint lint-strict help package

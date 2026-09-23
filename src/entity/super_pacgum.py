@@ -19,9 +19,9 @@ class SuperPacgum(Pacgum):
             column_pos: Column position of the super pacgum in the maze.
         """
         super().__init__(line_pos, column_pos)
-
+        path = self.resource_path("png/entities_sprite.png")
         self.sprite: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 401, 454, 35, 35)
+            path, 401, 454, 35, 35)
 
     def eat(self, simulation_manager: "SimulationManager") -> None:
         """Award points, start the effect cooldown, and set ghosts to hunting.

@@ -30,8 +30,10 @@ class LaunchGame(Screen):
 
         self._init_entity_starting_pos()
 
+        logo_path = self.simulation_manager.resource_path(
+            "png/old_pacman_logo.png")
         self.old_pacman_logo: pygame.Surface = self.get_sprite(
-            "png/old_pacman_logo.png", 30, 100, 1250, 500)
+            logo_path, 30, 100, 1250, 500)
         self.old_pacman_logo_pos: tuple[int, int] = (
             self.get_center_width(self.old_pacman_logo),
             self.simulation_manager.screen_height // 8)

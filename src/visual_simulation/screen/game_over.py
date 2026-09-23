@@ -17,8 +17,10 @@ class GameOver(Screen):
         """
         super().__init__(simulation_manager=simulation_manager)
         self.user_name = ""
+        logo_path =\
+            self.simulation_manager.resource_path("png/pacman_logo_small.png")
         self.pacman_logo: pygame.Surface = self.get_sprite(
-            "png/pacman_logo_small.png", 10, 0, 640, 380)
+            logo_path, 10, 0, 640, 380)
 
     def display_screen(self) -> None:
         """Render the game over screen, prompting for a name if applicable."""

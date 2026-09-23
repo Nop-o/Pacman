@@ -31,12 +31,13 @@ class Ghost(Character, ABC):
             Character.FacingDirection.RIGHT
         self.death_timer: float | None = None
 
+        path = self.resource_path("png/entities_sprite.png")
         self.running_away_sprites: list[pygame.Surface] = [
-            self.get_sprite("png/entities_sprite.png", 1, 554 + (i * 50),
+            self.get_sprite(path, 1, 554 + (i * 50),
                             35, 35)
             for i in range(0, 2, 1)]
         self.running_away_sprites.extend(
-            [self.get_sprite("png/entities_sprite.png", 51, 554 + (i * 50),
+            [self.get_sprite(path, 51, 554 + (i * 50),
                              35, 35)
              for i in range(0, 2, 1)])
 
@@ -192,18 +193,19 @@ class Shadow(Ghost):  # red chase
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
+        path = self.resource_path("png/entities_sprite.png")
         self.sprites = \
             [[self.get_sprite(
-             "png/entities_sprite.png", 1, 4 + (i * 50), 35, 35)
+              path, 1, 4 + (i * 50), 35, 35)
              for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 1, 104 + (i * 50), 35, 35)
+              path, 1, 104 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 1, 204 + (i * 50), 35, 35)
+              path, 1, 204 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 1, 304 + (i * 50), 35, 35)
+              path, 1, 304 + (i * 50), 35, 35)
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
@@ -243,18 +245,19 @@ class Speedy(Ghost):  # pink flank
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
+        path = self.resource_path("png/entities_sprite.png")
         self.sprites = \
             [[self.get_sprite(
-              "png/entities_sprite.png", 51, 4 + (i * 50), 35, 35)
+              path, 51, 4 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 51, 104 + (i * 50), 35, 35)
+              path, 51, 104 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 51, 204 + (i * 50), 35, 35)
+              path, 51, 204 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 51, 304 + (i * 50), 35, 35)
+              path, 51, 304 + (i * 50), 35, 35)
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
@@ -304,18 +307,19 @@ class Bashful(Ghost):  # cyan random
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
+        path = self.resource_path("png/entities_sprite.png")
         self.sprites = \
             [[self.get_sprite(
-              "png/entities_sprite.png", 101, 4 + (i * 50), 35, 35)
+              path, 101, 4 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 101, 104 + (i * 50), 35, 35)
+              path, 101, 104 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 101, 204 + (i * 50), 35, 35)
+              path, 101, 204 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 101, 304 + (i * 50), 35, 35)
+              path, 101, 304 + (i * 50), 35, 35)
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:
@@ -360,18 +364,19 @@ class Pokey(Ghost):  # orange chase + run away
         super().__init__(maze, pacman, super_pacgum_cooldown, algorithm)
         self.starting_position: tuple[int, int] = self._set_starting_position()
 
+        path = self.resource_path("png/entities_sprite.png")
         self.sprites = \
             [[self.get_sprite(
-              "png/entities_sprite.png", 151, 4 + (i * 50), 35, 35)
+              path, 151, 4 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 151, 104 + (i * 50), 35, 35)
+              path, 151, 104 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 151, 204 + (i * 50), 35, 35)
+              path, 151, 204 + (i * 50), 35, 35)
               for i in range(0, 2, 1)],
              [self.get_sprite(
-              "png/entities_sprite.png", 151, 304 + (i * 50), 35, 35)
+              path, 151, 304 + (i * 50), 35, 35)
               for i in range(0, 2, 1)]]
 
     def get_goal(self) -> tuple[int, int]:

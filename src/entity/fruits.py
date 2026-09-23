@@ -1,6 +1,6 @@
 import pygame
 from .sprite import Sprite
-
+import sys, os
 
 class Fruit(Sprite):
     """A collectible fruit backed by a sprite."""
@@ -25,14 +25,15 @@ class FruitManager:
 
     def __init__(self) -> None:
         """Initialize the fruit sprites and cycling state."""
+        path = self.resource_path("png/entities_sprite.png")
         self.fruits: list[Fruit] = [
-            Cherry("png/entities_sprite.png", 601, 4, 35, 35),
-            Strawberry("png/entities_sprite.png", 601, 54, 35, 35),
-            Apricot("png/entities_sprite.png", 601, 104, 35, 35),
-            Apple("png/entities_sprite.png", 601, 154, 35, 35),
-            Berry("png/entities_sprite.png", 601, 204, 35, 35),
-            Banana("png/entities_sprite.png", 601, 254, 35, 35),
-            Peach("png/entities_sprite.png", 601, 304, 35, 35)
+            Cherry(path, 601, 4, 35, 35),
+            Strawberry(path, 601, 54, 35, 35),
+            Apricot(path, 601, 104, 35, 35),
+            Apple(path, 601, 154, 35, 35),
+            Berry(path, 601, 204, 35, 35),
+            Banana(path, 601, 254, 35, 35),
+            Peach(path, 601, 304, 35, 35)
         ]
 
         self._fruit_position: list[tuple[int, int]]
@@ -92,6 +93,12 @@ class FruitManager:
             positions: List of (x, y) positions fruits can be displayed at.
         """
         self._fruit_position = positions
+
+    @staticmethod
+    def resource_path(relative_path: str) -> str:
+        base_path = getattr(sys, "_MEIPASS", os.path.abspath("."))
+        return os.path.join(base_path, relative_path)
+
 
 
 class Cherry(Fruit):

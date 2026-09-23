@@ -1,6 +1,6 @@
 from src.entity.sprite import Sprite
 import pygame
-
+import sys, os
 
 class Button(Sprite):
     """A single clickable/visual button backed by a sprite."""
@@ -30,18 +30,20 @@ class ButtonManager(Sprite):
             screen_width: Width of the screen in pixels.
             screen_height: Height of the screen in pixels.
         """
+        path_joystick = self.resource_path("png/joystick.png")
+        path_base = self.resource_path("png/joystick_base.png")
         self.joystick_sprites: list[Button] = [
-            Button("png/joystick.png", 340, 145, 110, 90),
-            Button("png/joystick.png", 240, 245, 110, 90),
-            Button("png/joystick.png", 140, 145, 110, 90),
-            Button("png/joystick.png", 240, 30, 110, 110),
+            Button(path_joystick, 340, 145, 110, 90),
+            Button(path_joystick, 240, 245, 110, 90),
+            Button(path_joystick, 140, 145, 110, 90),
+            Button(path_joystick, 240, 30, 110, 110),
         ]
         self.joystick_base_sprite: Button = Button(
-            "png/joystick_base.png", 102, 36, 172, 88)
-
+            path_base, 102, 36, 172, 88)
+        path = self.resource_path("png/entities_sprite.png")
         self.buttons_sprite: list[Button] = [
-            Button("png/entities_sprite.png", 201, 704, 35, 35),
-            Button("png/entities_sprite.png", 201, 796, 35, 35),
+            Button(path, 201, 704, 35, 35),
+            Button(path, 201, 796, 35, 35),
             ]
 
         self.screen_width: int = screen_width
@@ -146,3 +148,8 @@ class ButtonManager(Sprite):
             self.buttons_sprite[0].sprite, button_positions[position][0])
         screen.blit(
             self.buttons_sprite[1].sprite, button_positions[position][1])
+
+    @staticmethod
+    def resource_path(relative_path: str) -> str:
+        base_path = getattr(sys, "_MEIPASS", os.path.abspath("."))
+        return os.path.join(base_path, relative_path)

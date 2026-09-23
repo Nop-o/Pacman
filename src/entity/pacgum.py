@@ -20,8 +20,9 @@ class Pacgum(Entity):
         self.line_pos: int = line_pos
         self.column_pos: int = column_pos
 
+        path = self.resource_path("png/entities_sprite.png")
         self.sprite: pygame.Surface = self.get_sprite(
-            "png/entities_sprite.png", 401, 404, 35, 35)
+            path, 401, 404, 35, 35)
 
     def eat(self, simulation_manager: "SimulationManager") -> None:
         """Award points for eating this pacgum.
