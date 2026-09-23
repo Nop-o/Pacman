@@ -30,7 +30,7 @@ debug: install
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type d -name .mypy_cache -exec rm -rf {} +
-	rm pacman.spec
+	rm -rf pacman.spec
 	rm -rf dist
 	rm -rf build
 

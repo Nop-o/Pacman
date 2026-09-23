@@ -14,9 +14,6 @@ class Main:
         it, and runs the simulation. Errors are caught and printed as
         user-friendly messages rather than propagated.
         """
-        if len(sys.argv) < 2:
-            print("Argument error: missing json file")
-
         if len(sys.argv) > 2:
             print("Argument error: too many arguments entered")
             return
