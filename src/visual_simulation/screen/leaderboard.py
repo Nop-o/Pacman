@@ -147,7 +147,7 @@ class LeaderBoard(Screen):
             try:
                 screen.blit((
                     self.simulation_manager.text_rendering.render_small_title(
-                        f"{self.names[i]}", (255, 255, 0))),
+                        f"{self.names[i][0:10]}", (255, 255, 0))),
                     (starting_width + padding_width,
                      starting_height + (padding_height * i))
                         )
