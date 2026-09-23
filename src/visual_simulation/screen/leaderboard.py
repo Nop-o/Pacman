@@ -109,7 +109,8 @@ class LeaderBoard(Screen):
         screen: pygame.Surface = self.simulation_manager.screen
         starting_width: int = self.simulation_manager.screen_width // 3
         padding_width: int = self.simulation_manager.screen_width // 7
-        starting_height: int = int(self.simulation_manager.screen_height // 3.5)
+        starting_height: int = int(
+            self.simulation_manager.screen_height // 3.5)
         padding_height: int = self.simulation_manager.screen_height // 18
 
         position_text: pygame.Surface = \
@@ -182,10 +183,10 @@ class LeaderBoard(Screen):
     def _import_highscore(self) -> None:
         """Load scores and names from their JSON files, or initialize them."""
         try:
-            with open("scores/highscore.json", "r") as file:
+            with open("highscore.json", "r") as file:
                 raw_scores = json.loads(file.read())
                 self.scores = {int(k): v for k, v in raw_scores.items()}
-            with open("scores/highscore_name.json", "r") as file:
+            with open("highscore_name.json", "r") as file:
                 raw_names = json.loads(file.read())
                 self.names = {int(k): v for k, v in raw_names.items()}
         except FileNotFoundError:

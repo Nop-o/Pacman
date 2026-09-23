@@ -64,6 +64,9 @@ class GameOver(Screen):
     def button_action(self) -> None:
         """Save the current score to the leaderboard and go to the leaderboard
         screen."""
+        if len(self.user_name) == 0:
+            return
+
         self.simulation_manager.screen_manager.leaderboard.add_new_highscore(
             self.simulation_manager.game_state.score, self.user_name)
         self.leaderboard_screen()
@@ -102,7 +105,7 @@ class GameOver(Screen):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    self.main_menu_screen()
+                    self.button_action()
                     return
 
     def draw_sprites(self) -> None:
