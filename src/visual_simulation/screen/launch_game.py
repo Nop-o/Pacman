@@ -104,10 +104,7 @@ class LaunchGame(Screen):
 
     def update_ghost_chasing(self) -> None:
         """Toggle whether the ghosts are chasing Pac-Man or fleeing it."""
-        if self.ghost_chasing:
-            self.ghost_chasing = False
-        else:
-            self.ghost_chasing = True
+        self.ghost_chasing = not self.ghost_chasing
 
     def reverse_current_direction_choice(self) -> None:
         """Reverse the current movement direction of the entity chain."""
@@ -174,28 +171,22 @@ class LaunchGame(Screen):
     def display_pacman_hunting_entities(self) -> None:
         """Draw the ghosts fleeing from Pac-Man after eating a super pacgum."""
         level: Level = self.simulation_manager.screen_manager.game_play.level
+        ghost_positions: list[tuple[int, int]] = [
+            self.shadow_position, self.speedy_position,
+            self.bashful_position, self.pokey_position
+        ]
 
         if self.current_super_pacgum_cooldown < self.blinking_ghost_time:
             image_count = 2
         else:
             image_count = 4
 
-        self.simulation_manager.screen.blit(
-            level.ghosts[0].running_away_sprites[
-                self.simulation_manager.frame_count % image_count],
-            self.shadow_position)
-        self.simulation_manager.screen.blit(
-            level.ghosts[1].running_away_sprites[
-                self.simulation_manager.frame_count % image_count],
-            self.speedy_position)
-        self.simulation_manager.screen.blit(
-            level.ghosts[2].running_away_sprites[
-                self.simulation_manager.frame_count % image_count],
-            self.bashful_position)
-        self.simulation_manager.screen.blit(
-            level.ghosts[3].running_away_sprites[
-                self.simulation_manager.frame_count % image_count],
-            self.pokey_position)
+        for i, ghost in enumerate(level.ghosts, 0):
+            self.simulation_manager.screen.blit(
+                ghost.running_away_sprites[
+                    self.simulation_manager.frame_count % image_count],
+                ghost_positions[i])
+
         self.simulation_manager.screen.blit(
             level.pacman.sprites[level.pacman.direction][
                 self.simulation_manager.frame_count % 3],
@@ -211,14 +202,14 @@ class LaunchGame(Screen):
             pos_x, pos_y = getattr(self, attr)
 
             if screen_width <= pos_x:
-                pos_x -= screen_width
-            elif 0 >= pos_x:
-                pos_x += screen_width
+                pos_x = 0
+            elif -50 >= pos_x:
+                pos_x = screen_width - 51
 
-            if screen_height <= pos_y + 60:
-                pos_y -= screen_height
-            elif 0 >= pos_y:
-                pos_y += screen_height
+            if screen_height <= pos_y + 50:
+                pos_y = 0
+            elif -50 >= pos_y:
+                pos_y = screen_height - 51
 
             setattr(self, attr, self.snap_to_grid((pos_x, pos_y)))
 
