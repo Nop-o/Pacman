@@ -36,6 +36,7 @@ make lint          # flake8 + mypy (standard checks)
 make lint-strict   # flake8 + mypy --strict
 make clean         # remove __pycache__ and .mypy_cache
 make help          # list all available commands
+make package       # create a package
 ```
 
 The game itself is launched as:
