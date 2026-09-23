@@ -49,5 +49,6 @@ lint-strict:
 
 package: install
 	uv run pyinstaller --onefile --name pacman --add-data "png:png" run.py
+	zip dist/pacman.zip dist/pacman config.json
 
 .PHONY: install run debug clean lint lint-strict help package
