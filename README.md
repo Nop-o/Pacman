@@ -93,10 +93,6 @@ The top 10 scores are loaded at game start and saved whenever the game ends
 (win or lose), once the player has entered their name (max 10 characters,
 alphanumeric and spaces only, non-negative integer score).
 
-*TODO: document the exact internal structure (key names / shape) of
-`highscore.json` and `highscore_name.json` if it needs to be more explicit
-for reviewers.*
-
 ## Maze Generation
 
 Level generation relies entirely on an externally assigned **A-Maze-ing**
