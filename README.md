@@ -2,6 +2,21 @@
 
 # Pac-Man
 
+## Table of Contents
+- [Pac-Man](#pac-man)
+	- [Table of Contents](#table-of-contents)
+	- [Description](#description)
+	- [Download](#download)
+	- [Instructions](#instructions)
+		- [Controls](#controls)
+	- [Configuration](#configuration)
+	- [Highscore](#highscore)
+	- [Maze Generation](#maze-generation)
+	- [Implementation](#implementation)
+	- [General Software Architecture](#general-software-architecture)
+	- [Project Management](#project-management)
+	- [Resources](#resources)
+
 ## Description
 
 This project is a complete, playable recreation of the classic 1980 arcade game
