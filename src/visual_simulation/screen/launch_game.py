@@ -66,10 +66,10 @@ class LaunchGame(Screen):
 
         self.pacman_position = self.snap_to_grid((pacman_x, pacman_y))
 
-        self.shadow_position = self.snap_to_grid((pacman_x - 50, pacman_y))
-        self.speedy_position = self.snap_to_grid((pacman_x - 100, pacman_y))
-        self.pokey_position = self.snap_to_grid((pacman_x - 150, pacman_y))
-        self.bashful_position = self.snap_to_grid((pacman_x - 200, pacman_y))
+        self.shadow_position = self.snap_to_grid((pacman_x - 200, pacman_y))
+        self.speedy_position = self.snap_to_grid((pacman_x - 150, pacman_y))
+        self.bashful_position = self.snap_to_grid((pacman_x - 100, pacman_y))
+        self.pokey_position = self.snap_to_grid((pacman_x - 50, pacman_y))
 
     def display_images(self) -> None:
         """Draw the entities, logo, and welcome text."""
