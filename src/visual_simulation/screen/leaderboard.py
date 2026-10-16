@@ -2,6 +2,7 @@ from . import Screen
 from typing import TYPE_CHECKING
 import pygame
 import json
+import sys
 
 if TYPE_CHECKING:
     from ..simulation_manager import SimulationManager
@@ -136,7 +137,8 @@ class LeaderBoard(Screen):
                     )
             except KeyError as e:
                 if not self.leaderboard_error:
-                    print(f"Missing key: missing leaderboard key {e}")
+                    print(f"Missing key: missing leaderboard key {e}",
+                          file=sys.stderr)
                     self.leaderboard_error = True
 
         screen.blit(
@@ -153,7 +155,8 @@ class LeaderBoard(Screen):
                         )
             except KeyError as e:
                 if not self.leaderboard_error:
-                    print(f"Missing key: missing leaderboard key {e}")
+                    print(f"Missing key: missing leaderboard key {e}",
+                          file=sys.stderr)
                     self.leaderboard_error = True
 
         screen.blit(
@@ -170,7 +173,8 @@ class LeaderBoard(Screen):
                         )
             except KeyError as e:
                 if not self.leaderboard_error:
-                    print(f"Missing key: missing leaderboard key {e}")
+                    print(f"Missing key: missing leaderboard key {e}",
+                          file=sys.stderr)
                     self.leaderboard_error = True
 
     def export_highscore(self) -> None:

@@ -48,9 +48,6 @@ class FruitManager:
         Args:
             screen: Surface to draw on.
         """
-        if not self.fruit_position:
-            self.update_fruit_position
-
         screen.blit(self.fruits[self.current_fruit].sprites,
                     self.fruit_position)
 

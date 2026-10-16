@@ -1,4 +1,5 @@
-from pydantic import BaseModel, field_validator
+from pydantic import (BaseModel, field_validator, ConfigDict, Field,
+                      ValidatorFunctionWrapHandler, ValidationInfo)
 import json5
 from typing import Any
 import random
@@ -43,89 +44,21 @@ class JsonParsing:
 
 
 class JsonData(BaseModel):
-    lives: int
-    pacgum: int
-    points_per_pacgum: int
-    points_per_super_pacgum: int
-    super_pacgum_cooldown: int
-    points_per_ghost: int
-    level_max_time: int
-    seed: int
-    is_cheat_active: bool
+    model_config = ConfigDict(extra="forbid", validate_assignment=True)
 
-    @field_validator("lives", mode="before")
-    @classmethod
-    def validate_lives(cls, v: Any) -> int:
-        if not isinstance(v, int) or v < 0 or v > 200:
-            print(f"Config file error: {v} is not a valid live count")
-            return 3
-        return v
+    lives: int = Field(default=3, ge=1, le=200)
+    pacgum: int = Field(default=200, ge=1, le=100000)
+    points_per_pacgum: int = Field(default=200, ge=-100000, le=100000)
+    points_per_super_pacgum: int = Field(default=500, ge=-100000, le=100000)
+    super_pacgum_cooldown: int = Field(default=20, ge=1, le=1000)
+    points_per_ghost: int = Field(default=1000, ge=-100000, le=100000)
+    level_max_time: int = Field(default=90, ge=20, le=1000000000)
+    seed: int = Field(default=random.randint(-1000000000, 1000000000),
+                      ge=-1000000000, le=1000000000)
+    is_cheat_active: bool = Field(default=False)
 
-    @field_validator("pacgum", mode="before")
+    @field_validator("*", mode="wrap")
     @classmethod
-    def validate_pacgum(cls, v: Any) -> int:
-        if not isinstance(v, int) or v < 1:
-            print(f"Config file error: {v} is not a valid pacgum count")
-            return 200
-        return v
-
-    @field_validator("points_per_pacgum", mode="before")
-    @classmethod
-    def validate_points_per_pacgum(cls, v: Any) -> int:
-        if not isinstance(v, int) or v < -100000 or v > 100000:
-            print(f"Config file error: {v} is not a valid point per pacgum")
-            return 100
-        return v
-
-    @field_validator("points_per_super_pacgum", mode="before")
-    @classmethod
-    def validate_points_per_super_pacgum(cls, v: Any) -> int:
-        if not isinstance(v, int) or v < -100000 or v > 100000:
-            print(
-                f"Config file error: {v} is not a valid point per super pacgum"
-                )
-            return 200
-        return v
-
-    @field_validator("super_pacgum_cooldown", mode="before")
-    @classmethod
-    def validate_super_pacgum_cooldown(cls, v: Any) -> int:
-        if not isinstance(v, int) or v < 1 or v > 1000:
-            print(
-                f"Config file error: {v} is not a valid super pacgum cooldown")
-            return 20
-        return v
-
-    @field_validator("points_per_ghost", mode="before")
-    @classmethod
-    def validate_points_per_ghost(cls, v: Any) -> int:
-        if not isinstance(v, int) or v < -100000 or v > 100000:
-            print(f"Config file error: {v} is not a valid point per ghost")
-            return 500
-        return v
-
-    @field_validator("level_max_time", mode="before")
-    @classmethod
-    def validate_level_max_time(cls, v: Any) -> int:
-        if not isinstance(v, int) or v < 20 or v > 1000000000:
-            print(f"Config file error: {v} is not a valid level max time")
-            return 90
-        return v
-
-    @field_validator("seed", mode="before")
-    @classmethod
-    def validate_seed(cls, v: Any) -> int:
-        if not isinstance(v, int) or v < -1000000000 or v > 1000000000:
-            print(f"Config file error: {v} is not a valid seed")
-            return random.randint(-1000000000, 1000000000)
-        return v
-
-    @field_validator("is_cheat_active", mode="before")
-    @classmethod
-    def validate_is_cheat_active(cls, v: Any) -> Any:
-        if v not in [
-            True, 1, '1', 'true', 't', 'on', 'yes', 'y',
-           False, 0, '0', 'false', 'f', 'off', 'no', 'n']:
-            print(f"Config file error: {v} is not a valid cheat activation")
-            return False
-        return v
+    def clamp_all(cls, value, handler: ValidatorFunctionWrapHandler,
+                  info: ValidationInfo) -> None:
+        
