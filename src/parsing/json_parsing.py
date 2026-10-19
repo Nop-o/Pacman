@@ -1,5 +1,6 @@
 from pydantic import (BaseModel, field_validator, ConfigDict, Field,
-                      ValidatorFunctionWrapHandler, ValidationInfo)
+                      ValidatorFunctionWrapHandler, ValidationInfo,
+                      model_validator, ValidationError)
 import json5
 from typing import Any
 import random
@@ -18,29 +19,25 @@ class JsonParsing:
         with open(file_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
 
-        filtered: list[str] = [
-            line for line in lines if not line.lstrip().startswith('#')]
-        hashtag_less_content: list[str] = [
-            line.split('#', 1)[0] for line in filtered]
+        filtered_lines: list[str] = [
+            line.split('#', 1)[0].strip() for line in lines]
 
-        self._verify_duplicate_keys(hashtag_less_content)
+        file_content: str = "\n".join(filtered_lines)
 
-        file_content: str = "".join(hashtag_less_content)
-
-        return json5.loads(file_content)
+        return json5.loads(
+            file_content, object_pairs_hook=self._verify_duplicate_keys)
 
     @staticmethod
-    def _verify_duplicate_keys(data: list[str]) -> None:
-        """Verify duplicate keys"""
-        registered_keys = set()
+    def _verify_duplicate_keys(pairs: Any) -> Any:
+        result: dict[str, Any] = {}
 
-        for line in data:
-            if ':' in line:
-                key = line.split(':')[0]
-                if key in registered_keys:
-                    raise ValueError("Key error: duplicate keys entered")
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"Key error: duplicate key '{key}'")
 
-                registered_keys.add(key)
+            result[key] = value
+
+        return result
 
 
 class JsonData(BaseModel):
@@ -52,13 +49,37 @@ class JsonData(BaseModel):
     points_per_super_pacgum: int = Field(default=500, ge=-100000, le=100000)
     super_pacgum_cooldown: int = Field(default=20, ge=1, le=1000)
     points_per_ghost: int = Field(default=1000, ge=-100000, le=100000)
-    level_max_time: int = Field(default=90, ge=20, le=1000000000)
-    seed: int = Field(default=random.randint(-1000000000, 1000000000),
-                      ge=-1000000000, le=1000000000)
+    level_max_time: int = Field(default=90, ge=20, le=100000)
+    seed: int = Field(
+        default_factory=lambda: random.randint(-100000, 100000),
+        ge=-100000, le=100000)
     is_cheat_active: bool = Field(default=False)
 
     @field_validator("*", mode="wrap")
     @classmethod
-    def clamp_all(cls, value, handler: ValidatorFunctionWrapHandler,
-                  info: ValidationInfo) -> None:
-        
+    def clamp_all(cls, value: Any,
+                  handler: ValidatorFunctionWrapHandler,
+                  info: ValidationInfo) -> Any:
+        try:
+            return handler(value)
+        except ValidationError:
+            if info.field_name is None:
+                raise ValueError("Pydantic error: `info.field_name` is `None`")
+
+            default = cls.model_fields[info.field_name].get_default(
+                call_default_factory=True)
+            print(
+                f"Parsing error: '{info.field_name}' has an invalid "
+                f"value ({value})\n"
+                f"Using pydantic default value ({default})")
+            return default
+
+    @model_validator(mode="after")
+    def verify_missing_key(self) -> 'JsonData':
+        for name, field in type(self).model_fields.items():
+            if name not in self.model_fields_set:
+                print(
+                    f"Parsing error: key '{name}' is missing.\n"
+                    "Using pydantic default value "
+                    f"({field.get_default(call_default_factory=True)})")
+        return self
