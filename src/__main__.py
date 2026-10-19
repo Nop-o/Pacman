@@ -1,11 +1,6 @@
 import sys
 import os
-
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
-
-from pydantic import ValidationError
-from .parsing import JsonParsing, JsonData
-from .visual_simulation import SimulationManager
 
 
 class Main:
@@ -19,6 +14,10 @@ class Main:
         it, and runs the simulation. Errors are caught and printed as
         user-friendly messages rather than propagated.
         """
+        from pydantic import ValidationError
+        from .parsing import JsonParsing, JsonData
+        from .visual_simulation import SimulationManager
+
         if len(sys.argv) > 2:
             print("Argument error: too many arguments entered",
                   file=sys.stderr)
