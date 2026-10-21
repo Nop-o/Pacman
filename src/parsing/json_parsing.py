@@ -4,15 +4,35 @@ from pydantic import (BaseModel, field_validator, ConfigDict, Field,
 import json5
 from typing import Any
 import random
+import sys
 
 
 class JsonParsing:
+    """Load a JSON file that may contain comments and reject duplicate keys."""
 
     def __init__(self, file_path: str) -> None:
+        """Load the content of a JSON file.
+
+        Args:
+            file_path: Path of the JSON file to load. It must end with
+                `.json`.
+        """
         self.file_content: Any = self._load_json_file(file_path)
 
     def _load_json_file(self, file_path: str) -> Any:
-        """Load json content"""
+        """Read a JSON file and parse its content.
+
+        Everything after a `#` on a line is treated as a comment and
+        removed before parsing. The content is parsed with `json5`, and
+        duplicate keys in an object are rejected.
+
+        Args:
+            file_path: Path of the JSON file to read. It must end with
+                `.json`.
+
+        Returns:
+            The parsed content of the file.
+        """
         if not file_path.endswith(".json"):
             raise ValueError("Argument error: file is not a json file")
 
@@ -29,6 +49,18 @@ class JsonParsing:
 
     @staticmethod
     def _verify_duplicate_keys(pairs: Any) -> Any:
+        """Build a dict from the key-value pairs of a JSON object.
+
+        Used as the `object_pairs_hook` of the parser, so it is called
+        for every object found in the file.
+
+        Args:
+            pairs: The `(key, value)` pairs of one JSON object, in the
+                order they appear in the file.
+
+        Returns:
+            A dict made from the pairs.
+        """
         result: dict[str, Any] = {}
 
         for key, value in pairs:
@@ -41,6 +73,30 @@ class JsonParsing:
 
 
 class JsonData(BaseModel):
+    """The game settings read from the JSON file.
+
+    Unknown keys are rejected, and values are validated again when they
+    are assigned.
+    A missing or invalid value is replaced by the default
+    value of its field, with a message printed.
+
+    Attributes:
+        lives: Number of lives (1 to 200, default 3).
+        pacgum: Number of pac-gums (1 to 100000, default 200).
+        points_per_pacgum:
+            Points for a pac-gum (-100000 to 100000, default 200)
+        points_per_super_pacgum:
+            Points for a super pac-gum (-100000 to 100000, default 500)
+        super_pacgum_cooldown:
+            Cooldown of the super pac-gum (1 to 1000, default 20)
+        points_per_ghost:
+            Points for a ghost (-100000 to 100000, default 1000)
+        level_max_time:
+            Maximum time of a level (20 to 100000, default 90).
+        seed: Random seed (-100000 to 100000)
+        is_cheat_active: Whether the cheat mode is active (default False)
+    """
+
     model_config = ConfigDict(extra="forbid", validate_assignment=True)
 
     lives: int = Field(default=3, ge=1, le=200)
@@ -60,6 +116,20 @@ class JsonData(BaseModel):
     def clamp_all(cls, value: Any,
                   handler: ValidatorFunctionWrapHandler,
                   info: ValidationInfo) -> Any:
+        """Replace an invalid field value with the default of the field.
+
+        Runs on every field. If the value isn't valid, a message is printed and
+        the default value of the field is used.
+
+        Args:
+            value: The value read from the file for the field.
+            handler: The standard validation of the field.
+            info: Information about the field being validated.
+
+        Returns:
+            The validated value, or the default value of the field if
+            the value is invalid.
+        """
         try:
             return handler(value)
         except ValidationError:
@@ -71,15 +141,24 @@ class JsonData(BaseModel):
             print(
                 f"Parsing error: '{info.field_name}' has an invalid "
                 f"value ({value})\n"
-                f"Using pydantic default value ({default})")
+                f"Using pydantic default value ({default})", file=sys.stderr)
             return default
 
     @model_validator(mode="after")
     def verify_missing_key(self) -> 'JsonData':
+        """Print a message for each field missing from the input.
+
+        Missing fields keep their default value, so the model is
+        returned unchanged.
+
+        Returns:
+            The validated model.
+        """
         for name, field in type(self).model_fields.items():
             if name not in self.model_fields_set:
                 print(
                     f"Parsing error: key '{name}' is missing.\n"
                     "Using pydantic default value "
-                    f"({field.get_default(call_default_factory=True)})")
+                    f"({field.get_default(call_default_factory=True)})",
+                    file=sys.stderr)
         return self
